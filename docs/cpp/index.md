@@ -2,7 +2,7 @@
 
 ## Tree
 
-- [heavy-light decomposition `<tree/heavylightdecomposition.hpp>`](tree/heavy-light-decomposition)
+- [heavy-light decomposition `<tree/heavylightdecomposition.hpp>`](tree/heavy-light-decomposition.md)
 
 ---
 
