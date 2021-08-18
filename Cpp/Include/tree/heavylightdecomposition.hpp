@@ -88,7 +88,7 @@ public:
     return (D[u] > D[v]) ? v : u;
   }
 
-  vector<pair<int,int>> path(int r, int c, bool include_root = true) const {
+  vector<pair<int,int>> path(int r, int c, bool include_root = true, bool reverse_path = false) const {
     vector<pair<int,int>> res;
     while(PD[r] < PD[c]){
       res.push_back({ rangeL[PP[c]], rangeL[c]+1 });
@@ -101,7 +101,7 @@ public:
       res.back().first++;
       if(res.back().first == res.back().second) res.pop_back();
     }
-    reverse(res.begin(),res.end());
+    if(!reverse_path) reverse(res.begin(),res.end());
     return move(res);
   }
 

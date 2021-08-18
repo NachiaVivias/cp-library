@@ -77,7 +77,7 @@ $\mathrm{dist}(x,y)$ を返す。
 ### path
 
 ```c++
-vector<pair<int,int>> path(int r, int c, bool include_root = true) const;
+vector<pair<int,int>> path(int r, int c, bool include_root = true, bool reverse_path = false) const;
 ```
 
 - $0 \leq r,c \lt N$
@@ -94,6 +94,7 @@ $r$ から $c$ へ向かう単純パスをいくつかの**半開**区間 $[l_1,
 は一致する。
 
 `include_root` が `false` のとき、 $r$ から $c$ へ向かう単純パスは $r$ を除いたものとする。
+`reverse_path` が `true` のとき、返す配列を reverse する。
 
 ### subtree
 
