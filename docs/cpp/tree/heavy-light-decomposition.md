@@ -1,5 +1,7 @@
 # Heavy-Light Decomposition
 
+**注意：このライブラリの一部は verify されていない。**
+
 ## 主な機能
 
 $N$ 頂点の静的な根付き無向木 $T$ がある。
@@ -41,7 +43,7 @@ const vector<int>& idxs() const;
 
 頂点を扱いやすい順序に並べ替えた後の位置を取得する。頂点 $u$ に振られた番号は `idxs()[u]` で得られる。
 
-### depth
+### depth (not verified)
 
 ```c++
 int depth(int p) const;
@@ -63,7 +65,7 @@ int lca(int x, int y) const;
 
 $\mathrm{LCA}(x,y)$ を返す。
 
-### dist
+### dist (not verified)
 
 ```c++
 int dist(int x, int y) const;
@@ -96,7 +98,7 @@ $r$ から $c$ へ向かう単純パスをいくつかの**半開**区間 $[l_1,
 `include_root` が `false` のとき、 $r$ から $c$ へ向かう単純パスは $r$ を除いたものとする。
 `reverse_path` が `true` のとき、返す配列を reverse する。
 
-### subtree
+### subtree (not verified)
 
 ```c++
 pair<int,int> subtree(int r) const;
@@ -114,7 +116,7 @@ pair<int,int> subtree(int r) const;
 
 は一致する。
 
-### meet
+### meet (not verified)
 
 ```c++
 int meet(int x, int y, int z) const;
@@ -127,7 +129,7 @@ int meet(int x, int y, int z) const;
 
 $\mathrm{meet}(x,y,z)$ の性質として、 $x,y,z$ の順番をどのように入れ替えても結果は変わらない。
 
-### jump
+### jump (not verified)
 
 ```c++
 int jump(int from, int to, int d) const;
