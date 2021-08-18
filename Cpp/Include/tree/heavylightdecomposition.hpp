@@ -88,7 +88,7 @@ public:
     return (D[u] > D[v]) ? v : u;
   }
 
-  vector<pair<int,int>> path(int r, int c) const {
+  vector<pair<int,int>> path(int r, int c, bool include_root = true) const {
     vector<pair<int,int>> res;
     while(PD[r] < PD[c]){
       res.push_back({ rangeL[PP[c]], rangeL[c]+1 });
@@ -97,6 +97,10 @@ public:
     if(PP[r] != PP[c]) return {};
     if(D[r] > D[c]) return {};
     res.push_back({ rangeL[r], rangeL[c]+1 });
+    if(!include_root){
+      res.back().first++;
+      if(res.back().first == res.back().second) res.pop_back();
+    }
     reverse(res.begin(),res.end());
     return move(res);
   }
@@ -105,11 +109,11 @@ public:
     return rangeL;
   }
 
-  int meet(int x, int y, int z){
+  int meet(int x, int y, int z) const {
     return lca(x,y) ^ lca(y,z) ^ lca(x,z);
   }
 
-  int jump(int from, int to, int d){
+  int jump(int from, int to, int d) const {
     int g = lca(from,to);
     int dist0 = D[from] - D[g] * 2 + D[to];
     if(dist0 > d) return -1;

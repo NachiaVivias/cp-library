@@ -34,7 +34,7 @@ struct BIT{
 
 int main() {
   int N,Q; cin >> N >> Q;
-  vector<i64> A(N);
+  vector<int> A(N);
   for(int i=0; i<N; i++) cin >> A[i];
   vector<vector<int>> E(N);
   for(int i=0; i<N-1; i++){
@@ -52,16 +52,14 @@ int main() {
     int t; cin >> t;
     if(t == 0){
       int p,x; cin >> p >> x;
-      A[p] += x;
       rq.add(hld.idxs()[p],x);
     }
     if(t == 1){
       int u,v; cin >> u >> v;
       int g = hld.lca(u,v);
       i64 res = 0;
-      for(auto I : hld.path(g,u)) res += rq.sum(I.first, I.second);
-      for(auto I : hld.path(g,v)) res += rq.sum(I.first, I.second);
-      res -= A[g];
+      for(auto I : hld.path(g,u,true)) res += rq.sum(I.first, I.second);
+      for(auto I : hld.path(g,v,false)) res += rq.sum(I.first, I.second);
       cout << res << "\n";
     }
   }

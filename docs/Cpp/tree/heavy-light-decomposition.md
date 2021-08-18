@@ -77,11 +77,11 @@ $\mathrm{dist}(x,y)$ を返す。
 ### path
 
 ```c++
-vector<pair<int,int>> path(int r, int c) const;
+vector<pair<int,int>> path(int r, int c, bool include_root = true) const;
 ```
 
 - $0 \leq r,c \lt N$
-- 頂点 $r$ は頂点 $c$ の祖先である。
+- $r=c$ または、頂点 $r$ は頂点 $c$ の祖先である。
 - $O(\log N)$ 時間
 
 $r$ から $c$ へ向かう単純パスをいくつかの**半開**区間 $[l_1,r_1),[l_2,r_2),\cdots ,[l_k,r_k)$ で表し、ペアの列 $((l_1,r_1),(l_2,r_2),\cdots ,(l_k,r_k))$ を返す。
@@ -92,6 +92,8 @@ $r$ から $c$ へ向かう単純パスをいくつかの**半開**区間 $[l_1,
 - $S_2 = (l_1,l_1+1,l_1+2,\cdots,r_1-1,l_2,\cdots,r_2-1,l_3,\cdots,r_{k}-1)$
 
 は一致する。
+
+`include_root` が `false` のとき、 $r$ から $c$ へ向かう単純パスは $r$ を除いたものとする。
 
 ### subtree
 
