@@ -1,5 +1,7 @@
 # Heavy-Light Decomposition
 
+[C++ 用ライブラリ一覧に戻る](../../)
+
 **注意：このライブラリの一部は verify されていない。**
 
 ## 主な機能
@@ -43,7 +45,7 @@ const vector<int>& idxs() const;
 
 頂点を扱いやすい順序に並べ替えた後の位置を取得する。頂点 $u$ に振られた番号は `idxs()[u]` で得られる。
 
-### depth (not verified)
+### depth
 
 ```c++
 int depth(int p) const;
@@ -65,7 +67,7 @@ int lca(int x, int y) const;
 
 $\mathrm{LCA}(x,y)$ を返す。
 
-### dist (not verified)
+### dist
 
 ```c++
 int dist(int x, int y) const;
@@ -116,7 +118,7 @@ pair<int,int> subtree(int r) const;
 
 は一致する。
 
-### meet (not verified)
+### meet
 
 ```c++
 int meet(int x, int y, int z) const;
