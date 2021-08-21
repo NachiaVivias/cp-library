@@ -88,6 +88,10 @@ public:
     return (D[u] > D[v]) ? v : u;
   }
 
+  int dist(int u, int v) const {
+    return depth(u) + depth(v) - depth(lca(u,v)) * 2;
+  }
+
   vector<pair<int,int>> path(int r, int c, bool include_root = true, bool reverse_path = false) const {
     vector<pair<int,int>> res;
     while(PD[r] < PD[c]){
