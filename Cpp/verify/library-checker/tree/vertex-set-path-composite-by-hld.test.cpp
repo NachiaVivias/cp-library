@@ -1,6 +1,9 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/vertex_set_path_composite"
 #include "../../../Include/tree/heavylightdecomposition.hpp"
 
+
+using namespace std;
+
 using i32 = int32_t;
 using u32 = uint32_t;
 using i64 = int64_t;

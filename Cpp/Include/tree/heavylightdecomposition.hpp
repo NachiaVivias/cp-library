@@ -2,25 +2,24 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-using namespace std;
 
 
 struct heavy_light_decomposition{
 private:
 
   int N;
-  vector<int> P;
-  vector<int> PP;
-  vector<int> PD;
-  vector<int> D;
-  vector<int> I;
+  std::vector<int> P;
+  std::vector<int> PP;
+  std::vector<int> PD;
+  std::vector<int> D;
+  std::vector<int> I;
 
-  vector<int> rangeL;
-  vector<int> rangeR;
+  std::vector<int> rangeL;
+  std::vector<int> rangeR;
 
 public:
 
-  heavy_light_decomposition(const vector<vector<int>>& E = {{}}){
+  heavy_light_decomposition(const std::vector<std::vector<int>>& E = {{}}){
     N = E.size();
     P.assign(N, -1);
     I = {0};
@@ -32,8 +31,8 @@ public:
         P[e] = p;
       }
     }
-    vector<int> Z(N, 1);
-    vector<int> nx(N, -1);
+    std::vector<int> Z(N, 1);
+    std::vector<int> nx(N, -1);
     PP.resize(N);
     for(int i=0; i<N; i++) PP[i] = i;
     for(int i=N-1; i>=1; i--){
@@ -50,13 +49,13 @@ public:
     D.assign(N,0);
     for(int p : I) if(p != 0){
       PP[p] = PP[PP[p]];
-      PD[p] = min(PD[PP[p]], PD[P[p]]+1);
+      PD[p] = std::min(PD[PP[p]], PD[P[p]]+1);
       D[p] = D[P[p]]+1;
     }
     
     rangeL.assign(N,0);
     rangeR.assign(N,0);
-    vector<int> dfs;
+    std::vector<int> dfs;
     dfs.push_back(0);
     while(dfs.size()){
       int p = dfs.back();
@@ -82,7 +81,7 @@ public:
   }
 
   int lca(int u, int v) const {
-    if(PD[u] < PD[v]) swap(u, v);
+    if(PD[u] < PD[v]) std::swap(u, v);
     while(PD[u] > PD[v]) u = P[PP[u]];
     while(PP[u] != PP[v]){ u = P[PP[u]]; v = P[PP[v]]; }
     return (D[u] > D[v]) ? v : u;
@@ -92,8 +91,8 @@ public:
     return depth(u) + depth(v) - depth(lca(u,v)) * 2;
   }
 
-  vector<pair<int,int>> path(int r, int c, bool include_root = true, bool reverse_path = false) const {
-    vector<pair<int,int>> res;
+  std::vector<std::pair<int,int>> path(int r, int c, bool include_root = true, bool reverse_path = false) const {
+    std::vector<std::pair<int,int>> res;
     while(PD[r] < PD[c]){
       res.push_back({ rangeL[PP[c]], rangeL[c]+1 });
       c = P[PP[c]];
@@ -109,7 +108,7 @@ public:
     return move(res);
   }
 
-  const vector<int>& idxs() const {
+  const std::vector<int>& idxs() const {
     return rangeL;
   }
 
