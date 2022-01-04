@@ -112,11 +112,11 @@ public:
     return rangeL;
   }
 
-  int meet(int x, int y, int z) const {
+  int median(int x, int y, int z) const {
     return lca(x,y) ^ lca(y,z) ^ lca(x,z);
   }
 
-  int jump(int from, int to, int d) const {
+  int la(int from, int to, int d) const {
     int g = lca(from,to);
     int dist0 = D[from] - D[g] * 2 + D[to];
     if(dist0 > d) return -1;

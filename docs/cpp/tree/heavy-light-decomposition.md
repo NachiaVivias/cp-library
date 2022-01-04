@@ -11,16 +11,16 @@ $N$ 頂点の静的な根付き無向木 $T$ がある。頂点には番号(0-ba
 - $2$ 頂点 $x,y$ の Lowest Common Ancestor を $\mathrm{LCA}(x,y)$ と表す。
 - $2$ 頂点 $x,y$ 間の距離（各辺の長さは $1$ とする） を $\mathrm{dist}(x,y)$ と表す。
 
-$T$ に対して、以下の操作を行う。前処理は $O(N)$ 時間である。
+$T$ に対して、以下の操作を行う。前処理の計算量は $O(N)$ である。
 
 - [`lca(x,y)`](#lca) ： $\mathrm{LCA}(x,y)$ を求める。（ $O(\log N)$ 時間）
 - [`path(r,c)`](#path) ： $r$ とその子孫 $c$ について、 $r,c$ 間の単純パス上の頂点列を $O(\log N)$ 個の区間で表す。（ $O(\log N)$ 時間）
 - [`subtree(r)`](#subtree) ：頂点 $r$ の部分木が含む頂点の集合を $1$ つの区間で表す。（ $O(1)$ 時間）
 - [`dist(x,y)`](#dist) ： $\mathrm{dist}(x,y)$ を求める。（ $O(\log N)$ 時間）
-- [`meet(x,y,z)`](#meet) : 頂点・辺の構造はそのままで根を頂点 $x$ に変更したときの $\mathrm{LCA}(y,z)$ を求める。（ $O(\log N)$ 時間）
-- [`jump(from,to,d)`](#jump) : $\mathrm{from}$ から $\mathrm{to}$ に向かう単純パスにおいて、 $\mathrm{from}$ から距離 $d$ の頂点を求める。（ $O(\log N)$ 時間）
+- [`median(x,y,z)`](#median) : 頂点・辺の構造はそのままで根を頂点 $x$ に変更したときの $\mathrm{LCA}(y,z)$ を求める。（ $O(\log N)$ 時間）
+- [`la(from,to,d)`](#la) : $\mathrm{from}$ から $\mathrm{to}$ に向かう単純パスにおいて、 $\mathrm{from}$ から距離 $d$ の頂点を求める。（ $O(\log N)$ 時間）
 
-## 仕様
+## class HLD
 
 ### コンストラクタ
 
@@ -118,10 +118,10 @@ pair<int,int> subtree(int r) const;
 
 は一致する。
 
-### meet
+### median
 
 ```c++
-int meet(int x, int y, int z) const;
+int median(int x, int y, int z) const;
 ```
 
 - $0 \leq x,y,z \lt N$
@@ -129,12 +129,12 @@ int meet(int x, int y, int z) const;
 
 頂点・辺の構造はそのままで根を頂点 $x$ に変更したときの $\mathrm{LCA}(y,z)$ を返す。
 
-$\mathrm{meet}(x,y,z)$ の性質として、 $x,y,z$ の順番をどのように入れ替えても結果は変わらない。
+$\mathrm{median}(x,y,z)$ の性質として、 $x,y,z$ の順番をどのように入れ替えても結果は変わらない。
 
-### jump (not verified)
+### la (not verified)
 
 ```c++
-int jump(int from, int to, int d) const;
+int la(int from, int to, int d) const;
 ```
 
 - $0 \leq \mathrm{from},\mathrm{to} \lt N$
@@ -148,7 +148,7 @@ $\mathrm{dist}(\mathrm{from},\mathrm{to}) \lt d$ のとき、 $-1$ を返す。
 ## 参考
 
 - [単位重み木のユーティリティに関する @noshi91 によるツイート](https://twitter.com/noshi91/status/1253703019977256961)
-- [meet の実装に関する @noshi91 によるツイート](https://twitter.com/noshi91/status/1336562191080726528)
+- [median の実装に関する @noshi91 によるツイート](https://twitter.com/noshi91/status/1336562191080726528)
 
 
 ---
