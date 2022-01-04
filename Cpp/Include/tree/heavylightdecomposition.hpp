@@ -3,8 +3,9 @@
 #include <vector>
 #include <algorithm>
 
+namespace nachia{
 
-struct heavy_light_decomposition{
+struct HeavyLightDecomposition{
 private:
 
     int N;
@@ -19,7 +20,7 @@ private:
 
 public:
 
-    heavy_light_decomposition(const std::vector<std::vector<int>>& E = {{}}){
+    HeavyLightDecomposition(const std::vector<std::vector<int>>& E = {{}}){
         N = E.size();
         P.assign(N, -1);
         I = {0};
@@ -119,15 +120,18 @@ public:
     }
 
     int la(int from, int to, int d) const {
+        if(d < 0) return -1;
         int g = lca(from,to);
         int dist0 = D[from] - D[g] * 2 + D[to];
-        if(dist0 > d) return -1;
+        if(dist0 < d) return -1;
         int p = from;
-        if(D[from] - D[g] > d){ p = to; d = dist0 - d; }
-        while(D[p] - D[PP[p]] > d){
+        if(D[from] - D[g] < d){ p = to; d = dist0 - d; }
+        while(D[p] - D[PP[p]] < d){
             d -= D[p] - D[PP[p]] + 1;
             p = P[PP[p]];
         }
         return I[rangeL[p] - d];
     }
 };
+
+} // namespace nachia

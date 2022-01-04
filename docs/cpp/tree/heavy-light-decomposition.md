@@ -13,22 +13,22 @@ $N$ 頂点の静的な根付き無向木 $T$ がある。頂点には番号(0-ba
 
 $T$ に対して、以下の操作を行う。前処理の計算量は $O(N)$ である。
 
-- [`lca(x,y)`](#lca) ： $\mathrm{LCA}(x,y)$ を求める。（ $O(\log N)$ 時間）
+- [`lca(x,y)`](#lca) ： $\text{LCA}(x,y)$ を求める。（ $O(\log N)$ 時間）
 - [`path(r,c)`](#path) ： $r$ とその子孫 $c$ について、 $r,c$ 間の単純パス上の頂点列を $O(\log N)$ 個の区間で表す。（ $O(\log N)$ 時間）
 - [`subtree(r)`](#subtree) ：頂点 $r$ の部分木が含む頂点の集合を $1$ つの区間で表す。（ $O(1)$ 時間）
-- [`dist(x,y)`](#dist) ： $\mathrm{dist}(x,y)$ を求める。（ $O(\log N)$ 時間）
-- [`median(x,y,z)`](#median) : 頂点・辺の構造はそのままで根を頂点 $x$ に変更したときの $\mathrm{LCA}(y,z)$ を求める。（ $O(\log N)$ 時間）
-- [`la(from,to,d)`](#la) : $\mathrm{from}$ から $\mathrm{to}$ に向かう単純パスにおいて、 $\mathrm{from}$ から距離 $d$ の頂点を求める。（ $O(\log N)$ 時間）
+- [`dist(x,y)`](#dist) ： $\text{dist}(x,y)$ を求める。（ $O(\log N)$ 時間）
+- [`median(x,y,z)`](#median) : 頂点・辺の構造はそのままで根を頂点 $x$ に変更したときの $\text{LCA}(y,z)$ を求める。（ $O(\log N)$ 時間）
+- [`la(from,to,d)`](#la) : $\text{from}$ から $\text{to}$ に向かう単純パスにおいて、 $\text{from}$ から距離 $d$ の頂点を求める。（ $O(\log N)$ 時間）
 
-## class HLD
+## struct HeavyLightDecomposition
 
 ### コンストラクタ
 
 ```c++
-HLD(const vector<vector<int>>& E);
+nachia::HeavyLightDecomposition(const vector<vector<int>>& E);
 ```
 
-- $E\mathrm{.size()} = N$
+- $E\text{.size()} = N$
 - $N \leq 5\times 10^5$
 - $E[u]$ は頂点 $u$ に隣接する頂点のリストである。根付き木の親から子へ向かう辺は含まれていなければいけないが、親へ向かう辺は含まなくてもよい。
 - $O(N)$ 時間
@@ -65,7 +65,7 @@ int lca(int x, int y) const;
 - $0 \leq x,y \lt N$
 - $O(\log N)$ 時間
 
-$\mathrm{LCA}(x,y)$ を返す。
+$\text{LCA}(x,y)$ を返す。
 
 ### dist
 
@@ -76,7 +76,7 @@ int dist(int x, int y) const;
 - $0 \leq x,y \lt N$
 - $O(\log N)$ 時間
 
-$\mathrm{dist}(x,y)$ を返す。
+$\text{dist}(x,y)$ を返す。
 
 ### path
 
@@ -92,7 +92,7 @@ $r$ から $c$ へ向かう単純パスをいくつかの**半開**区間 $[l_0,
 
 パスに含まれる頂点の列を $(r=I_0,I_1,I_2, \cdots ,I_{L-1}=c)$ 、と表したとき、 $2$ つの数列
 
-- $S_1 = (\mathrm{idxs()}[I_0],\mathrm{idxs()}[I_1], \cdots ,\mathrm{idxs()}[I_{L-1}])$
+- $S_1 = (\text{idxs()}[I_0],\text{idxs()}[I_1], \cdots ,\text{idxs()}[I_{L-1}])$
 - $S_2 = (l_0,l_0+1,l_0+2,\cdots,r_0-1,l_1,\cdots,r_1-1,l_2,\cdots,r_{k-1}-1)$
 
 は一致する。
@@ -116,7 +116,7 @@ pair<int,int> subtree(int r) const;
 
 頂点 $r$ の部分木に含まれる頂点をある DFS の行きがけ順に並べた列を $(r=I_0,I_1, \cdots ,I_{L-1})$ としたとき、 $2$ つの数列
 
-- $S_1 = (\mathrm{idxs()}[I_0],\mathrm{idxs()}[I_1], \cdots ,\mathrm{idxs()}[I_{L-1}])$
+- $S_1 = (\text{idxs()}[I_0],\text{idxs()}[I_1], \cdots ,\text{idxs()}[I_{L-1}])$
 - $S_2 = ( l_0,l_0+1,l_0+2,\cdots,r_0-1 )$
 
 は一致する。
@@ -130,23 +130,23 @@ int median(int x, int y, int z) const;
 - $0 \leq x,y,z \lt N$
 - $O(\log N)$ 時間
 
-頂点・辺の構造はそのままで根を頂点 $x$ に変更したときの $\mathrm{LCA}(y,z)$ を返す。
+頂点・辺の構造はそのままで根を頂点 $x$ に変更したときの $\text{LCA}(y,z)$ を返す。
 
-$\mathrm{median}(x,y,z)$ の性質として、 $x,y,z$ の順番をどのように入れ替えても結果は変わらない。
+$\text{median}(x,y,z)$ の性質として、 $x,y,z$ の順番をどのように入れ替えても結果は変わらない。
 
-### la (not verified)
+### la
 
 ```c++
 int la(int from, int to, int d) const;
 ```
 
-- $0 \leq \mathrm{from},\mathrm{to} \lt N$
+- $0 \leq \text{from},\text{to} \lt N$
 - $0 \leq d$
 - $O(\log N)$ 時間
 
-$0 \leq d \leq \mathrm{dist}(\mathrm{from},\mathrm{to})$ のとき、 $\mathrm{from}$ から $\mathrm{to}$ へ向かう単純パスにおいて、 $\mathrm{from}$ から距離 $d$ の位置にある頂点を返す。
+$0 \leq d \leq \text{dist(from,to)}$ のとき、 $\text{from}$ から $\text{to}$ へ向かう単純パスにおいて、 $\text{from}$ から距離 $d$ の位置にある頂点を返す。それ以外のとき、 $-1$ を返す。
 
-$\mathrm{dist}(\mathrm{from},\mathrm{to}) \lt d$ のとき、 $-1$ を返す。
+これは、 $\text{from}$ を根としたときの Level Ancestor と同じことである。
 
 ## 参考
 

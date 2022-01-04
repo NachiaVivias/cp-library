@@ -95,7 +95,7 @@ int main(){
     E[v].push_back(u);
   }
 
-  heavy_light_decomposition hld(E);
+  nachia::HeavyLightDecomposition hld(E);
   RQ rq1(N);
   for(int i=0; i<N; i++) rq1.set(hld.idxs()[i],A[i]);
   RQ rq2(N);

@@ -52,7 +52,7 @@ vector<mll> dep;
 vector<int> iEidx;
 vector<int> flowIdx;
 
-heavy_light_decomposition hld;
+nachia::HeavyLightDecomposition hld;
 
 
 
@@ -78,7 +78,7 @@ void read_graph(){
       idE[v].push_back(u);
     }
   }
-  hld = heavy_light_decomposition(idE);
+  hld = nachia::HeavyLightDecomposition(idE);
 }
 
 void initLCA(){

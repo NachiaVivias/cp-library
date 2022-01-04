@@ -45,7 +45,7 @@ int main() {
     E[v].push_back(u);
   }
 
-  heavy_light_decomposition hld(E);
+  nachia::HeavyLightDecomposition hld(E);
   BIT rq(N);
 
   for(int i=0; i<N; i++) rq.add(hld.idxs()[i],A[i]);

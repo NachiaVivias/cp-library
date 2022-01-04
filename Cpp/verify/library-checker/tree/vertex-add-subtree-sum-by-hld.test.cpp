@@ -72,7 +72,7 @@ int main(){
         E[p].push_back(i);
     }
 
-    heavy_light_decomposition hld(E);
+    nachia::HeavyLightDecomposition hld(E);
     RQ rq(N);
     for(int i=0; i<N; i++) rq.set(hld.idxs()[i], A[i]);
 
