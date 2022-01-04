@@ -133,8 +133,8 @@ void build_flows(){
 
 int path_includes(int u,int v,int z){
   if(iEidx[z] == -1) return -1;
-  if(hld.meet(u,v,J[z].u) != J[z].u) return -1;
-  if(hld.meet(u,v,J[z].v) != J[z].v) return -1;
+  if(hld.median(u,v,J[z].u) != J[z].u) return -1;
+  if(hld.median(u,v,J[z].v) != J[z].v) return -1;
   int res = flowIdx[iEidx[z]];
   if(res == -1) return -2;
   return res;

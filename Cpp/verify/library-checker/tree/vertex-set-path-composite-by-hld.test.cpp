@@ -112,7 +112,7 @@ int main(){
       int u,v,x; cin >> u >> v >> x;
       int g = hld.lca(u,v);
       uint64_t px = x;
-      for(auto I : hld.path(g,u,false,true)) px = rq2.prod(N-I.second,N-I.first)(px);
+      for(auto I : hld.path(g,u,false,true)) px = rq2.prod(I.first,I.second)(px);
       for(auto I : hld.path(g,v,true,false)) px = rq1.prod(I.first,I.second)(px);
       cout << px << "\n";
     }

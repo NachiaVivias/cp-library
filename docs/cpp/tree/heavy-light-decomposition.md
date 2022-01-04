@@ -88,19 +88,22 @@ vector<pair<int,int>> path(int r, int c, bool include_root = true, bool reverse_
 - $r=c$ または、頂点 $r$ は頂点 $c$ の祖先である。
 - $O(\log N)$ 時間
 
-$r$ から $c$ へ向かう単純パスをいくつかの**半開**区間 $[l_1,r_1),[l_2,r_2),\cdots ,[l_k,r_k)$ で表し、ペアの列 $((l_1,r_1),(l_2,r_2),\cdots ,(l_k,r_k))$ を返す。
+$r$ から $c$ へ向かう単純パスをいくつかの**半開**区間 $[l_0,r_0),[l_1,r_1),\cdots ,[l_{k-1},r_{k-1})$ で表し、ペアの列 $ \left( (l_0,r_0),(l_1,r_1) \ldots (l_{k-1},r_{k-1}) \right) $ を返す。
 
-パスに含まれる頂点の列を $(I_1,I_2, \cdots ,I_L)$ 、と表したとき、 $2$ つの数列
+パスに含まれる頂点の列を $(r=I_0,I_1,I_2, \cdots ,I_{L-1}=c)$ 、と表したとき、 $2$ つの数列
 
-- $S_1 = (\mathrm{idxs()}[I_1],\mathrm{idxs()}[I_2], \cdots ,\mathrm{idxs()}[I_L])$
-- $S_2 = (l_1,l_1+1,l_1+2,\cdots,r_1-1,l_2,\cdots,r_2-1,l_3,\cdots,r_{k}-1)$
+- $S_1 = (\mathrm{idxs()}[I_0],\mathrm{idxs()}[I_1], \cdots ,\mathrm{idxs()}[I_{L-1}])$
+- $S_2 = (l_0,l_0+1,l_0+2,\cdots,r_0-1,l_1,\cdots,r_1-1,l_2,\cdots,r_{k-1}-1)$
 
 は一致する。
 
 `include_root` が `false` のとき、 $r$ から $c$ へ向かう単純パスは $r$ を除いたものとする。
-`reverse_path` が `true` のとき、返す配列を reverse する。
+`reverse_path` が `true` のとき、返す直前に次の手順を実行する。
 
-### subtree (not verified)
+1. 返す配列を reverse する。
+2. 各ペア $(l_i,r_i)$ を $(N-r_i,N-l_i)$ に変更する。
+
+### subtree
 
 ```c++
 pair<int,int> subtree(int r) const;
@@ -109,12 +112,12 @@ pair<int,int> subtree(int r) const;
 - $0 \leq r \lt N$
 - $O(1)$ 時間
 
-頂点 $r$ の部分木を**半開**区間 $[l_1,r_1)$ で表し、ペア $l_1,r_1$ を返す。
+頂点 $r$ の部分木を**半開**区間 $[l_0,r_0)$ で表し、ペア $l_1,r_1$ を返す。
 
-頂点 $r$ の部分木に含まれる頂点をある DFS 順に並べた列を $(I_1,I_2, \cdots ,I_L)$ としたとき、 $2$ つの数列
+頂点 $r$ の部分木に含まれる頂点をある DFS の行きがけ順に並べた列を $(r=I_0,I_1, \cdots ,I_{L-1})$ としたとき、 $2$ つの数列
 
-- $S_1 = (\mathrm{idxs()}[I_1],\mathrm{idxs()}[I_2], \cdots ,\mathrm{idxs()}[I_L])$
-- $S_2 = ( l_1,l_1+1,l_1+2,\cdots,r_1-1 )$
+- $S_1 = (\mathrm{idxs()}[I_0],\mathrm{idxs()}[I_1], \cdots ,\mathrm{idxs()}[I_{L-1}])$
+- $S_2 = ( l_0,l_0+1,l_0+2,\cdots,r_0-1 )$
 
 は一致する。
 

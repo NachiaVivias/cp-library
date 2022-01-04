@@ -7,126 +7,127 @@
 struct heavy_light_decomposition{
 private:
 
-  int N;
-  std::vector<int> P;
-  std::vector<int> PP;
-  std::vector<int> PD;
-  std::vector<int> D;
-  std::vector<int> I;
+    int N;
+    std::vector<int> P;
+    std::vector<int> PP;
+    std::vector<int> PD;
+    std::vector<int> D;
+    std::vector<int> I;
 
-  std::vector<int> rangeL;
-  std::vector<int> rangeR;
+    std::vector<int> rangeL;
+    std::vector<int> rangeR;
 
 public:
 
-  heavy_light_decomposition(const std::vector<std::vector<int>>& E = {{}}){
-    N = E.size();
-    P.assign(N, -1);
-    I = {0};
-    I.reserve(N);
-    for(int i=0; i<I.size(); i++){
-      int p = I[i];
-      for(int e : E[p]) if(P[p] != e){
-        I.push_back(e);
-        P[e] = p;
-      }
+    heavy_light_decomposition(const std::vector<std::vector<int>>& E = {{}}){
+        N = E.size();
+        P.assign(N, -1);
+        I = {0};
+        I.reserve(N);
+        for(int i=0; i<I.size(); i++){
+            int p = I[i];
+            for(int e : E[p]) if(P[p] != e){
+                I.push_back(e);
+                P[e] = p;
+            }
+        }
+        std::vector<int> Z(N, 1);
+        std::vector<int> nx(N, -1);
+        PP.resize(N);
+        for(int i=0; i<N; i++) PP[i] = i;
+        for(int i=N-1; i>=1; i--){
+            int p = I[i];
+            Z[P[p]] += Z[p];
+            if(nx[P[p]] == -1) nx[P[p]] = p;
+            if(Z[nx[P[p]]] < Z[p]) nx[P[p]] = p;
+        }
+
+        for(int p : I) if(nx[p] != -1) PP[nx[p]] = p;
+
+        PD.assign(N,N);
+        PD[0] = 0;
+        D.assign(N,0);
+        for(int p : I) if(p != 0){
+            PP[p] = PP[PP[p]];
+            PD[p] = std::min(PD[PP[p]], PD[P[p]]+1);
+            D[p] = D[P[p]]+1;
+        }
+        
+        rangeL.assign(N,0);
+        rangeR.assign(N,0);
+        std::vector<int> dfs;
+        dfs.push_back(0);
+        while(dfs.size()){
+            int p = dfs.back();
+            rangeR[p] = rangeL[p] + Z[p];
+            int ir = rangeR[p];
+            dfs.pop_back();
+            for(int e : E[p]) if(P[p] != e) if(e != nx[p]){
+                rangeL[e] = (ir -= Z[e]);
+                dfs.push_back(e);
+            }
+            if(nx[p] != -1){
+                rangeL[nx[p]] = rangeL[p] + 1;
+                dfs.push_back(nx[p]);
+            }
+        }
+
+        I.resize(N);
+        for(int i=0; i<N; i++) I[rangeL[i]] = i;
     }
-    std::vector<int> Z(N, 1);
-    std::vector<int> nx(N, -1);
-    PP.resize(N);
-    for(int i=0; i<N; i++) PP[i] = i;
-    for(int i=N-1; i>=1; i--){
-      int p = I[i];
-      Z[P[p]] += Z[p];
-      if(nx[P[p]] == -1) nx[P[p]] = p;
-      if(Z[nx[P[p]]] < Z[p]) nx[P[p]] = p;
+
+    int depth(int p) const {
+        return D[p];
     }
 
-    for(int p : I) if(nx[p] != -1) PP[nx[p]] = p;
-
-    PD.assign(N,N);
-    PD[0] = 0;
-    D.assign(N,0);
-    for(int p : I) if(p != 0){
-      PP[p] = PP[PP[p]];
-      PD[p] = std::min(PD[PP[p]], PD[P[p]]+1);
-      D[p] = D[P[p]]+1;
-    }
-    
-    rangeL.assign(N,0);
-    rangeR.assign(N,0);
-    std::vector<int> dfs;
-    dfs.push_back(0);
-    while(dfs.size()){
-      int p = dfs.back();
-      rangeR[p] = rangeL[p] + Z[p];
-      int ir = rangeR[p];
-      dfs.pop_back();
-      for(int e : E[p]) if(P[p] != e) if(e != nx[p]){
-        rangeL[e] = (ir -= Z[e]);
-        dfs.push_back(e);
-      }
-      if(nx[p] != -1){
-        rangeL[nx[p]] = rangeL[p] + 1;
-        dfs.push_back(nx[p]);
-      }
+    int lca(int u, int v) const {
+        if(PD[u] < PD[v]) std::swap(u, v);
+        while(PD[u] > PD[v]) u = P[PP[u]];
+        while(PP[u] != PP[v]){ u = P[PP[u]]; v = P[PP[v]]; }
+        return (D[u] > D[v]) ? v : u;
     }
 
-    I.resize(N);
-    for(int i=0; i<N; i++) I[rangeL[i]] = i;
-  }
-
-  int depth(int p) const {
-    return D[p];
-  }
-
-  int lca(int u, int v) const {
-    if(PD[u] < PD[v]) std::swap(u, v);
-    while(PD[u] > PD[v]) u = P[PP[u]];
-    while(PP[u] != PP[v]){ u = P[PP[u]]; v = P[PP[v]]; }
-    return (D[u] > D[v]) ? v : u;
-  }
-
-  int dist(int u, int v) const {
-    return depth(u) + depth(v) - depth(lca(u,v)) * 2;
-  }
-
-  std::vector<std::pair<int,int>> path(int r, int c, bool include_root = true, bool reverse_path = false) const {
-    std::vector<std::pair<int,int>> res;
-    while(PD[r] < PD[c]){
-      res.push_back({ rangeL[PP[c]], rangeL[c]+1 });
-      c = P[PP[c]];
+    int dist(int u, int v) const {
+        return depth(u) + depth(v) - depth(lca(u,v)) * 2;
     }
-    if(PP[r] != PP[c]) return {};
-    if(D[r] > D[c]) return {};
-    res.push_back({ rangeL[r], rangeL[c]+1 });
-    if(!include_root){
-      res.back().first++;
-      if(res.back().first == res.back().second) res.pop_back();
+
+    std::vector<std::pair<int,int>> path(int r, int c, bool include_root = true, bool reverse_path = false) const {
+        if(PD[c] < PD[r]) return {};
+        std::vector<std::pair<int,int>> res(PD[c]-PD[r]+1);
+        for(int i=0; i<res.size()-1; i++){
+            res[i] = std::make_pair(rangeL[PP[c]], rangeL[c]+1);
+            c = P[PP[c]];
+        }
+        if(PP[r] != PP[c] || D[r] > D[c]) return {};
+        res.back() = std::make_pair(rangeL[r]+(include_root?0:1), rangeL[c]+1);
+        if(res.back().first == res.back().second) res.pop_back();
+        if(!reverse_path) std::reverse(res.begin(),res.end());
+        else for(auto& a : res) a = std::make_pair(N - a.second, N - a.first);
+        return move(res);
     }
-    if(!reverse_path) reverse(res.begin(),res.end());
-    return move(res);
-  }
 
-  const std::vector<int>& idxs() const {
-    return rangeL;
-  }
-
-  int median(int x, int y, int z) const {
-    return lca(x,y) ^ lca(y,z) ^ lca(x,z);
-  }
-
-  int la(int from, int to, int d) const {
-    int g = lca(from,to);
-    int dist0 = D[from] - D[g] * 2 + D[to];
-    if(dist0 > d) return -1;
-    int p = from;
-    if(D[from] - D[g] > d){ p = to; d = dist0 - d; }
-    while(D[p] - D[PP[p]] > d){
-      d -= D[p] - D[PP[p]] + 1;
-      p = P[PP[p]];
+    std::pair<int,int> subtree(int p){
+        return std::make_pair(rangeL[p], rangeR[p]);
     }
-    return I[rangeL[p] - d];
-  }
+
+    const std::vector<int>& idxs() const {
+        return rangeL;
+    }
+
+    int median(int x, int y, int z) const {
+        return lca(x,y) ^ lca(y,z) ^ lca(x,z);
+    }
+
+    int la(int from, int to, int d) const {
+        int g = lca(from,to);
+        int dist0 = D[from] - D[g] * 2 + D[to];
+        if(dist0 > d) return -1;
+        int p = from;
+        if(D[from] - D[g] > d){ p = to; d = dist0 - d; }
+        while(D[p] - D[PP[p]] > d){
+            d -= D[p] - D[PP[p]] + 1;
+            p = P[PP[p]];
+        }
+        return I[rangeL[p] - d];
+    }
 };
-
