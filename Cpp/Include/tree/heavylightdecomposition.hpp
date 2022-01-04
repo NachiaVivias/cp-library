@@ -111,8 +111,11 @@ public:
         return std::make_pair(rangeL[p], rangeR[p]);
     }
 
-    const std::vector<int>& idxs() const {
-        return rangeL;
+    int to_seq(int vertex) const {
+        return rangeL[vertex];
+    }
+    int to_vtx(int seqidx) const {
+        return I[seqidx];
     }
 
     int median(int x, int y, int z) const {

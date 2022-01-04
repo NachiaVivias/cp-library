@@ -48,13 +48,13 @@ int main() {
   nachia::HeavyLightDecomposition hld(E);
   BIT rq(N);
 
-  for(int i=0; i<N; i++) rq.add(hld.idxs()[i],A[i]);
+  for(int i=0; i<N; i++) rq.add(hld.to_seq(i),A[i]);
 
   for(int i=0; i<Q; i++){
     int t; cin >> t;
     if(t == 0){
       int p,x; cin >> p >> x;
-      rq.add(hld.idxs()[p],x);
+      rq.add(hld.to_seq(p),x);
     }
     if(t == 1){
       int u,v; cin >> u >> v;

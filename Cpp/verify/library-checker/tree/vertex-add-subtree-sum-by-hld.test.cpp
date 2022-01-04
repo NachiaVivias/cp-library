@@ -74,13 +74,13 @@ int main(){
 
     nachia::HeavyLightDecomposition hld(E);
     RQ rq(N);
-    for(int i=0; i<N; i++) rq.set(hld.idxs()[i], A[i]);
+    for(int i=0; i<N; i++) rq.set(hld.to_seq(i), A[i]);
 
     for(int i=0; i<Q; i++){
         int t; cin >> t;
         if(t == 0){
             int p,x; cin >> p >> x;
-            rq.set(hld.idxs()[p], { rq.get(hld.idxs()[p]).a + (uint64_t)x });
+            rq.set(hld.to_seq(p), { rq.get(hld.to_seq(p)).a + (uint64_t)x });
         }
         if(t == 1){
             int p; cin >> p;
