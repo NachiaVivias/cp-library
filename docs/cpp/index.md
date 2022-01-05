@@ -1,10 +1,12 @@
-# C++ 言語のためのライブラリ
+# 競プロライブラリ by NachiaVivias (C++)
 
-## Multi-dimensional
+## 各種ライブラリ
+
+### Multi-dimensional
 
 - [2-dimensional rectangle query `<nachia/multi-dimensional/two-d-rectangle-query.hpp>`](multi-dimensional/two-d-rectangle-query.md)
 
-## Tree
+### Tree
 
 - [heavy-light decomposition `<nachia/tree/heavylightdecomposition.hpp>`](tree/heavy-light-decomposition.md)
 

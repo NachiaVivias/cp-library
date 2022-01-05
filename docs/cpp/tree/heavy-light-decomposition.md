@@ -1,6 +1,6 @@
 # Heavy-Light Decomposition
 
-[C++ 用ライブラリ一覧に戻る](../../)
+[C++ 用ライブラリ一覧に戻る](../index.md)
 
 **注意：このライブラリの一部は verify されていない。**
 
