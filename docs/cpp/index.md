@@ -4,7 +4,7 @@
 
 ### Multi-dimensional
 
-- [2-dimensional rectangle query `<nachia/multi-dimensional/two-d-rectangle-query.hpp>`](multi-dimensional/two-d-rectangle-query.md)
+- [$2$ 次元矩形クエリ `<nachia/multi-dimensional/two-d-rectangle-query.hpp>`](multi-dimensional/two-d-rectangle-query.md)
 
 ### Tree
 
