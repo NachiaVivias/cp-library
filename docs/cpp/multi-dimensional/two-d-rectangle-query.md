@@ -1,6 +1,6 @@
 # 2-dimensional rectangle query
 
-[C++ 用ライブラリ一覧に戻る](../../)
+[C++ 用ライブラリ一覧に戻る](../index.md)
 
 ## 主な機能
 
@@ -108,6 +108,8 @@ Library Checker : Point Add Rectangle Sum (https://judge.yosupo.jp/problem/point
 
 ```c++
 #include <iostream>
+
+#include <nachia/multi-dimensional/two-d-rectange-query.hpp>
 
 struct BIT{
     std::vector<long long> A;
