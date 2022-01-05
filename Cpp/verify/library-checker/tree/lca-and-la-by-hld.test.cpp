@@ -1,5 +1,5 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/lca"
-#include "../../../Include/tree/heavylightdecomposition.hpp"
+#include "../../../Include/nachia/tree/heavylightdecomposition.hpp"
 
 using i32 = int32_t;
 using u32 = uint32_t;

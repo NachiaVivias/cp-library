@@ -1,8 +1,10 @@
-# C++ 言語のためのライブラリ
+# 競プロライブラリ by NachiaVivias (C++)
 
-## Tree
+## 各種ライブラリ
 
-- [heavy-light decomposition `<tree/heavylightdecomposition.hpp>`](tree/heavy-light-decomposition.md)
+### Tree
+
+- [heavy-light decomposition `<nachia/tree/heavylightdecomposition.hpp>`](tree/heavy-light-decomposition.md)
 
 ---
 

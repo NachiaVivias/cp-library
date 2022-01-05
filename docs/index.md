@@ -1,12 +1,12 @@
-# NachiaVivias/cp-library/docs
+# 競プロライブラリ by NachiaVivias
 
 ## for C++
 
-Cpp ディレクトリにあります。
+[インストール方法](cpp/how-to-install.md)
 
-[docs](cpp/)
+[各種ライブラリの使用方法](cpp/index.md)
 
-[ディレクトリ](https://github.com/NachiaVivias/cp-library/tree/main/Cpp)
+[source](https://github.com/NachiaVivias/cp-library/tree/main/Cpp)
 
 ---
 
