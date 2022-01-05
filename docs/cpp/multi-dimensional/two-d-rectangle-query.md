@@ -8,7 +8,7 @@ $xy$ 平面上の与えられた $n$ 点 $(P_0,P_1,P_2, \ldots , P_{n-1})$ に�
 
 区間クエリ用のデータ構造の必要数は $\log_2 n + O(1)$ で、それぞれが $n$ 点をちょうど $1$ 個ずつ管理する。 $d$ 個目の区間クエリ用のデータ構造の $i$ 番目の位置で管理される点の番号を $A[d][i]$ とする。
 
-## struct nachia::RangeTree
+## struct nachia::TwoDRectangeQuery
 
 ### テンプレート引数
 
@@ -16,7 +16,7 @@ $xy$ 平面上の与えられた $n$ 点 $(P_0,P_1,P_2, \ldots , P_{n-1})$ に�
 namespace nachia{
 
     template<class PosX, class PosY>
-    struct RangeTree;
+    struct TwoDRectangeQuery;
 
 }
 ```
@@ -26,7 +26,7 @@ namespace nachia{
 ### コンストラクタ
 
 ```c++
-RangeTree(const std::vector<std::pair<PosX, PosY>>& P);
+TwoDRectangeQuery(const std::vector<std::pair<PosX, PosY>>& P);
 ```
 
 - $P\text{.size()} = n$
