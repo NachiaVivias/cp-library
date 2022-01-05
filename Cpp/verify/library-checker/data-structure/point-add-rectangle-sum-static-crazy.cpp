@@ -2,6 +2,7 @@
 #include "../../../Include/nachia/multi-dimensional/two-d-rectange-query.hpp"
 
 #include <iostream>
+#include <string>
 
 struct BIT{
     std::vector<long long> A;
@@ -18,13 +19,25 @@ struct BIT{
 };
 
 
+std::string int_to_compstr(int x){
+    std::string a = std::to_string(x);
+    return std::string(10 - a.size(), '0') + a;
+}
+
+struct ReversedInt{
+    int x;
+};
+bool operator<(ReversedInt l, ReversedInt r){ return r.x < l.x; }
+
+
 int main(){
     int N,Q; std::cin >> N >> Q;
-    std::vector<std::pair<int,int>> P(N);
-    std::vector<int> A(N);
+    std::vector<std::pair<ReversedInt, std::string>> P;
+    std::vector<int> A;
     for(int i=0; i<N; i++){
-        std::cin >> P[i].first >> P[i].second;
-        std::cin >> A[i];
+        int x, y, w; std::cin >> x >> y >> w;
+        P.push_back({ ReversedInt{x}, int_to_compstr(y) });
+        A.push_back(w);
     }
 
     std::vector<std::vector<int>> queries;
@@ -35,7 +48,7 @@ int main(){
         if(t == 0) /* additional point */ {
             int x, y, w; std::cin >> x >> y >> w;
             queries.push_back({ t, (int)P.size(), w });
-            P.push_back({ x, y });
+            P.push_back({ ReversedInt{x}, int_to_compstr(y) });
             A.push_back(0);
         }
         if(t == 1) /* query */ {
@@ -45,7 +58,7 @@ int main(){
     }
 
     // 2-dimensional to 1-dimensional
-    nachia::TwoDRectangeQuery<int, int> two_dim(P);
+    nachia::TwoDRectangeQuery<ReversedInt, std::string> two_dim(P);
 
     // 1-dimensional data structure
     std::vector<BIT> rq(two_dim.get_segment_count());
@@ -62,7 +75,10 @@ int main(){
         }
         if(q[0] == 1) /* query */ {
             long long ans = 0;
-            for(auto qq : two_dim.get_ranges(q[1], q[2], q[3], q[4])){
+            for(auto qq : two_dim.get_ranges(
+                ReversedInt{q[2]-1}, ReversedInt{q[1]-1},
+                int_to_compstr(q[3]), int_to_compstr(q[4]))
+            ){
                 ans += rq[qq.d].sum(qq.r) - rq[qq.d].sum(qq.l);
             }
             std::cout << ans << "\n";

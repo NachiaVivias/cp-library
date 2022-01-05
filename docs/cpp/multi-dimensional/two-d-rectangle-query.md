@@ -4,7 +4,7 @@
 
 ## 主な機能
 
-$2$ 次元平面上の与えられた $n$ 点 $(P_0,P_1,P_2, \ldots , P_{n-1})$ について、任意の矩形内クエリを $1$ 次元区間クエリに変形する。性質上、集約関数の可換性を仮定する。
+$xy$ 平面上の与えられた $n$ 点 $(P_0,P_1,P_2, \ldots , P_{n-1})$ について、軸に平行な任意の矩形クエリを $1$ 次元区間クエリに変換する。性質上、集約関数の可換性を仮定する。
 
 区間クエリ用のデータ構造の必要数は $\log_2 n + O(1)$ で、それぞれが $n$ 点をちょうど $1$ 個ずつ管理する。 $d$ 個目の区間クエリ用のデータ構造の $i$ 番目の位置で管理される点の番号を $A[d][i]$ とする。
 
@@ -15,18 +15,18 @@ $2$ 次元平面上の与えられた $n$ 点 $(P_0,P_1,P_2, \ldots , P_{n-1})$ 
 ```c++
 namespace nachia{
 
-    template<typename Pos>
+    template<class PosX, class PosY>
     struct RangeTree;
 
 }
 ```
 
-`Pos` は、点を配置する座標のスカラーの型。整数型、浮動小数型、その他全順序が成り立つ比較ができる型を設定できる。
+`PosX` , `PosY` はそれぞれ $X$ 座標、 $Y$ 座標の型。整数型、浮動小数型、その他全順序が成り立つ比較ができる型を設定できる。
 
 ### コンストラクタ
 
 ```c++
-RangeTree(const std::vector<std::pair<Pos, Pos>>& P);
+RangeTree(const std::vector<std::pair<PosX, PosY>>& P);
 ```
 
 - $P\text{.size()} = n$
@@ -34,7 +34,7 @@ RangeTree(const std::vector<std::pair<Pos, Pos>>& P);
 - $O(n \log n)$ 時間
 - $O(n \log n)$ 空間
 
-$P$ を点集合として前処理を行う。 $P$ の各要素は軸 $1$ の座標、 軸 $2$ の座標の組である。
+$P$ を点集合として前処理を行う。 $P$ の各要素は $X$ 座標、 $Y$ 座標の組である。
 
 メモリ使用量には注意すべきだ。
 
@@ -90,15 +90,15 @@ $A[d][i]=v$ を満たす組 $(d,i)$ をすべて求め、返す。つまり、�
 ```c++
 struct Query{ int d,l,r; };
 
-std::vector<Query> get_ranges(Pos xl, Pos xr, Pos yl, Pos yr); // (1)
+std::vector<Query> get_ranges(PosX xl, PosX xr, PosY yl, PosY yr); // (1)
 std::vector<Query> get_ranges_from_idx(int xl, int xr, int yl, int yr) // (2)
 ```
 
 - $O(\log n)$ 時間
 
-(1) $2$ 次元矩形 $\lbrace (x,y) \vert x_l\leq x \lt x_r , y_l\leq y \lt y_r \rbrace$ に対する集約クエリを、 $O( \log n )$ 個の $1$ 次元区間の集約クエリで表す。
+(1) 矩形 $\lbrace (x,y) \vert x_l\leq x \lt x_r , y_l\leq y \lt y_r \rbrace$ に対する集約クエリを、 $O( \log n )$ 個の $1$ 次元区間の集約クエリで表す。
 
-(2) 与えられた点集合 $P$ を各軸で昇順ソートし、それぞれ $P_X,P_Y$ とする。このときのソートは安定ではなく、 $P_X,P_Y$ は複数回の呼び出しの間に変化しない。 $P_X$ の $x_l$ 番目から $x_{r-1}$ 番目からなる集合と、 $P_Y$ の $y_l$ 番目から $y_{r-1}$ 番目からなる集合の共通部分に対する集約を考える。これを、 $O( \log n )$ 個の $1$ 次元区間の集約クエリで表す。
+(2) 与えられた点集合 $P$ を $X$ 座標、 $Y$ 座標で昇順ソートし、それぞれ $P_X,P_Y$ とする。このときのソートは安定ではなく、 $P_X,P_Y$ は複数回の呼び出しの間に変化しない。 $P_X$ の $x_l$ 番目から $x_{r-1}$ 番目からなる集合と、 $P_Y$ の $y_l$ 番目から $y_{r-1}$ 番目からなる集合の共通部分に対する集約を考える。これを、 $O( \log n )$ 個の $1$ 次元区間の集約クエリで表す。
 
 返す配列の要素 $(d,l,r)$ は、 $A[d][l],A[d][l+1], \ldots ,A[d][r-1]$ に対する集約を表す。すべての区間の集約クエリを処理すると、指定した矩形内の点のみちょうど $1$ 回ずつ集約に含まれる。
 

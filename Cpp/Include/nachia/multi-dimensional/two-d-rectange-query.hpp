@@ -5,15 +5,15 @@
 
 namespace nachia{
 
-template<typename Pos>
+template<class PosX, class PosY>
 struct TwoDRectangeQuery{
 private:
     
     int n;
     int N;
     int logN;
-    std::vector<Pos> Xsorted;
-    std::vector<Pos> Ysorted;
+    std::vector<PosX> Xsorted;
+    std::vector<PosY> Ysorted;
     std::vector<int> rankX;
     std::vector<std::vector<int>> Idx;
     std::vector<int> Z;
@@ -21,7 +21,7 @@ private:
 
 public:
 
-    TwoDRectangeQuery(const std::vector<std::pair<Pos,Pos>>& pos){
+    TwoDRectangeQuery(const std::vector<std::pair<PosX, PosY>>& pos){
         n = pos.size();
 
         std::vector<int> sortIY(n);
@@ -106,7 +106,7 @@ public:
         return res; 
     }
   
-    std::vector<Query> get_ranges(Pos xl, Pos xr, Pos yl, Pos yr){
+    std::vector<Query> get_ranges(PosX xl, PosX xr, PosY yl, PosY yr){
         return get_ranges_from_idx(
             lower_bound(Xsorted.begin(),Xsorted.end(),xl) - Xsorted.begin(),
             lower_bound(Xsorted.begin(),Xsorted.end(),xr) - Xsorted.begin(),
