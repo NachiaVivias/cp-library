@@ -183,7 +183,7 @@ int main(){
 
 ## 参考
 
-Eating Your Own Cat Food \| ウェーブレット行列(wavelet matrix) : https://miti-7.hatenablog.com/entry/2018/04/28/152259
+Eating Your Own Cat Food \| ウェーブレット行列(wavelet matrix) : [https://miti-7.hatenablog.com/entry/2018/04/28/152259](https://miti-7.hatenablog.com/entry/2018/04/28/152259)
 
 
 ---
