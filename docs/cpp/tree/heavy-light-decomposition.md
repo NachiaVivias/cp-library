@@ -70,6 +70,28 @@ int depth(int p) const;
 
 頂点 $p$ の深さ（つまり、根と頂点 $p$ との距離）を返す。
 
+### parent_of
+
+```c++
+int parent_of(int v) const;
+```
+
+- $0 \leq v \lt n$
+- $O(1)$ 時間
+
+頂点 $v$ の親の番号を返す。 $v$ が根の場合は $-1$ を返す。
+
+### heavy_child_of
+
+```c++
+int heavy_child_of(int v) const;
+```
+
+- $0 \leq v \lt n$
+- $O(1)$ 時間
+
+頂点 $v$ に heavy path でつながれた子の番号を返す。存在しない場合、 $-1$ を返す。
+
 ### lca
 
 ```c++

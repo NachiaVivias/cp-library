@@ -77,8 +77,15 @@ public:
         for(int i=0; i<N; i++) I[rangeL[i]] = i;
     }
 
-    int depth(int p) const {
-        return D[p];
+    int depth(int p) const { return D[p]; }
+    int to_seq(int vertex) const { return rangeL[vertex]; }
+    int to_vtx(int seqidx) const { return I[seqidx]; }
+    int parent_of(int v) const { return P[v]; }
+    int heavy_child_of(int v) const {
+        if(to_seq(v) == N-1) return -1;
+        int cand = to_vtx(to_seq(v) + 1);
+        if(PP[v] == PP[cand]) return cand;
+        return v;
     }
 
     int lca(int u, int v) const {
@@ -109,13 +116,6 @@ public:
 
     std::pair<int,int> subtree(int p){
         return std::make_pair(rangeL[p], rangeR[p]);
-    }
-
-    int to_seq(int vertex) const {
-        return rangeL[vertex];
-    }
-    int to_vtx(int seqidx) const {
-        return I[seqidx];
     }
 
     int median(int x, int y, int z) const {
