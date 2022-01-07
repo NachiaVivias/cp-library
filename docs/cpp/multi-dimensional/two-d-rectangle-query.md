@@ -153,7 +153,7 @@ int main(){
     }
 
     // 2-dimensional to 1-dimensional
-    nachia::TwoDRectangeQuery<int> two_dim(P);
+    nachia::TwoDRectangeQuery<int, int> two_dim(P);
 
     // 1-dimensional data structure
     std::vector<BIT> rq(two_dim.get_segment_count());
