@@ -27,11 +27,11 @@ $T$ に対して、以下の操作を行う。前処理の計算量は $O(n)$ �
 ### コンストラクタ
 
 ```c++
-nachia::HeavyLightDecomposition(const vector<vector<int>>& E);
+nachia::HeavyLightDecomposition(const vector<vector<int>>& E = {{}});
 ```
 
 - $E\text{.size()} = n$
-- $0 \leq n \leq 5\times 10^5$
+- $1 \leq n \leq 5\times 10^5$
 - $E[u]$ は頂点 $u$ に隣接する頂点のリストである。根付き木の親から子へ向かう辺は含まれていなければいけないが、親へ向かう辺は含まなくてもよい。
 - $O(n)$ 時間
 
