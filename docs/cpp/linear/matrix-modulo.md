@@ -117,9 +117,9 @@ MatrixModulo linear_equation() const;
 
 $w$ 次列ベクトル
 
-$$\bm{x}= \left( \begin{matrix} x_0 \\ x_1 \\ \vdots \\ x_{w-1} \end{matrix} \right) $$
+$$\boldsymbol{x}= \left( \begin{matrix} x_0 \\ x_1 \\ \vdots \\ x_{w-1} \end{matrix} \right) $$
 
-であって、 $x_{h-1}=1$ かつ $A\bm{x}=O$ を満たすものの集合を求める。
+であって、 $x_{h-1}=1$ かつ $A\boldsymbol{x}=O$ を満たすものの集合を求める。
 
 次の線形連立方程式を解くことに対応する。
 
@@ -138,7 +138,7 @@ $$
 
 解がある場合に返る行列を $B$ とする。 $B$ は $h' \times w$ 型行列 $(h' \leq h)$ である。 $B_{0,w-1}=1,B_{y,w-1}=0 \hspace{5px}(1 \leq y \lt h')$ を満たす。
 
-$B$ の各行ベクトルを $\bm{b}_0,\bm{b}_1, \ldots ,\bm{b}_{h'-1}$ とする。これらはいずれも零ベクトルでない。これらの線形結合の転置 $\bm{x}=(\sum_i t_i \bm{b}_i)^\top$ で方程式 $A\bm{x}=O$ の解が網羅される。ただし、線形連立方程式の定数項を正しく扱うには、 $\bm{b}_0$ の係数は $t_0=1$ としなければならない。
+$B$ の各行ベクトルを $\boldsymbol{b}_0,\boldsymbol{b}_1, \ldots ,\boldsymbol{b}_{h'-1}$ とする。これらはいずれも零ベクトルでない。これらの線形結合の転置 $\boldsymbol{x}=(\sum_i t_i \boldsymbol{b}_i)^\top$ で方程式 $A\boldsymbol{x}=O$ の解が網羅される。ただし、線形連立方程式の定数項を正しく扱うには、 $\boldsymbol{b}_0$ の係数は $t_0=1$ としなければならない。
 
 ## 参考
 
