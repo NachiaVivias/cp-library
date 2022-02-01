@@ -1,5 +1,5 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/point_add_rectangle_sum"
-#include "../../../Include/nachia/multi-dimensional/two-d-rectange-query.hpp"
+#include "../../../Include/nachia/multi-dimensional/two-d-rectangle-query.hpp"
 
 #include <iostream>
 #include <string>
@@ -58,7 +58,7 @@ int main(){
     }
 
     // 2-dimensional to 1-dimensional
-    nachia::TwoDRectangeQuery<ReversedInt, std::string> two_dim(P);
+    nachia::TwoDRectangleQuery<ReversedInt, std::string> two_dim(P);
 
     // 1-dimensional data structure
     std::vector<BIT> rq(two_dim.get_segment_count());

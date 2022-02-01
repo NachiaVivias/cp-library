@@ -6,7 +6,7 @@
 namespace nachia{
 
 template<class PosX, class PosY>
-struct TwoDRectangeQuery{
+struct TwoDRectangleQuery{
 private:
     
     int n;
@@ -21,7 +21,7 @@ private:
 
 public:
 
-    TwoDRectangeQuery(const std::vector<std::pair<PosX, PosY>>& pos){
+    TwoDRectangleQuery(const std::vector<std::pair<PosX, PosY>>& pos){
         n = pos.size();
 
         std::vector<int> sortIY(n);
