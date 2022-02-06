@@ -1,5 +1,5 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/enumerate_primes"
-#include "../../../Include/nachia/math/sieve-of-eratosthenes.hpp"
+#include "../../../Include/nachia/math/prime-sieve-explicit.hpp"
 #include <iostream>
 
 struct ios_do_not_sync{
@@ -12,9 +12,9 @@ struct ios_do_not_sync{
 int main(){
     using namespace std;
     int N,A,B; cin >> N >> A >> B;
-    int pi_N = nachia::PrimeCountingBySieve(N);
+    int pi_N = nachia::PrimeCountingExplicit(N);
     vector<int> X;
-    for(int p=B; p<pi_N; p+=A) X.push_back(nachia::NthPrimeBySieve(p));
+    for(int p=B; p<pi_N; p+=A) X.push_back(nachia::NthPrimeExplicit(p));
 
     cout << pi_N << ' ' << X.size() << '\n';
     for(int i=0; i<(int)X.size(); i++){

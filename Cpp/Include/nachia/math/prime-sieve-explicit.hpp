@@ -1,11 +1,12 @@
 
 #include <vector>
 #include <algorithm>
+#include <cassert>
 
 
 namespace nachia{
 
-namespace sieve_of_eratosthenes_internal{
+namespace prime_sieve_explicit_internal{
     std::vector<bool> isprime = { false, false };
 
     void CalcIsPrime(int z){
@@ -19,9 +20,7 @@ namespace sieve_of_eratosthenes_internal{
             }
         }
     }
-}
-
-namespace sieve_of_eratosthenes_internal{
+    
     std::vector<int> prime_list;
     int prime_list_max = 1;
 
@@ -48,23 +47,38 @@ namespace sieve_of_eratosthenes_internal{
 }
 
 
-bool IsprimeBySieve(int n){
-    using namespace sieve_of_eratosthenes_internal;
+bool IsprimeExplicit(int n){
+    using namespace prime_sieve_explicit_internal;
     CalcIsPrime(n);
     return isprime[n];
 }
 
-int NthPrimeBySieve(int n){
-    using namespace sieve_of_eratosthenes_internal;
+int NthPrimeExplicit(int n){
+    using namespace prime_sieve_explicit_internal;
     CalcPrimeList(n);
     return prime_list[n];
 }
 
-int PrimeCountingBySieve(int n){
-    using namespace sieve_of_eratosthenes_internal;
+int PrimeCountingExplicit(int n){
+    using namespace prime_sieve_explicit_internal;
     CalcPrimeListUntil(n);
     auto res = ::std::upper_bound(prime_list.begin(), prime_list.end(), n) - prime_list.begin();
     return (int)res;
+}
+
+// [l, r)
+::std::vector<bool> SegmentedSieve(long long l, long long r){
+    assert(0 <= l); assert(l <= r);
+    long long d = r - l;
+    if(d == 0) return {};
+    ::std::vector<bool> res(d, true);
+    for(long long p=2; p*p<=r; p++) if(IsprimeExplicit(p)){
+        long long il = (l+p-1)/p, ir = (r+p-1)/p;
+        if(il <= p) il = p;
+        for(long long i=il; i<ir; i++) res[i*p-l] = false;
+    }
+    if(l < 2) for(long long p=l; p<2 && p<r; p++) res[l-p] = false;
+    return res;
 }
 
 }
