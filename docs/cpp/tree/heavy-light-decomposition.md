@@ -37,7 +37,7 @@ nachia::HeavyLightDecomposition(const vector<vector<int>>& E = {{}});
 
 頂点 $0$ を根として前処理を行う。
 
-### to_seq
+### to\_seq
 
 ```c++
 int to_seq(int vertex) const;
@@ -48,7 +48,7 @@ int to_seq(int vertex) const;
 
 $A[i]=v$ を満たす $i$ を返す。
 
-### to_vtx
+### to\_vtx
 
 ```c++
 int to_vtx(int seqidx) const;
@@ -70,7 +70,7 @@ int depth(int p) const;
 
 頂点 $p$ の深さ（つまり、根と頂点 $p$ との距離）を返す。
 
-### parent_of
+### parent\_of
 
 ```c++
 int parent_of(int v) const;
@@ -81,7 +81,7 @@ int parent_of(int v) const;
 
 頂点 $v$ の親の番号を返す。 $v$ が根の場合は $-1$ を返す。
 
-### heavy_child_of
+### heavy\_child\_of
 
 ```c++
 int heavy_child_of(int v) const;
@@ -124,12 +124,12 @@ vector<pair<int,int>> path(int r, int c, bool include_root = true, bool reverse_
 - $r=c$ または、頂点 $r$ は頂点 $c$ の祖先である。
 - $O(\log n)$ 時間
 
-$r$ から $c$ へ向かう単純パスをいくつかの**半開**区間 $[l_0,r_0),[l_1,r_1),\cdots ,[l_{k-1},r_{k-1})$ で表し、ペアの列 $ \left( (l_0,r_0),(l_1,r_1) \ldots (l_{k-1},r_{k-1}) \right) $ を返す。
+$r$ から $c$ へ向かう単純パスをいくつかの**半開**区間 $[l _ 0,r _ 0),[l _ 1,r _ 1),\cdots ,[l _ {k-1},r _ {k-1})$ で表し、ペアの列 $ \left( (l _ 0,r _ 0),(l _ 1,r _ 1) \ldots (l_{k-1},r_{k-1}) \right) $ を返す。
 
-パスに含まれる頂点の列を $(r=I_0,I_1,I_2, \cdots ,I_{L-1}=c)$ 、と表したとき、 $2$ つの数列
+パスに含まれる頂点の列を $(r=I _ 0,I _ 1,I _ 2, \cdots ,I _ {L-1}=c)$ 、と表したとき、 $2$ つの数列
 
-- $S_1 = (I_0,I_1, \cdots ,I_{L-1})$
-- $S_2 = (A[l_0],A[l_0+1],A[l_0+2],\cdots,A[r_0-1],A[l_1],\cdots,A[r_1-1],A[l_2],\cdots,A[r_{k-1}-1])$
+- $S _ 1 = (I _ 0,I _ 1, \cdots ,I _ {L-1})$
+- $S _ 2 = (A[l _ 0],A[l _ 0+1],A[l _ 0+2],\cdots,A[r _ 0-1],A[l _ 1],\cdots,A[r _ 1-1],A[l _ 2],\cdots,A[r _ {k-1}-1])$
 
 は一致する。
 
@@ -137,7 +137,7 @@ $r$ から $c$ へ向かう単純パスをいくつかの**半開**区間 $[l_0,
 `reverse_path` が `true` のとき、返す直前に次の手順を実行する。
 
 1. 返す配列を逆順にする。
-2. 各ペア $(l_i,r_i)$ を $(n-r_i,n-l_i)$ に変更する。
+2. 各ペア $(l _ i,r _ i)$ を $(n-r _ i,n-l _ i)$ に変更する。
 
 $c$ から $r$ へ向かうパスを扱うときは、数列 $A$ を逆順にとり、 `reverse_path` を真にしてこの関数を利用するとよい。
 
@@ -150,12 +150,12 @@ pair<int,int> subtree(int r) const;
 - $0 \leq r \lt n$
 - $O(1)$ 時間
 
-頂点 $r$ の部分木を**半開**区間 $[l_0,r_0)$ で表し、ペア $l_1,r_1$ を返す。
+頂点 $r$ の部分木を**半開**区間 $[l _ 0,r _ 0)$ で表し、ペア $l _ 1,r _ 1$ を返す。
 
-頂点 $r$ の部分木に含まれる頂点をある DFS の行きがけ順に並べた列を $(r=I_0,I_1, \cdots ,I_{L-1})$ としたとき、 $2$ つの数列
+頂点 $r$ の部分木に含まれる頂点をある DFS の行きがけ順に並べた列を $(r=I _ 0,I _ 1, \cdots ,I _ {L-1})$ としたとき、 $2$ つの数列
 
-- $S_1 = (I_0,I_1, \cdots ,I_{L-1})$
-- $S_2 = ( A[l_0],A[l_0+1],A[l_0+2],\cdots,A[r_0-1] )$
+- $S _ 1 = (I _ 0,I _ 1, \cdots ,I _ {L-1})$
+- $S _ 2 = ( A[l _ 0],A[l _ 0+1],A[l _ 0+2],\cdots,A[r _ 0-1] )$
 
 は一致する。
 

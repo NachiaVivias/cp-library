@@ -1,10 +1,10 @@
-# 行列（剰余体 : $\mathbb{F}_p=\mathbb{Z}/p\mathbb{Z}$ ）
+# 行列（剰余体 : $\mathbb{F} _ p=\mathbb{Z}/p\mathbb{Z}$ ）
 
 [C++ 用ライブラリ一覧に戻る](../index.md)
 
 ## 主な機能
 
-体 $\mathbb{F}_p$ 上の $h \times w$ 型行列 $A$ を管理する。スカラーの型には `atcoder::static_modint<p>` ( $p$ は奇素数) およびそれに準ずる構造体を指定できる。
+体 $\mathbb{F} _ p$ 上の $h \times w$ 型行列 $A$ を管理する。スカラーの型には `atcoder::static_modint<p>` ( $p$ は奇素数) およびそれに準ずる構造体を指定できる。
 
 ## struct nachia::TwoDRectangeQuery
 
@@ -19,7 +19,7 @@ namespace nachia{
 }
 ```
 
-`Elem` は $\mathbb{F}_p$ の要素の型である。 AtCoder Library の `atcoder::static_modint<p>` ( $p$ は奇素数) が望ましいが、同様のインターフェースを持つ他の構造体も利用できるようにしている。各メンバ関数で用いている機能が実装されていない場合は利用できないが、その詳細な条件は分量が多いゆえ説明を控える。
+`Elem` は $\mathbb{F} _ p$ の要素の型である。 AtCoder Library の `atcoder::static_modint<p>` ( $p$ は奇素数) が望ましいが、同様のインターフェースを持つ他の構造体も利用できるようにしている。各メンバ関数で用いている機能が実装されていない場合は利用できないが、その詳細な条件は分量が多いゆえ説明を控える。
 
 ### コンストラクタ
 
@@ -117,28 +117,28 @@ MatrixModulo linear_equation() const;
 
 $w$ 次列ベクトル
 
-$$\boldsymbol{x}= \left( \begin{matrix} x_0 \\ x_1 \\ \vdots \\ x_{w-1} \end{matrix} \right) $$
+$$\boldsymbol{x}= \left( \begin{matrix} x _ 0 \\ x _ 1 \\ \vdots \\ x _ {w-1} \end{matrix} \right) $$
 
-であって、 $x_{h-1}=1$ かつ $A\boldsymbol{x}=O$ を満たすものの集合を求める。
+であって、 $x _ {h-1}=1$ かつ $A\boldsymbol{x}=O$ を満たすものの集合を求める。
 
 次の線形連立方程式を解くことに対応する。
 
 $$
 \left\{
     \begin{array}{l}
-        A_{0,0} x_0 + A_{0,1} x_1 + \cdots + A_{0,w-2} x_{w-2} + A_{0,w-1} = 0 \\
-        A_{1,0} x_0 + A_{1,1} x_1 + \cdots + A_{1,w-2} x_{w-2} + A_{1,w-1} = 0 \\
+        A _ {0,0} x _ 0 + A _ {0,1} x_1 + \cdots + A _ {0,w-2} x _ {w-2} + A _ {0,w-1} = 0 \\
+        A _ {1,0} x _ 0 + A _ {1,1} x_1 + \cdots + A _ {1,w-2} x _ {w-2} + A _ {1,w-1} = 0 \\
         \hspace{10px} \vdots \\
-        A_{h-1,0} x_0 + A_{h-1,1} x_1 + \cdots + A_{h-1,w-2} x_{w-2} + A_{h-1,w-1} = 0 \\
+        A _ {h-1,0} x _ 0 + A _ {h-1,1} x_1 + \cdots + A _ {h-1,w-2} x _ {w-2} + A _ {h-1,w-1} = 0 \\
     \end{array}
 \right.
 $$
 
 解がない場合は、 $h=0$ のインスタンスを返す。
 
-解がある場合に返る行列を $B$ とする。 $B$ は $h' \times w$ 型行列 $(h' \leq h)$ である。 $B_{0,w-1}=1,B_{y,w-1}=0 \hspace{5px}(1 \leq y \lt h')$ を満たす。
+解がある場合に返る行列を $B$ とする。 $B$ は $h' \times w$ 型行列 $(h' \leq h)$ である。 $B _ {0,w-1}=1,B _ {y,w-1}=0 \hspace{5px}(1 \leq y \lt h')$ を満たす。
 
-$B$ の各行ベクトルを $\boldsymbol{b}_0,\boldsymbol{b}_1, \ldots ,\boldsymbol{b}_{h'-1}$ とする。これらはいずれも零ベクトルでない。これらの線形結合の転置 $\boldsymbol{x}=(\sum_i t_i \boldsymbol{b}_i)^\top$ で方程式 $A\boldsymbol{x}=O$ の解が網羅される。ただし、線形連立方程式の定数項を正しく扱うには、 $\boldsymbol{b}_0$ の係数は $t_0=1$ としなければならない。
+$B$ の各行ベクトルを $\boldsymbol{b} _ 0,\boldsymbol{b} _ 1, \ldots ,\boldsymbol{b} _ {h'-1}$ とする。これらはいずれも零ベクトルでない。これらの線形結合の転置 $\boldsymbol{x}=(\sum_i t _ i \boldsymbol{b} _ i)^\top$ で方程式 $A\boldsymbol{x}=O$ の解が網羅される。ただし、線形連立方程式の定数項を正しく扱うには、 $\boldsymbol{b} _ 0$ の係数は $t _ 0=1$ としなければならない。
 
 ## 参考
 
