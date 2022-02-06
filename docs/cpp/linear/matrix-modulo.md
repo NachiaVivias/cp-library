@@ -117,19 +117,19 @@ MatrixModulo linear_equation() const;
 
 $w$ 次列ベクトル
 
-$$\boldsymbol{x}= \left( \begin{matrix} x _ 0 \\ x _ 1 \\ \vdots \\ x _ {w-1} \end{matrix} \right) $$
+$$\boldsymbol{x}= \left( \begin{matrix} x _ 0 \newline x _ 1 \newline \vdots \newline x _ {w-1} \end{matrix} \right) $$
 
-であって、 $x _ {h-1}=1$ かつ $A\boldsymbol{x}=O$ を満たすものの集合を求める。
+であって、 $x _ {w-1}=1$ かつ $A\boldsymbol{x}=O$ を満たすものの集合を求める。
 
 次の線形連立方程式を解くことに対応する。
 
 $$
 \left\{
     \begin{array}{l}
-        A _ {0,0} x _ 0 + A _ {0,1} x_1 + \cdots + A _ {0,w-2} x _ {w-2} + A _ {0,w-1} = 0 \\
-        A _ {1,0} x _ 0 + A _ {1,1} x_1 + \cdots + A _ {1,w-2} x _ {w-2} + A _ {1,w-1} = 0 \\
-        \hspace{10px} \vdots \\
-        A _ {h-1,0} x _ 0 + A _ {h-1,1} x_1 + \cdots + A _ {h-1,w-2} x _ {w-2} + A _ {h-1,w-1} = 0 \\
+        A _ {0,0} x _ 0 + A _ {0,1} x_1 + \cdots + A _ {0,w-2} x _ {w-2} + A _ {0,w-1} = 0 \newline
+        A _ {1,0} x _ 0 + A _ {1,1} x_1 + \cdots + A _ {1,w-2} x _ {w-2} + A _ {1,w-1} = 0 \newline
+        \hspace{10px} \vdots \newline
+        A _ {h-1,0} x _ 0 + A _ {h-1,1} x_1 + \cdots + A _ {h-1,w-2} x _ {w-2} + A _ {h-1,w-1} = 0 \newline
     \end{array}
 \right.
 $$
