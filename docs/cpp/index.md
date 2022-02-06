@@ -4,12 +4,12 @@
 
 ### Linear
 
-- [行列（剰余体 : $\mathbb{F}_p=\mathbb{Z}/p\mathbb{Z}$ ）](linear/matrix-modulo.md)
+- [行列（剰余体 : $\mathbb{F}_p=\mathbb{Z}/p\mathbb{Z}$ ） `<nachia/linear/matrix-modulo.hpp>`](linear/matrix-modulo.md)
 
 ### Math
 
-- [$N$ 以下の素数の個数](math/counting-primes.md)
-- [明示的な素数篩（エラトステネスの篩）](math/prime-sieve-explicit.md)
+- [$N$ 以下の素数の個数 `<nachia/math/counting-primes.hpp>`](math/counting-primes.md)
+- [明示的な素数篩（エラトステネスの篩） `<nachia/math/prime-sieve-explicit.hpp>`](math/prime-sieve-explicit.md)
 
 ### Multi-dimensional
 
