@@ -1,4 +1,6 @@
 
+#define PROBLEM "https://judge.yosupo.jp/problem/counting_primes"
+
 #include "../../../Include/nachia/math/counting-primes.hpp"
 #include <iostream>
 
