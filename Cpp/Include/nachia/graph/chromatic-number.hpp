@@ -77,7 +77,6 @@ int ChromaticNumberByMod(std::vector<std::vector<int>> adjacency_matrix){
         for(u32 i=0; i<biDh; i++) table[i] += table[i|biDh];
         unsigned long long cond = 0;
         for(u32 i=0; i<biDh; i++) cond += table[i];
-        std::cout << (cond % MOD) << std::endl;
         if(cond % MOD != 0) return iD+1;
     }
     return n;
