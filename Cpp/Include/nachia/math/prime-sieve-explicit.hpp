@@ -1,3 +1,4 @@
+#pragma once
 
 #include <vector>
 #include <algorithm>
@@ -86,4 +87,4 @@ int PrimeCountingExplicit(int n){
 }
 
 
-}
+} // namespace nachia

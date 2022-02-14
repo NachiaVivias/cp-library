@@ -1,3 +1,4 @@
+#pragma once
 
 #include <vector>
 #include <cassert>
@@ -93,4 +94,4 @@ public:
     }
 };
 
-}
+} // namespace nachia

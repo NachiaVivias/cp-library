@@ -1,3 +1,4 @@
+#pragma once
 
 #include <vector>
 #include <utility>
@@ -41,4 +42,4 @@ long long CountingPrimes(long long maxval){
     return prefix_sum_devil[1];
 }
 
-}
+} // namespace nachia
