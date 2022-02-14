@@ -2,6 +2,10 @@
 
 ## 各種ライブラリ
 
+### Graph
+
+- [頂点彩色数 `<nachia/graph/chromatic-number.hpp>`](graph/chromatic-number.md)
+
 ### Linear
 
 - [行列（剰余体 : $\mathbb{F}_p=\mathbb{Z}/p\mathbb{Z}$ ） `<nachia/linear/matrix-modulo.hpp>`](linear/matrix-modulo.md)
