@@ -27,7 +27,7 @@ bool IsprimeExplicit(int n);
 - $0 \leq n \leq 5 \times 10^8$
 - 前計算 $k=n$ , $O(1)$ 時間
 
-$n$ が素数かどうかの審議値を返す。
+$n$ が素数かどうかの真偽値を返す。
 
 ### NthPrimeExplicit
 
@@ -51,7 +51,7 @@ int PrimeCountingExplicit(int n);
 
 $n$ 以下の素数の個数を返す。
 
-### PrimeCountingExplicit
+### SegmentedSieveExplicit
 
 ```c++
 ::std::vector<bool> SegmentedSieveExplicit(long long l, long long r);
