@@ -4,7 +4,6 @@
 
 #include <vector>
 #include <algorithm>
-#include <iostream>
 #include <cassert>
 
 
@@ -14,13 +13,9 @@ namespace dycon_internal{
 
 template<
     class S,
-    class F,
+    class Key,
     S op(S l, S r),
-    S e(),
-    void reverseprod(S& x),
-    S mapping(F f, S x),
-    F composition(F f, F x),
-    F id()
+    S e()
 >
 struct SplayTreeByIdx{
     static SplayTreeByIdx *NIL;
@@ -32,37 +27,11 @@ struct SplayTreeByIdx{
     MyType *p = nullptr;
     S a = e();
     S mprod = e();
-    F f = id();
-    bool propagated = true;
-    int rev = 0;
+    Key key;
 
     SplayTreeByIdx(){
     }
 
-    void prepareDown(){
-        if(!propagated){
-            if(l != NIL){
-                l->a = mapping(f, l->a);
-                l->mprod = mapping(f, l->mprod);
-                l->f = composition(f, l->f);
-                l->propagated = false;
-            }
-            if(r != NIL){
-                r->a = mapping(f, r->a);
-                r->mprod = mapping(f, r->mprod);
-                r->f = composition(f, r->f);
-                r->propagated = false;
-            }
-            f = id();
-            propagated = true;
-        }
-        if(rev){
-            ::std::swap(l, r);
-            if(l != NIL) l->rev ^= 1;
-            if(r != NIL) r->rev ^= 1;
-            rev = 0;
-        }
-    }
     void prepareUp(){
         mprod = op(op(l->mprod, a), r->mprod);
     }
@@ -90,13 +59,9 @@ struct SplayTreeByIdx{
         r = t;
     }
     void splay(){
-        prepareDown();
         while(p != NIL){
             auto pc = p;
             auto ppc = pc->p;
-            if(ppc != NIL) ppc->prepareDown();
-            if(pc != NIL) pc->prepareDown();
-            prepareDown();
             if(pc->l == this){
                 if(ppc == NIL){ rotR(); }
                 else if(ppc->l == pc){ pc->rotR(); rotR(); }
@@ -112,23 +77,11 @@ struct SplayTreeByIdx{
         }
         prepareUp();
     }
-    static MyType* get_new_node(S a){
+    static MyType* get_new_node(S a, Key key){
         MyType* nx = new MyType(*get_nil());
         nx->a = nx->mprod = a;
+        nx->key = key;
         return nx;
-    }
-    void reverse(){
-        if(!is_root()) splay();
-        rev ^= 1;
-        prepareDown();
-    }
-    void apply(F ff){
-        if(!is_root()) splay();
-        a = mapping(ff, a);
-        mprod = mapping(ff, mprod);
-        f = composition(ff, f);
-        propagated = false;
-        prepareDown();
     }
     S prod(){
         if(!is_root()) splay();
@@ -148,9 +101,7 @@ struct SplayTreeByIdx{
     MyType* front(){
         auto c = this;
         if(!c->is_root()) c->splay();
-        prepareDown();
         while(!c->l->is_nil()){
-            c->prepareDown();
             c = c->l;
         }
         c->splay();
@@ -185,32 +136,27 @@ struct SplayTreeByIdx{
         return ::std::make_pair(R, Rr);
     }
 
-    void dump2(){
-        if(is_nil()) return;
-        l->dump2();
-        ::std::cout << "(" << a.edgeidx.first << "," << a.edgeidx.second << ")";
-        r->dump2();
-    }
-    void dump(){
-        auto p = this;
-        while(!p->is_root()) p = p->p;
-        p->dump2();
-        ::std::cout << ::std::endl;
+    MyType* search_flag(unsigned int mask){
+        auto v = this;
+        if((v->prod().flags & mask) == 0) return get_nil();
+        while(true){
+            if(v->a.flags & mask) break;
+            if(v->l->mprod.flags & mask) v = v->l;
+            else v = v->r;
+        }
+        v->splay();
+        return v;
     }
 };
 
 template<
     class S,
-    class F,
+    class Key,
     S op(S l, S r),
-    S e(),
-    void reverseprod(S& x),
-    S mapping(F f, S x),
-    F composition(F f, F x),
-    F id()
+    S e()
 >
-    SplayTreeByIdx<S,F,op,e,reverseprod,mapping,composition,id> *
-    SplayTreeByIdx<S,F,op,e,reverseprod,mapping,composition,id>
+    SplayTreeByIdx<S,Key,op,e> *
+    SplayTreeByIdx<S,Key,op,e>
     ::NIL
     = get_nil();
 
@@ -226,27 +172,16 @@ namespace dycon_internal {
 
 template<
     class S,
-    class F,
     S op(S l, S r),
     S e(),
-    S newnode(),
-    void reverseprod(S& x),
-    S mapping(F f, S x),
-    F composition(F f, F x),
-    F id()
+    S newnode()
 >
 struct EulerTourTree{
-    struct new_S {
-        S internal_S;
-        ::std::pair<int,int> edgeidx;
+    struct new_Key {
+        ::std::pair<int, int> edgeidx;
     };
-    static new_S new_op(new_S l, new_S r){ return { op(l.internal_S, r.internal_S), {-1,-1} }; }
-    static new_S new_e(){ return { e(), {-1,-1} }; }
-    static void new_reverseprod(new_S& x){ reverseprod(x.internal_S); }
-    static new_S new_mapping(F f, new_S x){ return { mapping(f, x.internal_S), x.edgeidx }; }
-
-    //using SplayNode = SplayTreeByIdx<S, F, op, e, reverseprod, mapping, composition, id>;
-    using SplayNode = SplayTreeByIdx<new_S, F, new_op, new_e, new_reverseprod, new_mapping, composition, id>;
+    
+    using SplayNode = SplayTreeByIdx<S, new_Key, op, e>;
     ::std::vector<SplayNode*> nodes;
     
     ::std::unordered_map<unsigned long long, SplayNode*> node_searcher;
@@ -268,17 +203,16 @@ struct EulerTourTree{
     }
 
     ::std::pair<SplayNode*, SplayNode*> create_edge(int u, int v, S x){
-        auto edgeuv = SplayNode::get_new_node({ x, {u,v} });
+        auto edgeuv = SplayNode::get_new_node(x, {{u,v}});
         node_searcher.insert_or_assign(edgeid_compress(u, v), edgeuv);
-        auto edgevu = SplayNode::get_new_node({ x, {v,u} });
+        auto edgevu = SplayNode::get_new_node(x, {{v,u}});
         node_searcher.insert_or_assign(edgeid_compress(v, u), edgevu);
         return ::std::make_pair(edgeuv, edgevu);
     }
 
     SplayNode* expose(int v){
         if(nodes[v]->is_nil()){
-            nodes[v] = SplayNode::get_new_node({ newnode(), {v,v} });
-            node_searcher.insert_or_assign(edgeid_compress(v,v), nodes[v]);
+            nodes[v] = SplayNode::get_new_node(newnode(), {{v,v}});
         }
         nodes[v]->splay();
         return nodes[v];
@@ -292,30 +226,27 @@ struct EulerTourTree{
     }
     // u will be the new root
     SplayNode* link(int u, int v, S x){
-        auto Hu = evert(u);
         auto Hv = evert(v);
-        if(!Hu->is_root()) return Hv;
+        auto Hu = evert(u);
+        assert(Hv->is_root());
         auto [Huv, Hvu] = create_edge(u, v, x);
         return SplayNode::merge(SplayNode::merge(Hu, Huv), SplayNode::merge(Hv, Hvu));
     }
 
     SplayNode* find_ettnode(int u, int v){
+        if(u == v) return nodes[u];
         auto i = node_searcher.find(edgeid_compress(u, v));
         if(i == node_searcher.end()) return SplayNode::get_nil();
         return i->second;
     }
 
     ::std::pair<SplayNode*, SplayNode*> cut(int u, int v){
+        evert(u);
         SplayNode* Hvu = find_ettnode(v, u);
         SplayNode* Huv = find_ettnode(u, v);
-        evert(u);
-        Huv->splay();
         auto [Hu, R2] = SplayNode::split_l(Huv);
-        Huv->splay();
         [[maybe_unused]] auto [edgeuv, R3] = SplayNode::split_r(Huv);
-        Hvu->splay();
         auto [Hv, R4] = SplayNode::split_l(Hvu);
-        Hvu->splay();
         [[maybe_unused]] auto [edgevu, Hu2] = SplayNode::split_r(Hvu);
         delete_node(u, v);
         delete_node(v, u);
@@ -323,27 +254,27 @@ struct EulerTourTree{
     }
 
     S get(int u){
-        return expose(u)->a.internal_S;
+        return expose(u)->a;
     }
     S get(int u, int v){
         auto Huv = find_ettnode(u, v);
-        Huv->splay();
-        return Huv->a.internal_S;
+        if(!Huv->is_nil()) Huv->splay();
+        return Huv->a;
     }
     void set(int u, S x){
         auto Hu = expose(u);
-        Hu->a.internal_S = x;
+        Hu->a = x;
         Hu->prepareUp();
     }
     void set(int u, int v, S x){
         auto Huv = find_ettnode(u, v);
         Huv->splay();
-        Huv->a.internal_S = x;
+        Huv->a = x;
         Huv->prepareUp();
     }
 
     S component_prod(int u){
-        return expose(u)->prod(u).internal_S;
+        return expose(u)->prod(u);
     }
 
     bool is_connected(int u, int v){
@@ -359,18 +290,14 @@ struct EulerTourTree{
 namespace DyConETT{
     using u32 = unsigned int;
     using u64 = unsigned long long;
-    const u32 MOD = 998244353;
 
-    struct S{ ::std::pair<int, int> justrank; u32 z; int edgemark; };
-    struct F{  };
-    S op(S l, S r){ return { ::std::max(l.justrank, r.justrank), l.z + r.z, ::std::max(l.edgemark, r.edgemark) }; }
-    S e(){ return { { -1, -1 }, 0, -1 }; }
-    S newnode(){ return { { -1, -1 }, 1, -1 }; }
-    void reverseprod(S&) {}
-    S mapping(F , S x){ return x; }
-    F composition(F , F x){ return x; }
-    F id(){ return {}; }
-    using ETT = ::nachia::dycon_internal::EulerTourTree<S, F, op, e, newnode, reverseprod, mapping, composition, id>;
+    static const u32 FLAG_JUSTRANK = 2;
+    static const u32 FLAG_EDGEMARK = 1;
+    struct S{ u32 flags; u32 z; };
+    S op(S l, S r){ return { l.flags | r.flags, l.z + r.z }; }
+    S e(){ return { 0, 0 }; }
+    S newnode(){ return { 0, 1 }; }
+    using ETT = ::nachia::dycon_internal::EulerTourTree<S, op, e, newnode>;
 }
 
 } // namespace dycon_internal
@@ -381,30 +308,58 @@ namespace DyConETT{
 
 #include <unordered_set>
 #include <unordered_map>
-#include <iostream>
+#include <list>
 
 namespace nachia {
 
 struct OnlineFullyDynamicConnectivityBySplayEtt{
 private:
+
     int n = 0;
     int RanksCount = 0;
     ::std::vector<dycon_internal::DyConETT::ETT> etts;
-    ::std::vector<::std::vector<::std::unordered_set<int>>> edges;
 
+    ::std::list<::std::unordered_set<int>> edges2;
+    using Edges2Iterator = ::std::list<::std::unordered_set<int>>::iterator;
+    ::std::vector<::std::unordered_map<int, Edges2Iterator>> edges;
+    
     using SplayNode = typename dycon_internal::DyConETT::ETT::SplayNode;
 
     void add_ranked_edge(int k, int u, int v){
-        if(edges[k][u].empty()) etts[k].set(u, {{-1,-1},1,u});
-        if(edges[k][v].empty()) etts[k].set(v, {{-1,-1},1,v});
-        edges[k][u].insert(v);
-        edges[k][v].insert(u);
+        for(int t=0; t<2; t++){
+            auto fu = edges[k].find(u);
+            if(fu == edges[k].end()){
+                edges2.push_front({});
+                fu = edges[k].insert({ u, edges2.begin() }).first;
+                etts[k].set(u, { dycon_internal::DyConETT::FLAG_EDGEMARK, 1 });
+            }
+            fu->second->insert(v);
+            ::std::swap(u,v);
+        }
     }
     void erase_ranked_edge(int k, int u, int v){
-        edges[k][u].erase(v);
-        edges[k][v].erase(u);
-        if(edges[k][u].empty()) etts[k].set(u, {{-1,-1},1,-1});
-        if(edges[k][v].empty()) etts[k].set(v, {{-1,-1},1,-1});
+        for(int t=0; t<2; t++){
+            auto fu = edges[k].find(u);
+            fu->second->erase(v);
+            if(fu->second->empty()){
+                etts[k].set(u, { 0, 1 });
+                edges2.erase(fu->second);
+                edges[k].erase(fu);
+            }
+            ::std::swap(u,v);
+        }
+    }
+
+    bool check_ranked_edge(int k, int u, int v){
+        auto fu = edges[k].find(u);
+        if(fu == edges[k].end()) return false;
+        return fu->second->find(v) != fu->second->end();
+    }
+
+    int get_any_edge(int k, int u){
+        auto fu = edges[k].find(u);
+        if(fu == edges[k].end()) return -1;
+        return *(fu->second->begin());
     }
 
     ::std::pair<int,int> replace(int k, int u, int v){
@@ -413,31 +368,33 @@ private:
         auto [Hu, Hv] = etts[k].cut(u, v);
         auto [s,t] = replace(k+1,u,v);
         if(s != -1){
-            etts[k].link(s, t, {{-1,-1},0,-1});
+            etts[k].link(s, t, { 0, 0 });
             return {s,t};
         }
-        if(Hu->prod().internal_S.z > Hv->prod().internal_S.z){
+        if(Hu->prod().z > Hv->prod().z){
             ::std::swap(u, v);
             ::std::swap(Hu, Hv);
         }
-        while(Hu->prod().internal_S.justrank.first != -1){
-            auto [eu, ev] = Hu->prod().internal_S.justrank;
-            etts[k].set(eu, ev, {{-1,-1},0,-1});
-            etts[k].set(ev, eu, {{-1,-1},0,-1});
-            etts[k+1].link(eu, ev, {{eu,ev},0,-1});
+        while(Hu->prod().flags & dycon_internal::DyConETT::FLAG_JUSTRANK){
+            Hu = Hu->search_flag(dycon_internal::DyConETT::FLAG_JUSTRANK);
+            auto [eu, ev] = Hu->key.edgeidx;
+            etts[k].set(eu, ev, { 0, 0 });
+            etts[k].set(ev, eu, { 0, 0 });
+            etts[k+1].link(eu, ev, { dycon_internal::DyConETT::FLAG_JUSTRANK, 0 });
             Hu->splay();
         }
-        while(Hu->prod().internal_S.edgemark != -1){
-            int x = Hu->prod().internal_S.edgemark;
-            while(!edges[k][x].empty()){
-                int y = *edges[k][x].begin();
+        while(Hu->prod().flags & dycon_internal::DyConETT::FLAG_EDGEMARK){
+            Hu = Hu->search_flag(dycon_internal::DyConETT::FLAG_EDGEMARK);
+            int x = Hu->key.edgeidx.first;
+            while(edges[k].count(x)){
+                int y = get_any_edge(k, x);
                 if(etts[k].is_connected(x, y)){
                     erase_ranked_edge(k, x, y);
                     add_ranked_edge(k+1, x, y);
                     continue;
                 }
                 erase_ranked_edge(k, x, y);
-                etts[k].link(x, y, {{x,y},0,-1});
+                etts[k].link(x, y, { dycon_internal::DyConETT::FLAG_JUSTRANK, 0 });
                 return {x,y};
             }
             Hu->splay();
@@ -454,7 +411,6 @@ public:
             ett = dycon_internal::DyConETT::ETT(n);
         }
         edges.resize(RanksCount);
-        for(auto& a : edges) a.resize(n);
     }
 
     struct ForestCutQuery{
@@ -467,14 +423,14 @@ public:
             add_ranked_edge(0, u, v);
             return {-1,-1};
         }
-        etts[0].link(u, v, { {u,v}, 0, -1 });
+        etts[0].link(u, v, { dycon_internal::DyConETT::FLAG_JUSTRANK, 0 });
         return {u,v};
     }
     
     ForestCutQuery cut(int u, int v){
         if(etts[0].find_ettnode(u, v)->is_nil()){
             for(int k=0; k<RanksCount; k++){
-                if(edges[k][u].find(v) != edges[k][u].end()){
+                if(check_ranked_edge(k, u, v)){
                     erase_ranked_edge(k, u, v);
                     break;
                 }
