@@ -4,7 +4,7 @@
 
 ## 主な機能
 
-fully-dynamic connectivity problem を解き、全域森を管理する。
+fully-dynamic connectivity problem をオンラインで解き、全域森を管理する。
 
 頂点の番号は $0$ -based 。
 
@@ -30,7 +30,7 @@ $n$ 頂点で辺を持たないグラフで、初期化する。
 - $0 \leq u \lt n$
 - $0 \leq v \lt n$
 - この時点でグラフは辺 $\lbrace u,v \rbrace $ をもたない
-- 償却 $O( ( \log n ) ^2 )$ 時間
+- 償却 平均 $O( ( \log n ) ^2 )$ 時間
 
 グラフに辺 $\lbrace u,v \rbrace $ を追加する。
 
@@ -45,7 +45,7 @@ ForestCutQuery cut(int u, int v);
 - $0 \leq u \lt n$
 - $0 \leq v \lt n$
 - この時点でグラフは辺 $\lbrace u,v \rbrace $ をもつ
-- 償却 $O( ( \log n ) ^2 )$ 時間
+- 償却 平均 $O( ( \log n ) ^2 )$ 時間
 
 グラフの辺 $\lbrace u,v \rbrace $ を削除する。
 
@@ -63,9 +63,13 @@ bool is_connected(int u, int v);
 
 - $0 \leq u \lt n$
 - $0 \leq v \lt n$
-- 償却 $O( \log n )$ 時間
+- 償却 平均 $O( \log n )$ 時間
 
 $2$ 頂点 $u$ , $v$ が連結かどうかの真偽値を返す。
+
+## 参考
+
+hotman78 \| online dynamic connectivity(削除可能union-find)の作り方を詳しく解説！！！ [https://qiita.com/hotman78/items/78cd3aa50b05a57738d4](https://qiita.com/hotman78/items/78cd3aa50b05a57738d4)
 
 ---
 
