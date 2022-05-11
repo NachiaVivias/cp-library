@@ -22,7 +22,7 @@ namespace prime_sieve_explicit_internal{
             }
         }
     }
-    
+
     std::vector<int> prime_list = {2};
     int prime_list_max = 0;
 
@@ -39,7 +39,7 @@ namespace prime_sieve_explicit_internal{
     void CalcPrimeListUntil(int z){
         if(prime_list_max < z){
             CalcIsPrime(z);
-            for(int p=prime_list_max+1; p<(int)isprime.size()-1; p++){
+            for(int p=prime_list_max+1; p<(int)isprime.size(); p++){
                 if(isprime[p]) prime_list.push_back(p*2+1);
             }
             prime_list_max = isprime.size() - 1;
