@@ -5,6 +5,7 @@
 ### Graph
 
 - [頂点彩色数 `<nachia/graph/chromatic-number.hpp>`](graph/chromatic-number.md)
+- [Online Dynamic Connectivity `<nachia/graph/dynamic-connectivity.hpp>`](graph/dynamic-connectivity.md)
 
 ### Linear
 
