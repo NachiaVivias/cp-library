@@ -28,6 +28,7 @@
 - [木の中心 `<nachia/tree/tree-center.hpp>`](tree/tree-center.md)
 - [木の重心 `<nachia/tree/tree-centroid.hpp>`](tree/tree-centroid.md)
 - [木の直径 `<nachia/tree/tree-diameter.hpp>`](tree/tree-diameter.md)
+- [木の同型性判定 AHU algorithm `<nachia/tree/ahu-algorithm.hpp>`](tree/ahu-algorithm.md)
 
 -->
 
