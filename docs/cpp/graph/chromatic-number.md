@@ -25,6 +25,8 @@ int ChromaticNumber(std::vector<std::vector<int>> adjacency_matrix);
 
 グラフの頂点彩色数を返す。
 
+目安は $n\leq 24$ 。
+
 ### ChromaticNumberByMod
 
 ```c++

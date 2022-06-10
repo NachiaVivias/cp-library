@@ -67,6 +67,10 @@ bool is_connected(int u, int v);
 
 $2$ 頂点 $u$ , $v$ が連結かどうかの真偽値を返す。
 
+## 備考
+
+現状 splay tree を用いているが、今後 randomized BST を用いるように変更するかもしれない。
+
 ## 参考
 
 hotman78 \| online dynamic connectivity(削除可能union-find)の作り方を詳しく解説！！！ [https://qiita.com/hotman78/items/78cd3aa50b05a57738d4](https://qiita.com/hotman78/items/78cd3aa50b05a57738d4)
