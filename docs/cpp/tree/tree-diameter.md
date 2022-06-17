@@ -14,6 +14,8 @@ $n$ 頂点の木を `AdjacencyList` で入力すると、木の直径である�
 std::vector<int> UnitTreeDiameter(const AdjacencyList& T);
 ```
 
+[AdjacencyList とは？](./../graph/adjacency-list.md)
+
 - $1 \leq n \leq 10^8$
 - $O(n)$ 時間
 

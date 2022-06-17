@@ -19,6 +19,8 @@ CentroidDecompositionBinaryTree(); // (#)
 nachia::CentroidDecompositionBinaryTree(const nachia::AdjacencyList& adj); // (1)
 ```
 
+[AdjacencyList とは？](./../graph/adjacency-list.md)
+
 `(#)` ダミーを生成する。このコンストラクタで生成したインスタンスでクエリを呼んではいけない。
 
 `(1)`

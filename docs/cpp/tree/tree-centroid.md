@@ -18,6 +18,8 @@ $n$ が奇数なら $1$ つの頂点番号を、偶数なら $2$ つの頂点番
 std::vector<int> UnitTreeCentroid(const AdjacencyList& T);
 ```
 
+[AdjacencyList とは？](./../graph/adjacency-list.md)
+
 - $1 \leq n \leq 10^8$
 - $O(n)$ 時間
 

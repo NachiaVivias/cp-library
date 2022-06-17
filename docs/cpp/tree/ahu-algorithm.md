@@ -16,6 +16,8 @@ $n$ 頂点の木の同型判定問題の効率的なアルゴリズムである�
 AHUAlgorithmLinearTime(const AdjacencyList& E, int root = 0);
 ```
 
+[AdjacencyList とは？](./../graph/adjacency-list.md)
+
 - $1 \leq n \leq 10^8$
 - $O(n)$ 時間
 

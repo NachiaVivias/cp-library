@@ -18,6 +18,8 @@ $n$ 頂点の木を `AdjacencyList` で入力すると、木の中心を求め�
 std::vector<int> UnitTreeCenter(const AdjacencyList& T);
 ```
 
+[AdjacencyList とは？](./../graph/adjacency-list.md)
+
 - $1 \leq n \leq 10^8$
 - $O(n)$ 時間
 
