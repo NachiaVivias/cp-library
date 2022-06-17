@@ -31,15 +31,19 @@ AHUAlgorithmLinearTime(const AdjacencyList& E, int root = 0);
 
 `depth[i]` は頂点 $i$ の深さである。
 
-`compressed[i]` は、深さ `depth[i]` の頂点の部分木を座標圧縮したとき、頂点 $i$ の部分木の値である。
+`compressed[i]` は、深さ `depth[i]` の頂点の部分木を座標圧縮したとき、頂点 $i$ の部分木に対応する値である。
 
-`children_ordered[i]` は、深さ優先探索で頂点 $i$ を訪れたあと、どの順番で子を訪れれば辞書順最小のツアーを得られるかかを表す。一般的な構造とは別の型であるが、 `begin` , `end` , `size` , `operator[]` を用いることで配列同様に扱える。
+`children_ordered[i]` は、深さ優先探索で頂点 $i$ を訪れたあと、辞書順最小のツアー得るために子を訪れる順番を表す。一般的な構造とは別の型であるが、 `begin` , `end` , `size` , `operator[]` を用いることで配列同様に扱える。
 
 ## 使用例
 
 根付き木の同型性判定をする場合、 $2$ つの木の根を新しい根につないだ木を作って AHU algorithm を適用するとよい。答えは $2$ つの木の根の `compressed` が同じ値であるかどうかである。
 
 木の同型性判定をする場合、根を重心（ $1$ ～ $2$ 個である）に決め打つことで根付き木の同型性判定に帰着する。
+
+## 参考
+
+- [https://logic.pdmi.ras.ru/~smal/files/smal_jass08.pdf](https://logic.pdmi.ras.ru/~smal/files/smal_jass08.pdf)
 
 ---
 
