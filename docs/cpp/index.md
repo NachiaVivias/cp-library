@@ -2,6 +2,10 @@
 
 ## 各種ライブラリ
 
+### Array
+
+- [約数包除・GCD畳み込み `<nachia/array/divisor-convolution.hpp>`](array/divisor-convolution.md)
+
 ### Graph
 
 - [頂点彩色数 `<nachia/graph/chromatic-number.hpp>`](graph/chromatic-number.md)
