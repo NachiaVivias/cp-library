@@ -8,6 +8,8 @@
 
 ### Graph
 
+- [静的な隣接リスト `<nachia/graph/adjacency-list.hpp>`](graph/adjacency-list.md)
+- [Biconnected Components ( 2-連結成分 ) `<nachia/graph/biconnected-components.hpp>`](graph/biconnected-components.md)
 - [頂点彩色数 `<nachia/graph/chromatic-number.hpp>`](graph/chromatic-number.md)
 - [Online Dynamic Connectivity `<nachia/graph/dynamic-connectivity.hpp>`](graph/dynamic-connectivity.md)
 
