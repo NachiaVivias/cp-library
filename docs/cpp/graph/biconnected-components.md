@@ -23,11 +23,11 @@ BiconnectedComponents(int n, std::vector<std::pair<int, int>> edges);
 ```
 
 - $1 \leq n \leq 5 \times 10^5$
+- $1 \leq m \leq 5 \times 10^5$
+- グラフは自己ループを含まない。
 - $O(n + m)$ 時間
 
 $n$ 頂点 $m$ 辺のグラフを $2$-連結成分に分解する。配列 edges 内のインデックスを用いて辺に番号を振って管理する。
-
-自己ループを含めてはいけない。
 
 逆辺を与える必要はない。
 
