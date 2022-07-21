@@ -97,19 +97,15 @@ public:
         std::vector<std::pair<int, int>> res(bct_n * 2 - 1);
         int resi = 0;
         int bci = 0;
-        std::vector<int> visited(mn, 1);
+        std::vector<int> visited(mn, -1);
         for(bci=0 ; bci<mnum_bcs; bci++){
             for(int e : bc_edgelists[bci]){
                 auto [u,v] = medges[e];
-                if(visited[u] != 0){ visited[u] = 0; res[resi++] = {mn+bci,u}; }
-                if(visited[v] != 0){ visited[v] = 0; res[resi++] = {mn+bci,v}; }
-            }
-            for(int e : bc_edgelists[bci]){
-                auto [u,v] = medges[e];
-                visited[u] = visited[v] = 2;
+                if(visited[u] != bci){ visited[u] = bci; res[resi++] = {mn+bci,u}; }
+                if(visited[v] != bci){ visited[v] = bci; res[resi++] = {mn+bci,v}; }
             }
         }
-        for(int i=0; i<mn; i++) if(visited[i] == 1) res[resi++] = {bct_n++,i};
+        for(int i=0; i<mn; i++) if(visited[i] == -1) res[resi++] = {bct_n++,i};
         res.resize(resi);
         return AdjacencyList(bct_n, res, true);
     }
