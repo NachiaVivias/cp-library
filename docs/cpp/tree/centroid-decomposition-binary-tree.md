@@ -66,10 +66,10 @@ const std::vector<UpdatePoint> get_update_points(int vtx);
 
 構造体 `QueryRange` は $i$ , $p$ の組からなり $i$ 番目（ $\text{id}=i$ ）の区間データ構造のインデックス $p$ を指定する。
 
-### get_update_points
+### get_query_range
 
 ```c++
-std::vector<QueryRange> get_query_range(int from, int distl, int distr);
+const std::vector<QueryRange>& get_query_range(int from, int distl, int distr);
 ```
 
 - $0 \leq \text{from} \lt n$

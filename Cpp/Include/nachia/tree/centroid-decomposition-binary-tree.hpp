@@ -229,7 +229,7 @@ public:
     
     int get_array_count() const { return bt_arrays.size(); }
     const std::vector<int>& get_array(int id) const { return bt_arrays[id]; }
-    const std::vector<UpdatePoint> get_update_points(int vtx) const { return update_points[vtx]; }
+    const std::vector<UpdatePoint>& get_update_points(int vtx) const { return update_points[vtx]; }
 
     std::vector<QueryRange> get_query_range(int from, int distl, int distr){
         int p = from;
