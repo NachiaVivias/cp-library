@@ -1,8 +1,9 @@
 #pragma once
 
-#include <iostream>
 #include <vector>
 #include <algorithm>
+
+#include "../graph/adjacency-list.hpp"
 
 namespace nachia{
 
@@ -21,12 +22,12 @@ private:
 
 public:
 
-    HeavyLightDecomposition(const std::vector<std::vector<int>>& E = {{}}){
-        N = E.size();
+    HeavyLightDecomposition(const AdjacencyList& E = AdjacencyList(1, {}, false)){
+        N = E.num_vertices();
         P.assign(N, -1);
         I = {0};
         I.reserve(N);
-        for(int i=0; i<I.size(); i++){
+        for(int i=0; i<(int)I.size(); i++){
             int p = I[i];
             for(int e : E[p]) if(P[p] != e){
                 I.push_back(e);
@@ -57,20 +58,15 @@ public:
         
         rangeL.assign(N,0);
         rangeR.assign(N,0);
-        std::vector<int> dfs;
-        dfs.push_back(0);
-        while(dfs.size()){
-            int p = dfs.back();
+        
+        for(int p : I){
             rangeR[p] = rangeL[p] + Z[p];
             int ir = rangeR[p];
-            dfs.pop_back();
             for(int e : E[p]) if(P[p] != e) if(e != nx[p]){
                 rangeL[e] = (ir -= Z[e]);
-                dfs.push_back(e);
             }
             if(nx[p] != -1){
                 rangeL[nx[p]] = rangeL[p] + 1;
-                dfs.push_back(nx[p]);
             }
         }
 
@@ -82,11 +78,12 @@ public:
     int to_seq(int vertex) const { return rangeL[vertex]; }
     int to_vtx(int seqidx) const { return I[seqidx]; }
     int parent_of(int v) const { return P[v]; }
+    int heavy_root_of(int v) const { return PP[v]; }
     int heavy_child_of(int v) const {
         if(to_seq(v) == N-1) return -1;
         int cand = to_vtx(to_seq(v) + 1);
         if(PP[v] == PP[cand]) return cand;
-        return v;
+        return -1;
     }
 
     int lca(int u, int v) const {
@@ -103,7 +100,7 @@ public:
     std::vector<std::pair<int,int>> path(int r, int c, bool include_root = true, bool reverse_path = false) const {
         if(PD[c] < PD[r]) return {};
         std::vector<std::pair<int,int>> res(PD[c]-PD[r]+1);
-        for(int i=0; i<res.size()-1; i++){
+        for(int i=0; i<(int)res.size()-1; i++){
             res[i] = std::make_pair(rangeL[PP[c]], rangeL[c]+1);
             c = P[PP[c]];
         }
@@ -112,7 +109,7 @@ public:
         if(res.back().first == res.back().second) res.pop_back();
         if(!reverse_path) std::reverse(res.begin(),res.end());
         else for(auto& a : res) a = std::make_pair(N - a.second, N - a.first);
-        return move(res);
+        return res;
     }
 
     std::pair<int,int> subtree(int p){

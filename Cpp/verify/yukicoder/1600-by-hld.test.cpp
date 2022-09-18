@@ -1,5 +1,5 @@
 #define PROBLEM "https://yukicoder.me/problems/no/1600"
-#include "../../../Include/nachia/tree/heavy-light-decomposition.hpp"
+#include "../../Include/nachia/tree/heavy-light-decomposition.hpp"
 
 
 #include <iostream>
@@ -10,7 +10,7 @@ using namespace std;
 using ll = long long;
 using ull = unsigned long long;
 const ull MOD = 1000000007;
-#define rep(i,n) for(int i=0; i<(n); i++)
+#define rep(i,n) for(int i=0; i<(int)(n); i++)
 
 struct mll{
   using u32 = uint32_t;
