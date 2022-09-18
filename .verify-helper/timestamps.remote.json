@@ -12,6 +12,10 @@
 "Cpp/verify/library-checker/matrix/matrix-mod-determinant.test.cpp": "2022-02-14 20:00:15 +0900",
 "Cpp/verify/library-checker/matrix/matrix-mod-linear-eq.test.cpp": "2022-02-14 20:00:15 +0900",
 "Cpp/verify/library-checker/matrix/matrix-mod-product.test.cpp": "2022-02-14 20:00:15 +0900",
+"Cpp/verify/library-checker/tree/jump-by-hld.test.cpp": "2022-09-19 06:13:55 +0900",
+"Cpp/verify/library-checker/tree/vertex-add-path-sum-by-hld.test.cpp": "2022-09-19 06:07:03 +0900",
+"Cpp/verify/library-checker/tree/vertex-add-subtree-sum-by-hld.test.cpp": "2022-09-19 06:07:03 +0900",
+"Cpp/verify/library-checker/tree/vertex-set-path-composite-by-hld.test.cpp": "2022-09-19 06:07:03 +0900",
 "Cpp/verify/yukicoder/1600-by-hld.test.cpp": "2022-09-19 05:56:09 +0900",
 "example.test.cpp": "2021-08-13 14:14:33 +0900"
 }
