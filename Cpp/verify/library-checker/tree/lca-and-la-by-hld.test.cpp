@@ -1,11 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/lca"
 #include "../../../Include/nachia/tree/heavy-light-decomposition.hpp"
 
-using i32 = int32_t;
-using u32 = uint32_t;
-using i64 = int64_t;
-using u64 = uint64_t;
-
 
 #include <iostream>
 #include <vector>

@@ -2,6 +2,7 @@
 #include "../../../Include/nachia/tree/heavy-light-decomposition.hpp"
 
 #include <iostream>
+#include <cstdint>
 
 
 

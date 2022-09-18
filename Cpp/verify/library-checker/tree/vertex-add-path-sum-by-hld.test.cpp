@@ -2,6 +2,7 @@
 #include "../../../Include/nachia/tree/heavy-light-decomposition.hpp"
 
 #include <iostream>
+#include <cstdint>
 
 struct BIT{
   std::vector<int64_t> A;
