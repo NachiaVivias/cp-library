@@ -1,5 +1,5 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/vertex_add_path_sum"
-#include "../../../Include/nachia/tree/heavylightdecomposition.hpp"
+#include "../../../Include/nachia/tree/heavy-light-decomposition.hpp"
 
 using namespace std;
 

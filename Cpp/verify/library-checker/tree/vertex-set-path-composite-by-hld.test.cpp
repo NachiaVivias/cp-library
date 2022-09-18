@@ -1,5 +1,5 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/vertex_set_path_composite"
-#include "../../../Include/nachia/tree/heavylightdecomposition.hpp"
+#include "../../../Include/nachia/tree/heavy-light-decomposition.hpp"
 
 
 using namespace std;
