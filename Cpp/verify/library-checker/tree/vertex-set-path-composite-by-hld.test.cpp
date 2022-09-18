@@ -1,13 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/vertex_set_path_composite"
 #include "../../../Include/nachia/tree/heavy-light-decomposition.hpp"
 
-
-using namespace std;
-
-using i32 = int32_t;
-using u32 = uint32_t;
-using i64 = int64_t;
-using u64 = uint64_t;
+#include <iostream>
 
 
 
@@ -19,7 +13,7 @@ template<
 struct Segtree {
 
   int N;
-  vector<S> A;
+  std::vector<S> A;
 
   void mergev(int i){
     if(i<N) A[i] = op(A[i*2], A[i*2+1]);
@@ -29,7 +23,7 @@ struct Segtree {
     N=1; while (N<n) N*=2;
     A.assign(N*2,e());
   }
-  Segtree(const vector<S>& a) : Segtree(a.size()){
+  Segtree(const std::vector<S>& a) : Segtree(a.size()){
     for(int i=0; i<a.size(); i++) A[i+N] = a[i];
     for(int i=N-1; i>=1; i--) mergev(i);
   }
@@ -85,12 +79,12 @@ using RQ = Segtree<RQS,RQop,RQe>;
 
 
 int main(){
-  int N, Q; cin >> N >> Q;
-  vector<RQS> A(N);
-  for(auto& a : A) cin >> a.a >> a.b;
-  vector<vector<int>> E(N);
+  int N, Q; std::cin >> N >> Q;
+  std::vector<RQS> A(N);
+  for(auto& a : A) std::cin >> a.a >> a.b;
+  std::vector<std::vector<int>> E(N);
   for(int i=0; i<N-1; i++){
-    int u,v; cin >> u >> v;
+    int u,v; std::cin >> u >> v;
     E[u].push_back(v);
     E[v].push_back(u);
   }
@@ -102,19 +96,19 @@ int main(){
   for(int i=0; i<N; i++) rq2.set(N-1-hld.to_seq(i),A[i]);
 
   for(int i=0; i<Q; i++){
-    int t; cin >> t;
+    int t; std::cin >> t;
     if(t == 0){
-      int p,c,d; cin >> p >> c >> d;
+      int p,c,d; std::cin >> p >> c >> d;
       rq1.set(hld.to_seq(p), RQS{(uint64_t)c,(uint64_t)d});
       rq2.set(N-1-hld.to_seq(p), RQS{(uint64_t)c,(uint64_t)d});
     }
     if(t == 1){
-      int u,v,x; cin >> u >> v >> x;
+      int u,v,x; std::cin >> u >> v >> x;
       int g = hld.lca(u,v);
       uint64_t px = x;
       for(auto I : hld.path(g,u,false,true)) px = rq2.prod(I.first,I.second)(px);
       for(auto I : hld.path(g,v,true,false)) px = rq1.prod(I.first,I.second)(px);
-      cout << px << "\n";
+      std::cout << px << "\n";
     }
   }
   return 0;
@@ -122,10 +116,10 @@ int main(){
 
 
 struct ios_do_not_sync{
-  ios_do_not_sync(){
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-  }
+    ios_do_not_sync(){
+        std::ios::sync_with_stdio(false);
+        std::cin.tie(nullptr);
+    }
 } ios_do_not_sync_instance;
 
 

@@ -1,12 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/vertex_add_subtree_sum"
 #include "../../../Include/nachia/tree/heavy-light-decomposition.hpp"
 
-using namespace std;
-
-using i32 = int32_t;
-using u32 = uint32_t;
-using i64 = int64_t;
-using u64 = uint64_t;
+#include <iostream>
 
 
 
@@ -18,7 +13,7 @@ template<
 struct Segtree {
 
     int N;
-    vector<S> A;
+    std::vector<S> A;
 
     void mergev(int i){
         if(i<N) A[i] = op(A[i*2], A[i*2+1]);
@@ -28,7 +23,7 @@ struct Segtree {
         N=1; while (N<n) N*=2;
         A.assign(N*2,e());
     }
-    Segtree(const vector<S>& a) : Segtree(a.size()){
+    Segtree(const std::vector<S>& a) : Segtree(a.size()){
         for(int i=0; i<a.size(); i++) A[i+N] = a[i];
         for(int i=N-1; i>=1; i--) mergev(i);
     }
@@ -63,12 +58,12 @@ using RQ = Segtree<RQS,RQop,RQe>;
 
 
 int main(){
-    int N, Q; cin >> N >> Q;
-    vector<RQS> A(N);
-    for(auto& a : A) cin >> a.a;
-    vector<vector<int>> E(N);
+    int N, Q; std::cin >> N >> Q;
+    std::vector<RQS> A(N);
+    for(auto& a : A) std::cin >> a.a;
+    std::vector<std::vector<int>> E(N);
     for(int i=1; i<N; i++){
-        int p; cin >> p;
+        int p; std::cin >> p;
         E[p].push_back(i);
     }
 
@@ -77,16 +72,16 @@ int main(){
     for(int i=0; i<N; i++) rq.set(hld.to_seq(i), A[i]);
 
     for(int i=0; i<Q; i++){
-        int t; cin >> t;
+        int t; std::cin >> t;
         if(t == 0){
-            int p,x; cin >> p >> x;
+            int p,x; std::cin >> p >> x;
             rq.set(hld.to_seq(p), { rq.get(hld.to_seq(p)).a + (uint64_t)x });
         }
         if(t == 1){
-            int p; cin >> p;
+            int p; std::cin >> p;
             auto range = hld.subtree(p);
             uint64_t ans = rq.prod(range.first, range.second).a;
-            cout << ans << "\n";
+            std::cout << ans << "\n";
         }
     }
     return 0;
@@ -95,8 +90,8 @@ int main(){
 
 struct ios_do_not_sync{
     ios_do_not_sync(){
-        ios::sync_with_stdio(false);
-        cin.tie(nullptr);
+        std::ios::sync_with_stdio(false);
+        std::cin.tie(nullptr);
     }
 } ios_do_not_sync_instance;
 

@@ -7,6 +7,7 @@ using i64 = int64_t;
 using u64 = uint64_t;
 
 
+#include <iostream>
 #include <vector>
 #include <algorithm>
 #include <unordered_map>
