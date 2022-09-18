@@ -2,6 +2,10 @@
 
 [C++ 用ライブラリ一覧に戻る](../index.md)
 
+## ソースコード
+
+[nachia/linear/matrix-modulo.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/linear/matrix-modulo.hpp)
+
 ## 主な機能
 
 体 $\mathbb{F} _ p$ 上の $h \times w$ 型行列 $A$ を管理する。スカラーの型には `atcoder::static_modint<p>` ( $p$ は奇素数) およびそれに準ずる構造体を指定できる。

@@ -2,6 +2,10 @@
 
 [C++ 用ライブラリ一覧に戻る](../index.md)
 
+## ソースコード
+
+[nachia/math/counting-primes.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/math/counting-primes.hpp)
+
 ## 主な機能
 
 $N$ 以下の素数の個数を求める。

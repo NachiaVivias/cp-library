@@ -2,6 +2,10 @@
 
 [C++ 用ライブラリ一覧に戻る](../index.md)
 
+## ソースコード
+
+[nachia/tree/ahu-algorithm.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/tree/ahu-algorithm.hpp)
+
 ## 主な機能
 
 $n$ 頂点の木の同型判定問題の効率的なアルゴリズムである。木の重心の計算と組み合わせると、 $O(n)$ 時間を達成する。

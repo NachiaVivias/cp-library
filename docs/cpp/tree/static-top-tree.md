@@ -2,6 +2,10 @@
 
 [C++ 用ライブラリ一覧に戻る](../index.md)
 
+## ソースコード
+
+[nachia/tree/static-top-tree.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/tree/static-top-tree.hpp)
+
 ## 主な機能
 
 $n$ 頂点の木の辺を与えると、辺がバラバラの状態から全体の木に至る cluster のマージ過程を求める。 expose, link, cut などの操作をしない top tree に相当する。

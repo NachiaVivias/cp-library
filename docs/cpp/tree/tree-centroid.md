@@ -2,6 +2,10 @@
 
 [C++ 用ライブラリ一覧に戻る](../index.md)
 
+## ソースコード
+
+[nachia/tree/tree-centroid.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/tree/tree-centroid.hpp)
+
 ## 主な機能
 
 $n$ 頂点の木を `AdjacencyList` で入力すると、木の重心を求める。

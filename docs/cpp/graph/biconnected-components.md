@@ -2,6 +2,10 @@
 
 [C++ 用ライブラリ一覧に戻る](../index.md)
 
+## ソースコード
+
+[nachia/graph/biconnected-components.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/graph/biconnected-components.hpp)
+
 ## 主な機能
 
 自己ループを持たない無向グラフを $2$-連結成分に分解します。各辺がどの成分に属するか（一意）を求めます。

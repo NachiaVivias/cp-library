@@ -1,6 +1,10 @@
 # 頂点彩色数
 
-[C++ 用ライブラリ一覧に戻る](../index.md)
+[C++ 用ライブラリ一覧に戻る](../index.md)./index.md)
+
+## ソースコード
+
+[nachia/graph/chromatic-number.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/graph/chromatic-number.hpp)
 
 ## 主な機能
 

@@ -2,6 +2,10 @@
 
 [C++ 用ライブラリ一覧に戻る](../index.md)
 
+## ソースコード
+
+[nachia/graph/adjacency-list.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/graph/adjacency-list.hpp)
+
 ## 主な機能
 
 グラフの隣接リスト表現で、辺集合が変化しないとき、 `std::vector<std::vector<int>>` の代わりに使うことで高速化が見込める。原理は行列の CSR 表現と同じである。

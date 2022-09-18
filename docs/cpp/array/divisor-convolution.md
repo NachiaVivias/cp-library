@@ -2,6 +2,10 @@
 
 [C++ 用ライブラリ一覧に戻る](../index.md)
 
+## ソースコード
+
+[nachia/array/divisor-convolution.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/array/divisor-convolution.hpp)
+
 ## 主な機能
 
 約数・倍数の関係に基づく計算。

@@ -2,6 +2,10 @@
 
 [C++ 用ライブラリ一覧に戻る](../index.md)
 
+## ソースコード
+
+[nachia/tree/centroid-decomposition-binary-tree.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/tree/centroid-decomposition-binary-tree.hpp)
+
 ## 主な機能
 
 $n$ 頂点の静的な根付き無向木 $T$ がある。頂点には番号(0-based) が振られている。

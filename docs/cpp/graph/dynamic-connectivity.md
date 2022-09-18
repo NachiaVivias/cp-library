@@ -2,6 +2,10 @@
 
 [C++ 用ライブラリ一覧に戻る](../index.md)
 
+## ソースコード
+
+[nachia/graph/dynamic-connectivity.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/graph/dynamic-connectivity.hpp)
+
 ## 主な機能
 
 fully-dynamic connectivity problem をオンラインで解き、全域森を管理する。

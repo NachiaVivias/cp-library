@@ -2,6 +2,10 @@
 
 [C++ 用ライブラリ一覧に戻る](../index.md)
 
+## ソースコード
+
+[nachia/multi-dimensional/two-d-rectangle-query.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/multi-dimensional/two-d-rectangle-query.hpp)
+
 ## 主な機能
 
 $xy$ 平面上の与えられた $n$ 点 $(P _ 0,P _ 1,P _ 2, \ldots , P _ {n-1})$ について、軸に平行な任意の矩形クエリを $1$ 次元区間クエリに変換する。性質上、集約関数の可換性を仮定する。

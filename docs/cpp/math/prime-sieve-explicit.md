@@ -2,6 +2,10 @@
 
 [C++ 用ライブラリ一覧に戻る](../index.md)
 
+## ソースコード
+
+[nachia/math/prime-sieve-explicit.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/math/prime-sieve-explicit.hpp)
+
 ## 主な機能
 
 ある値以下の素数を列挙する。
