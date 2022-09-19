@@ -10,7 +10,7 @@
 
 $n$ 頂点の木の辺を与えると、辺がバラバラの状態から全体の木に至る cluster のマージ過程を求める。 expose, link, cut などの操作をしない top tree に相当する。
 
-以降では、 cluster は相異なる頂点の組 $(s,t)$ を用いて $s \rightarrow t$ と表す。
+以降では、まったく正確な表現ではないが、 cluster を boundary vertex かもしれない相異なる頂点の組 $(s,t)$ を用いて $s \rightarrow t$ で表す。
 
 理論的には、マージ過程を表す木の高さの上限を $4\log _ 2(n)+O(1)$ にとることができる。
 
