@@ -1,6 +1,6 @@
 #define PROBLEM "https://yukicoder.me/problems/no/1600"
 #include "../../Include/nachia/tree/heavy-light-decomposition.hpp"
-#include "../../../Include/nachia/graph/graph.hpp"
+#include "../../Include/nachia/graph/graph.hpp"
 
 
 #include <iostream>
