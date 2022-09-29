@@ -8,7 +8,7 @@
 
 ## 主な機能
 
-$n$ 頂点の木を `AdjacencyList` で入力すると、木の重心を求める。
+$n$ 頂点の木の隣接リスト表現を `CsrArray<int>` で入力すると、木の重心を求める。
 
 ここで木の重心とは、その頂点で木を分割したとき各成分の頂点数が高々 $\frac{n}{2}$ となるおうな頂点である。
 
@@ -19,7 +19,7 @@ $n$ が奇数なら $1$ つの頂点番号を、偶数なら $2$ つの頂点番
 ### UnitTreeCentroid
 
 ```c++
-std::vector<int> UnitTreeCentroid(const AdjacencyList& T);
+std::vector<int> UnitTreeCentroid(const CsrArray<int>& T);
 ```
 
 [AdjacencyList とは？](./../graph/adjacency-list.md)

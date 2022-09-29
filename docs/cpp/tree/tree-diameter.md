@@ -8,14 +8,14 @@
 
 ## 主な機能
 
-$n$ 頂点の木を `AdjacencyList` で入力すると、木の直径であるパスを $1$ つ求める。
+$n$ 頂点の木の隣接リスト表現を `CsrArray<int>` で入力すると、木の直径であるパスを $1$ つ求める。
 
 ## 関数
 
 ### UnitTreeDiameter
 
 ```c++
-std::vector<int> UnitTreeDiameter(const AdjacencyList& T);
+std::vector<int> UnitTreeDiameter(const CsrArray<int>& T);
 ```
 
 [AdjacencyList とは？](./../graph/adjacency-list.md)

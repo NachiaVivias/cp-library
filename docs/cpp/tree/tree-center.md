@@ -8,7 +8,7 @@
 
 ## 主な機能
 
-$n$ 頂点の木を `AdjacencyList` で入力すると、木の中心を求める。
+$n$ 頂点の木の隣接リスト表現を `CsrArray<int>` で入力すると、木の中心を求める。
 
 ここで木の中心とは、直径のパス上の中央単一の点あるいは辺である。
 
@@ -19,7 +19,7 @@ $n$ 頂点の木を `AdjacencyList` で入力すると、木の中心を求め�
 ### UnitTreeCenter
 
 ```c++
-std::vector<int> UnitTreeCenter(const AdjacencyList& T);
+std::vector<int> UnitTreeCenter(const CsrArray<int>& T);
 ```
 
 [AdjacencyList とは？](./../graph/adjacency-list.md)
