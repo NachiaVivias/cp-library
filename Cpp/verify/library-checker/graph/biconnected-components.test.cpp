@@ -23,7 +23,6 @@ int main() {
     int bccnt = bc.getNumBcs();
 
     if(bcv.size() != bccnt) Exit("bcv.size() != bccnt");
-    if(bcv.fullSize() != n) Exit("bce.fullSize() != n");
     if(bct.numVertices() != n + bccnt) Exit("bct.numVertices() != n + bccnt");
     if(bce.size() != bccnt) Exit("bce.size() != bccnt");
     if(bce.fullSize() != m) Exit("bce.fullSize() != m");
