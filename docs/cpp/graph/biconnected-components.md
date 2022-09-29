@@ -71,6 +71,10 @@ $n$ 個の頂点は頂点 $0$ から $n-1$ （ cut node ）にそのまま対応
 
 block node に隣接する cut node の集合は、 $2$-連結成分に属する頂点集合に一致する。
 
+## 参考
+
+- コラム 非再帰DFS [link](../../column/2022/01.md)
+
 ---
 
 [TOP PAGE](https://nachiavivias.github.io/cp-library/)

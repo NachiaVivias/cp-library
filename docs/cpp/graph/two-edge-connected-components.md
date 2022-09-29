@@ -59,6 +59,10 @@ std::vector<int> getEdgeMapping() const;
 
 $2$-辺連結成分に対応する新しい頂点、橋を新しい辺とすると、新しいグラフは森をなす。
 
+## 参考
+
+- コラム 非再帰DFS [link](../../column/2022/01.md)
+
 ---
 
 [TOP PAGE](https://nachiavivias.github.io/cp-library/)

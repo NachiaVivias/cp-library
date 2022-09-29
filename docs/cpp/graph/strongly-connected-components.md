@@ -52,6 +52,10 @@ CsrArray<int> getCsr() const;
 
 各強連結成分の頂点集合を返す。頂点の番号は与えられたグラフのものである。
 
+## 参考
+
+- コラム 非再帰DFS [link](../../column/2022/01.md)
+
 ---
 
 [TOP PAGE](https://nachiavivias.github.io/cp-library/)
