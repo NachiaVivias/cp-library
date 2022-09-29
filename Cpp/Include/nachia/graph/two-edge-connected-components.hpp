@@ -11,9 +11,10 @@ struct TwoEdgeConnectedComponents{
     Graph mG;
     int m_numComponent;
     std::vector<int> m_color;
-    TwoEdgeConnectedComponents(Graph G){
+    TwoEdgeConnectedComponents(Graph G = Graph(0, true)){
         assert(G.isUndirected());
         int n = G.numVertices(), m = G.numEdges();
+        if(n == 0){ mG = G; m_numComponent = 0; return; }
         std::vector<int> P, ord, I(n); {
             auto dfsTree = DfsTree::Construct<false>(G);
             P = std::move(dfsTree.parent);

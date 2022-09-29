@@ -9,6 +9,7 @@ struct SCC{
     CsrArray<int> induce;
     int componentNum;
 
+    SCC() : m_n(0), induce(), componentNum(0) {}
     SCC(Graph E) {
         int n = E.numVertices();
         m_n = n;
