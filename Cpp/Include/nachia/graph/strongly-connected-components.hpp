@@ -42,7 +42,7 @@ struct SCC{
         induce = CsrArray<int>::FromRaw(std::move(csr), std::move(sep));
     }
 
-    int numComponent() const { return componentNum; }
+    int numComponents() const { return componentNum; }
     const CsrArray<int>& getCsr() const { return induce; }
 };
 

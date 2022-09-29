@@ -46,7 +46,7 @@ public:
         std::vector<int> indexV(n), newV(num);
         for(int i=0; i<n; i++) if(mapping[i] >= 0) indexV[i] = ++newV[mapping[i]];
         std::vector<Graph> res; res.reserve(num);
-        for(int i=0; i<num; i++) res.emplace_back(newV[i]);
+        for(int i=0; i<num; i++) res.emplace_back(newV[i], isUndirected());
         for(auto e : m_e) if(mapping[e.from] == mapping[e.to] && mapping[e.to] >= 0) res[mapping[e.to]].addEdge(indexV[e.from], indexV[e.to]);
         return res;
     }

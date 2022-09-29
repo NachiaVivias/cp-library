@@ -52,10 +52,10 @@ public:
         mnum_bcs = num_bcs;
     }
 
-    int getNumBcs() const { return mnum_bcs; }
+    int numComponents() const { return mnum_bcs; }
 
     CsrArray<int> getBcVertices() const {
-        return CsrArray<int>::Construct(getNumBcs(), m_bcVtxPair);
+        return CsrArray<int>::Construct(numComponents(), m_bcVtxPair);
     }
 
     Graph getBcTree() const {

@@ -40,7 +40,7 @@ struct TwoEdgeConnectedComponents{
         mG = std::move(G);
     }
     int numComponents() const noexcept { return m_numComponent; }
-    CsrArray<int> getTecVertices() const {
+    CsrArray<int> getTeccVertices() const {
         int n = mG.numVertices();
         std::vector<std::pair<int, int>> res(n);
         for(int i=0; i<n; i++) res[i] = { m_color[i], i };

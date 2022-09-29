@@ -24,7 +24,7 @@ $n$ 頂点の静的な根付き無向木 $T$ がある。頂点には番号(0-ba
 
 ```c++
 CentroidDecompositionBinaryTree(); // (#)
-nachia::CentroidDecompositionBinaryTree(const nachia::AdjacencyList& adj); // (1)
+nachia::CentroidDecompositionBinaryTree(const CsrArray<int>& adj); // (1)
 ```
 
 [AdjacencyList とは？](./../graph/adjacency-list.md)

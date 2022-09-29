@@ -10,18 +10,19 @@
 
 $n$ 頂点の木の同型判定問題の効率的なアルゴリズムである。木の重心の計算と組み合わせると、 $O(n)$ 時間を達成する。
 
-同時に、木のオイラーツアーであって、根から離れる向きを `1` 、根に戻る向きを `2` としたときに辞書順最小のものを求められる。
+同時に、木のオイラーツアーから得られる辺列であって、根から離れる向きを `1` 、根に戻る向きを `2` と置き換えたときに辞書順最小であるようなものを暗に求める。
 
 ## struct AHUAlgorithmLinearTime
 
 ### コンストラクタ
 
 ```c++
-AHUAlgorithmLinearTime(const AdjacencyList& E, int root = 0);
+AHUAlgorithmLinearTime(const Graph& E, int root = 0);
 ```
 
-[AdjacencyList とは？](./../graph/adjacency-list.md)
+[Graph とは？](./../graph/graph.md)
 
+- $E$ は無向グラフで、木である
 - $1 \leq n \leq 10^8$
 - $O(n)$ 時間
 

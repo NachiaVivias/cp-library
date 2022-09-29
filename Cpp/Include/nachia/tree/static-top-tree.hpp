@@ -1,4 +1,4 @@
-
+#pragma once
 #include "../array/csr-array.hpp"
 #include <utility>
 #include <vector>

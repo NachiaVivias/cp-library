@@ -18,7 +18,7 @@ int main() {
     auto G = nachia::Graph(n, edges, true);
     auto scc = nachia::SCC(G);
     auto sccv = scc.getCsr();
-    int scccnt = scc.numComponent();
+    int scccnt = scc.numComponents();
 
     printf("%d\n", scccnt);
     for(int i=0; i<scccnt; i++){

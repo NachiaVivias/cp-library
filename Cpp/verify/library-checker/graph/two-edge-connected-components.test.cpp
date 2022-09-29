@@ -17,7 +17,7 @@ int main() {
 
     auto G = nachia::Graph(n, edges, true);
     auto tecc = nachia::TwoEdgeConnectedComponents(G);
-    auto teccv = tecc.getTecVertices();
+    auto teccv = tecc.getTeccVertices();
     int teccCnt = tecc.numComponents();
 
     printf("%d\n", teccCnt);

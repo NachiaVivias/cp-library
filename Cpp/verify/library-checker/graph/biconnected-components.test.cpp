@@ -20,7 +20,7 @@ int main() {
     auto bcv = bc.getBcVertices();
     auto bct = bc.getBcTree();
     auto bce = bc.getBcEdges();
-    int bccnt = bc.getNumBcs();
+    int bccnt = bc.numComponents();
 
     if(bcv.size() != bccnt) Exit("bcv.size() != bccnt");
     if(bct.numVertices() != n + bccnt) Exit("bct.numVertices() != n + bccnt");
