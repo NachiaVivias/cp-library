@@ -1,5 +1,6 @@
 #define PROBLEM "https://yukicoder.me/problems/no/1600"
 #include "../../Include/nachia/tree/heavy-light-decomposition.hpp"
+#include "../../../Include/nachia/graph/graph.hpp"
 
 
 #include <iostream>
@@ -59,7 +60,7 @@ nachia::HeavyLightDecomposition hld;
 void read_graph(){
   cin >> N >> M;
   E.resize(N);
-  vector<vector<int>> idE(N);
+  vector<pair<int,int>> idE;
   cost.resize(M);
   cost[0] = 2;
   for(int i=1; i<M; i++) cost[i] = cost[i-1] * 2;
@@ -74,11 +75,10 @@ void read_graph(){
       G1.merge(u,v);
       E[u].push_back({u,v,i});
       E[v].push_back({v,u,i});
-      idE[u].push_back(v);
-      idE[v].push_back(u);
+      idE.push_back({ u,v });
     }
   }
-  hld = nachia::HeavyLightDecomposition(idE);
+  hld = nachia::HeavyLightDecomposition(nachia::Graph(N, idE, true).getAdjacencyArray());
 }
 
 void initLCA(){

@@ -1,9 +1,7 @@
 #pragma once
-
+#include "../array/csr-array.hpp"
 #include <vector>
 #include <algorithm>
-
-#include "../graph/adjacency-list.hpp"
 
 namespace nachia{
 
@@ -22,8 +20,8 @@ private:
 
 public:
 
-    HeavyLightDecomposition(const AdjacencyList& E = AdjacencyList(1, {}, false)){
-        N = E.num_vertices();
+    HeavyLightDecomposition(const CsrArray<int>& E = CsrArray<int>::Construct(1, {})){
+        N = E.size();
         P.assign(N, -1);
         I = {0};
         I.reserve(N);

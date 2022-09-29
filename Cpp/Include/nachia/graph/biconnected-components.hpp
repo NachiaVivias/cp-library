@@ -1,8 +1,7 @@
 #pragma once
-
-#include "../graph/adjacency-list.hpp"
-#include "../graph/adjacency-list-indexed.hpp"
-
+#include "../graph/graph.hpp"
+#include "../array/csr-array.hpp"
+#include "../graph/dfs-tree.hpp"
 #include <vector>
 
 namespace nachia{
@@ -12,102 +11,83 @@ private:
     int mn;
     int mm;
     int mnum_bcs;
-    std::vector<std::pair<int, int>> medges;
-    std::vector<int> edgeidx_to_bcidx;
+    Graph mG;
+    std::vector<std::pair<int,int>> m_bcVtxPair;
 public:
-    BiconnectedComponents(int n, std::vector<std::pair<int, int>> edges){
+    BiconnectedComponents(Graph G){
+        int n = mn = G.numVertices();
+        int m = mm = G.numEdges();
+        mG = std::move(G);
+        auto adj = mG.getAdjacencyArray();
 
-        mn = n;
-        int m = edges.size();
-        medges = std::move(edges);
-        nachia::AdjacencyListEdgeIndexed adj(n, medges, true);
+        auto dfstree = DfsTree::Construct<false>(adj);
+        std::vector<int> vtxToDfsi(n), parent, low;
+        for(int i=0; i<n; i++) vtxToDfsi[dfstree.dfsOrd[i]] = i;
+        parent = std::move(dfstree.parent);
+        low = vtxToDfsi;
+        
+        for(int p=0; p<n; p++) for(int e : adj[p]) low[p] = std::min(low[p], vtxToDfsi[e]);
 
-        std::vector<int> dfsi_to_vtx(n);
-        std::vector<int> vtx_to_dfsi(n);
-        std::vector<int> linked_over(n, -1);
-        std::vector<int> dfs_parent(n, -1);
-        int dfsi = 0;
-
-        auto dfs1 = [&](int p, auto self)->int {
-            vtx_to_dfsi[p] = dfsi;
-            dfsi_to_vtx[dfsi] = p;
-            int backedge = dfsi;
-            dfsi++;
-            for(auto [nx,i] : adj[p]){
-                if(dfs_parent[nx] != -1){
-					backedge = std::min(backedge, vtx_to_dfsi[nx]);
-				}
-                else{
-                    dfs_parent[nx] = i;
-                    int link = self(nx, self);
-                    backedge = std::min(backedge, link);
-                    linked_over[nx] = (link < vtx_to_dfsi[p]) ? 1 : 0;
-                }
-            }
-            return backedge;
-        };
-        for(int i=0; i<n; i++) if(dfs_parent[i] == -1){
-            dfs_parent[i] = -2;
-            dfs1(i, dfs1);
+        for(int i=n-1; i>=0; i--){
+            int p = dfstree.dfsOrd[i];
+            int pp = parent[p];
+            if(pp >= 0) low[pp] = std::min(low[pp], low[p]);
         }
         
+        int num_bcs = 0;
         std::vector<int> res(m);
-        auto dfs2 = [&](int p, int bcid, int& maxbcid, auto self)-> void {
-            if(dfs_parent[p] < 0){
-                for(auto [nx,i] : adj[p]) if(dfs_parent[nx] == i){
-                    bcid = maxbcid++;
-                    self(nx, bcid, maxbcid, self);
-                }
-                return;
+        for(int p : dfstree.dfsOrd) if(parent[p] >= 0){
+            int pp = parent[p];
+            if(low[p] < vtxToDfsi[pp]){
+                low[p] = low[pp];
+                m_bcVtxPair.push_back(std::make_pair(low[p], p));
             }
-            for(auto [nx,i] : adj[p]) if(dfs_parent[nx] != i) res[i] = bcid;
-            for(auto [nx,i] : adj[p]) if(dfs_parent[nx] == i){
-                int nx_bcid = bcid;
-                if(!linked_over[nx]) nx_bcid = maxbcid++;
-                self(nx, nx_bcid, maxbcid, self);
+            else{
+                low[p] = num_bcs++;
+                m_bcVtxPair.push_back(std::make_pair(low[p], pp));
+                m_bcVtxPair.push_back(std::make_pair(low[p], p));
             }
-        };
-        int bcid = 0;
-        for(int i=0; i<n; i++) if(dfs_parent[i] < 0) dfs2(i, -1, bcid, dfs2);
-        edgeidx_to_bcidx = std::move(res);
-        mm = m;
-        mnum_bcs = bcid;
-    }
-
-    int get_num_bcs() const { return mnum_bcs; }
-
-    std::vector<std::vector<int>> get_bcs() const {
-        std::vector<std::vector<int>> res(mnum_bcs);
-        for(int i=0; i<mm; i++){
-            res[edgeidx_to_bcidx[i]].push_back(i);
         }
-        return res;
+        for(int s=0; s<mn; s++) if(adj[s].size() == 0) m_bcVtxPair.push_back(std::make_pair(num_bcs++, s));
+        mnum_bcs = num_bcs;
     }
 
-    AdjacencyList get_bct() const {
+    int getNumBcs() const { return mnum_bcs; }
+
+    CsrArray<int> getBcVertices() const {
+        return CsrArray<int>::Construct(getNumBcs(), m_bcVtxPair);
+    }
+
+    Graph getBcTree() const {
         int bct_n = mn + mnum_bcs;
-        AdjacencyList bc_edgelists; {
-            std::vector<int> buf(mnum_bcs+1);
-            for(int bci : edgeidx_to_bcidx) ++buf[bci];
-            for(int i=1; i<=mnum_bcs; i++) buf[i] += buf[i-1];
-            std::vector<int> E(buf.back());
-            for(int i=0; i<mm; i++) E[--buf[edgeidx_to_bcidx[i]]] = i;
-            bc_edgelists = AdjacencyList::from_raw(std::move(E), std::move(buf));
-        }
-        std::vector<std::pair<int, int>> res(bct_n * 2 - 1);
-        int resi = 0;
-        int bci = 0;
-        std::vector<int> visited(mn, -1);
-        for(bci=0 ; bci<mnum_bcs; bci++){
-            for(int e : bc_edgelists[bci]){
-                auto [u,v] = medges[e];
-                if(visited[u] != bci){ visited[u] = bci; res[resi++] = {mn+bci,u}; }
-                if(visited[v] != bci){ visited[v] = bci; res[resi++] = {mn+bci,v}; }
+        std::vector<std::pair<int, int>> res = m_bcVtxPair;
+        for(auto& e : res) e.first += mn;
+        return Graph(bct_n, std::move(res), true);
+    }
+
+    CsrArray<int> getBcEdges() const {
+        auto bct = getBcTree().getAdjacencyArray();
+        std::vector<int> bfsP(bct.size(), -1);
+        std::vector<int> bfsD(bct.size(), 0);
+        std::vector<int> bfs(bct.size());
+        int p0 = 0, p1 = 0;
+        for(int s=0; s<bct.size(); s++) if(bfsP[s] < 0){
+            for(bfs[p1++]=s; p0<p1; p0++){
+                int p = bfs[p0];
+                for(auto e : bct[p]) if(bfsP[p] != e){
+                    bfsP[e] = p;
+                    bfsD[e] = bfsD[p] + 1;
+                    bfs[p1++] = e;
+                }
             }
         }
-        for(int i=0; i<mn; i++) if(visited[i] == -1) res[resi++] = {bct_n++,i};
-        res.resize(resi);
-        return AdjacencyList(bct_n, res, true);
+        std::vector<std::pair<int,int>> res(mm);
+        for(int i=0; i<mm; i++){
+            int u = mG[i].from, v = mG[i].to;
+            res[i].first = bfsP[(bfsD[u] <= bfsD[v]) ? v : u] - mn;
+            res[i].second = i;
+        }
+        return CsrArray<int>::Construct(mnum_bcs, res);
     }
 };
 

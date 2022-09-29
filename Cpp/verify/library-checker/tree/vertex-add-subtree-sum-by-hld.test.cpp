@@ -62,13 +62,13 @@ int main(){
     int N, Q; std::cin >> N >> Q;
     std::vector<RQS> A(N);
     for(auto& a : A) std::cin >> a.a;
-    std::vector<std::vector<int>> E(N);
+    std::vector<std::pair<int,int>> edges(N-1);
     for(int i=1; i<N; i++){
         int p; std::cin >> p;
-        E[p].push_back(i);
+        edges[i-1] = { p, i };
     }
 
-    nachia::HeavyLightDecomposition hld(E);
+    auto hld = nachia::HeavyLightDecomposition(nachia::CsrArray<int>::Construct(N, edges));
     RQ rq(N);
     for(int i=0; i<N; i++) rq.set(hld.to_seq(i), A[i]);
 

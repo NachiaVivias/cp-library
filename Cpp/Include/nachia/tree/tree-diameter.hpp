@@ -1,13 +1,11 @@
 #pragma once
-
-#include "../graph/adjacency-list.hpp"
-
+#include "../array/csr-array.hpp"
 #include <vector>
 
 namespace nachia{
 
 // list of nodes through the diameter path
-std::vector<int> UnitTreeDiameter(const AdjacencyList& T){
+std::vector<int> UnitTreeDiameter(const CsrArray<int>& T){
     int n = T.size();
     std::vector<int> I(n, 0);
     std::vector<int> P(n, -1);

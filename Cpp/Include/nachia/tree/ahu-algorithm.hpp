@@ -1,15 +1,11 @@
 #pragma once
-
-
-#include "../graph/adjacency-list.hpp"
-
+#include "../array/csr-array.hpp"
+#include "../graph/graph.hpp"
 #include <vector>
 #include <utility>
 #include <cassert>
-
 #include <algorithm>
 #include <numeric>
-
 
 
 namespace nachia{
@@ -193,51 +189,36 @@ std::vector<int> suffix_array(const std::vector<int>& s, int upper) {
     return sa;
 }
 
+// Reference:
+// T. Kasai, G. Lee, H. Arimura, S. Arikawa, and K. Park,
+// Linear-Time Longest-Common-Prefix Computation in Suffix Arrays and Its
+// Applications
+template <class T>
+std::vector<int> lcp_array(const std::vector<T>& s,
+                           const std::vector<int>& sa) {
+    int n = int(s.size());
+    assert(n >= 1);
+    std::vector<int> rnk(n);
+    for (int i = 0; i < n; i++) {
+        rnk[sa[i]] = i;
+    }
+    std::vector<int> lcp(n - 1);
+    int h = 0;
+    for (int i = 0; i < n; i++) {
+        if (h > 0) h--;
+        if (rnk[i] == 0) continue;
+        int j = sa[rnk[i] - 1];
+        for (; j + h < n && i + h < n; h++) {
+            if (s[j + h] != s[i + h]) break;
+        }
+        lcp[rnk[i] - 1] = h;
+    }
+    return lcp;
+}
+
 } // namespace atcoder
     
-struct CSRArray{
-public:
-    struct CSRRange{
-        using iterator = typename std::vector<int>::iterator;
-        iterator begi, endi;
-        iterator begin() const { return begi; }
-        iterator end() const { return endi; }
-        int size() const { return (int)::std::distance(begi, endi); }
-        int& operator[](int i) const { return begi[i]; }
-    };
-private:
-    int mn;
-    std::vector<int> E;
-    std::vector<int> I;
-public:
-    CSRArray(int n, std::vector<std::pair<int,int>> elems){
-        mn = n;
-        std::vector<int> buf(n+1, 0);
-        for(auto [u,v] : elems) ++buf[u];
-        for(int i=1; i<=n; i++) buf[i] += buf[i-1];
-        E.resize(buf[n]);
-        for(int i=(int)elems.size()-1; i>=0; i--){
-            auto [u,v] = elems[i];
-            E[--buf[u]] = v;
-        }
-        I = std::move(buf);
-    }
-    CSRArray(const std::vector<std::vector<int>>& elems = {}){
-        int n = mn = elems.size();
-        std::vector<int> buf(n+1, 0);
-        for(int i=0; i<n; i++) buf[i+1] = buf[i] + elems[i].size();
-        E.resize(buf[n]);
-        for(int i=0; i<n; i++) for(int j=0; j<(int)elems[i].size(); j++) E[buf[i]+j] = elems[i][j];
-        I = std::move(buf);
-    }
-    CSRRange operator[](int u) {
-        return CSRRange{ E.begin() + I[u], E.begin() + I[u+1] };
-    }
-    int size() const { return mn; }
-    int num_elems() const { return E.size(); }
-};
-    
-void sort_tg_by(CSRArray& tg, std::vector<int>& by, int bound){
+void sort_tg_by(CsrArray<int>& tg, std::vector<int>& by, int bound){
     std::vector<int> cnt(bound + 1);
     for(int i=0; i<(int)tg.size(); i++) for(int v : tg[i]) cnt[by[v]]++;
     for(int i=0; i<bound; i++) cnt[i+1] += cnt[i];
@@ -248,7 +229,7 @@ void sort_tg_by(CSRArray& tg, std::vector<int>& by, int bound){
 }
 
 
-std::vector<int> coord_compress_from_arr_by(CSRArray& tg, std::vector<int>& by, int bound){
+std::vector<int> coord_compress_from_arr_by(CsrArray<int>& tg, std::vector<int>& by, int bound){
     int n = tg.size();
 
     std::vector<int> sorted_tg_idx;
@@ -284,13 +265,17 @@ std::vector<int> coord_compress_from_arr_by(CSRArray& tg, std::vector<int>& by, 
 
 struct AHUAlgorithmLinearTime{
 
+    int N;
     std::vector<int> compressed;
     std::vector<int> depth;
-    treetourlex_internal::CSRArray children_ordered;
+    CsrArray<int> children_ordered;
+    int root;
 
     // O(N) time
-    AHUAlgorithmLinearTime(const AdjacencyList& E, int root = 0){
-        int N = E.num_vertices();
+    AHUAlgorithmLinearTime(const Graph& E, int new_root = 0){
+        root = new_root;
+        N = E.numVertices();
+        auto adj = E.getAdjacencyArray();
         depth.assign(N, -1);
         std::vector<int> parent(N, -1);
         std::vector<int> bfs = {root};
@@ -298,7 +283,7 @@ struct AHUAlgorithmLinearTime{
         depth[0] = 0;
         for(int i=0; i<N; i++){
             int p = bfs[i];
-            for(int e : E[p]) if(depth[e] == -1){
+            for(int e : adj[p]) if(depth[e] == -1){
                 depth[e] = depth[p] + 1;
                 parent[e] = p;
                 bfs.push_back(e);
@@ -306,30 +291,67 @@ struct AHUAlgorithmLinearTime{
         }
 
         int max_depth = *max_element(depth.begin(), depth.end());
-        treetourlex_internal::CSRArray from_depth; {
+        CsrArray<int> from_depth; {
             std::vector<std::pair<int,int>> elems;
             for(int i=0; i<N; i++) elems.push_back(std::make_pair(depth[i], i));
-            from_depth = treetourlex_internal::CSRArray(max_depth+2, elems);
+            from_depth = CsrArray<int>::Construct(max_depth+2, elems);
         }
 
         compressed.assign(N, 0);
         /* children_ordered */ {
             std::vector<std::pair<int,int>> edges;
-            for(int p=0; p<N; p++) for(int c : E[p]) if(depth[p] < depth[c]) edges.push_back(std::make_pair(p,c));
-            children_ordered = treetourlex_internal::CSRArray(N, edges);
+            for(int p=0; p<N; p++) for(int c : adj[p]) if(depth[p] < depth[c]) edges.push_back(std::make_pair(p,c));
+            children_ordered = CsrArray<int>::Construct(N, edges);
         }
 
         for(int d = max_depth; d >= 0; d--){
             auto vtxs = from_depth[d];
-            treetourlex_internal::CSRArray children_ordered_part; {
+            CsrArray<int> children_ordered_part; {
                 std::vector<std::pair<int,int>> elems;
                 for(int i=0; i<(int)vtxs.size(); i++) for(auto p : children_ordered[vtxs[i]]) elems.push_back(std::make_pair(i,p));
-                children_ordered_part = treetourlex_internal::CSRArray(vtxs.size(), elems);
+                children_ordered_part = CsrArray<int>::Construct(vtxs.size(), elems);
             }
             treetourlex_internal::sort_tg_by(children_ordered_part, compressed, from_depth[d+1].size());
             auto compressed_part = treetourlex_internal::coord_compress_from_arr_by(children_ordered_part, compressed, from_depth[d+1].size());
             for(int i=0; i<(int)vtxs.size(); i++) for(int j=0; j<(int)children_ordered_part[i].size(); j++) children_ordered[vtxs[i]][j] = children_ordered_part[i][j];
             for(int i=0; i<(int)vtxs.size(); i++) compressed[vtxs[i]] = compressed_part[i];
+        }
+    }
+
+    void secondary(){
+        std::vector<int> bfs = {root};
+        std::vector<int> parent(N, -1);
+        std::vector<int> size(N, 1);
+        bfs.reserve(N);
+        for(int i=0; i<N; i++){
+            int p = bfs[i];
+            for(int e : children_ordered[p]){
+                parent[e] = p;
+                bfs.push_back(e);
+            }
+        }
+        for(int i=N-1; i>=1; i--) size[parent[bfs[i]]] += size[bfs[i]];
+        std::vector<int> pos(N, 0);
+        std::vector<int> brack(N, 0);
+        for(int i=0; i<N; i++){
+            int p = bfs[i];
+            int posv = pos[p] + 1;
+            brack[pos[p] + size[p] - 1]++;
+            for(int e : children_ordered[bfs[i]]){
+                pos[e] = posv;
+                posv += size[e];
+            }
+        }
+        auto sa = treetourlex_internal::atcoder::suffix_array(brack, N);
+        auto lcp = treetourlex_internal::atcoder::lcp_array(brack, sa);
+        std::vector<int> invpos(N, 0);
+        for(int i=0; i<N; i++) invpos[pos[i]] = i;
+        compressed[invpos[sa[0]]] = 0;
+        for(int i=1; i<N; i++){
+            int prevtx = invpos[sa[i-1]];
+            int vtx = invpos[sa[i]];
+            compressed[vtx] = compressed[prevtx];
+            if(lcp[i-1] < size[vtx]-1 || size[prevtx] != size[vtx]) compressed[vtx]++;
         }
     }
 };

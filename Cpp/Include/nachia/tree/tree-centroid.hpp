@@ -1,14 +1,13 @@
 #pragma once
-
-#include "../graph/adjacency-list.hpp"
-
+#include "../array/csr-array.hpp"
+#include <vector>
 
 namespace nachia{
 
 // size 1 : center is a node
 // size 2 : center is an edge between them
-std::vector<int> UnitTreeCentroid(const AdjacencyList& T){
-    int n = T.num_vertices();
+std::vector<int> UnitTreeCentroid(const CsrArray<int>& T){
+    int n = T.size();
     std::vector<int> bfs = {0};
     bfs.reserve(n);
     std::vector<int> Z(n, 1);

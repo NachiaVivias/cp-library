@@ -1,45 +1,47 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/biconnected_components"
-
 #include "../../../Include/nachia/graph/biconnected-components.hpp"
-
-
-#include <iostream>
+#include <cstdio>
 #include <algorithm>
+#include <cassert>
+
+void Exit(const char* e){ puts(e); exit(0); }
 
 int main() {
-
-    int n; std::cin >> n;
-    int m; std::cin >> m;
+    int n; scanf("%d", &n);
+    int m; scanf("%d", &m);
     std::vector<std::pair<int, int>> edges(m);
     for(auto& [u,v] : edges){
-        u; std::cin >> u;
-        v; std::cin >> v;
+        scanf("%d", &u);
+        scanf("%d", &v);
     }
 
-    auto bct = nachia::BiconnectedComponents(n, edges).get_bct();
+    auto G = nachia::Graph(n, edges, true);
+    auto bc = nachia::BiconnectedComponents(G);
+    auto bcv = bc.getBcVertices();
+    auto bct = bc.getBcTree();
+    auto bce = bc.getBcEdges();
+    int bccnt = bc.getNumBcs();
 
-    int bccnt = bct.num_vertices() - n;
-    for(int i=0; i<n; i++) if(bct[i].size() == 0) bccnt++;
+    if(bcv.size() != bccnt) Exit("bcv.size() != bccnt");
+    if(bcv.fullSize() != n) Exit("bce.fullSize() != n");
+    if(bct.numVertices() != n + bccnt) Exit("bct.numVertices() != n + bccnt");
+    if(bce.size() != bccnt) Exit("bce.size() != bccnt");
+    if(bce.fullSize() != m) Exit("bce.fullSize() != m");
 
-    std::cout << bccnt << '\n';
+    std::vector<int> vis(n, -1);
+    for(int i=0; i<bccnt; i++){
+        for(int v : bcv[i]) vis[v] = i;
+        for(int e : bce[i]){
+            if(vis[G[e].from] != i) Exit("vis[G[e].from] != i");
+            if(vis[G[e].to] != i) Exit("vis[G[e].to] != i");
+        }
+    }
 
-    std::vector<std::vector<int>> ansbuf(bccnt);
-    int ansbufItr = 0;
-    
-    for(int bcidx=n; bcidx < bct.num_vertices(); bcidx++) ansbuf[ansbufItr++] = std::vector<int>(bct[bcidx].begin(), bct[bcidx].end());
-
-    for(auto& a : ansbuf){
-        std::cout << (int)a.size();
-        for(auto v : a) std::cout << ' ' << v;
-        std::cout << '\n';
+    printf("%d\n", bccnt);
+    for(int i=0; i<bccnt; i++){
+        printf("%d\n", (int)bcv[i].size());
+        for(auto v : bcv[i]) printf(" %d", v);
+        printf("\n");
     }
     return 0;
 }
-
-
-struct ios_do_not_sync{
-    ios_do_not_sync(){
-        std::ios::sync_with_stdio(false);
-        std::cin.tie(nullptr);
-    }
-} ios_do_not_sync_instance;

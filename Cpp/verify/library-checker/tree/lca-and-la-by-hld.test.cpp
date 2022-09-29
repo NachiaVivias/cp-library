@@ -1,7 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/lca"
 #include "../../../Include/nachia/tree/heavy-light-decomposition.hpp"
 
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -67,13 +66,13 @@ int main() {
 
     int N; std::cin >> N;
     int Q; std::cin >> Q;
-    std::vector<std::vector<int>> E(N);
+    std::vector<std::pair<int,int>> edges(N-1);
     for(int i=1; i<N; i++){
         int p; std::cin >> p;
-        E[p].push_back(i);
+        edges[i-1] = { p, i };
     }
 
-    nachia::HeavyLightDecomposition hld(E);
+    auto hld = nachia::HeavyLightDecomposition(nachia::CsrArray<int>::Construct(N, edges));
 
     for(int i=0; i<Q; i++){
         int u, v; std::cin >> u >> v;

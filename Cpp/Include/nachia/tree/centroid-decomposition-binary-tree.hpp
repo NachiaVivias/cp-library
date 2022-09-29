@@ -1,7 +1,5 @@
 #pragma once
-
-#include "../graph/adjacency-list.hpp"
-
+#include "../array/csr-array.hpp"
 #include <vector>
 #include <algorithm>
 #include <utility>
@@ -12,9 +10,6 @@
 namespace nachia {
 
 struct CentroidDecompositionBinaryTree{
-public:
-    struct UpdatePoint { int i; int p; };
-    struct QueryRange { int i, l, r; };
 private:
     struct VectorIntView{
         using Iter = typename std::vector<int>::iterator;
@@ -39,6 +34,9 @@ private:
         int exclude_cent;
     };
 
+    struct UpdatePoint { int i; int p; };
+    struct QueryRange { int i, l, r; };
+
     std::vector<std::vector<int>> cd_dist;
     std::vector<CDBTNode> bt_nodes;
     std::vector<std::vector<int>> bt_arrays;
@@ -61,7 +59,7 @@ private:
     }
 
     static int find_centroid(
-        const nachia::AdjacencyList& adj,
+        const CsrArray<int>& adj,
         std::vector<int>& Z,
         int root
     ){
@@ -78,9 +76,17 @@ private:
 public:
 
     CentroidDecompositionBinaryTree() {}
-    CentroidDecompositionBinaryTree(const nachia::AdjacencyList& adj){
-        int n = adj.num_vertices();
+    CentroidDecompositionBinaryTree(const CsrArray<int>& adj){
+        int n = adj.size();
         assert(1 <= n);
+        if(n == 1){
+            cd_dist = {{0}};
+            bt_nodes = {{0,0,-1,-1,0,1,0}};
+            bt_arrays = {{0}};
+            bt_arrays_sep = {{0,1}};
+            update_points = {{{0,0}}};
+            return;
+        }
         std::vector<int> Z;
         {
             std::vector<int> bfs = {0};
