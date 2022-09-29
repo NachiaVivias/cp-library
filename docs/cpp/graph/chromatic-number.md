@@ -46,7 +46,7 @@ int ChromaticNumberByMod(std::vector<std::vector<int>> adjacency_matrix);
 - $\text{adjacency\_matrix}[i][j]=\text{adjacency\_matrix}[j][i]$
 - $O(2^n)$ 時間
 
-一定のルールに従ってグラフの頂点を彩色する方法を $\bmod \hspace{3px} \text{MOD}$ で数え上げ、それがゼロかどうかで彩色数を推定した値を返す。
+一定のルールに従って $k$ 色でグラフの頂点を彩色する方法を $\bmod \hspace{3px} \text{MOD}$ で数え上げ、それがゼロかどうかで彩色数を推定した値を返す。
 
 正しい彩色数以上 $n$ 以下の値を返す。
 
