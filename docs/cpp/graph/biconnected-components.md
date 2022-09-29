@@ -19,7 +19,7 @@
 ### コンストラクタ
 
 ```c++
-BiconnectedComponents(Graph G);
+BiconnectedComponents(Graph G = Graph(0, true));
 ```
 
 - 頂点数： $1 \leq n \leq 1 \times 10^7$

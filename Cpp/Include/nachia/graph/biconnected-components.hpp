@@ -14,10 +14,11 @@ private:
     Graph mG;
     std::vector<std::pair<int,int>> m_bcVtxPair;
 public:
-    BiconnectedComponents(Graph G){
+    BiconnectedComponents(Graph G = Graph(0, true)){
         int n = mn = G.numVertices();
         int m = mm = G.numEdges();
         mG = std::move(G);
+        if(n == 0){ mnum_bcs = 0; return; }
         auto adj = mG.getAdjacencyArray();
 
         auto dfstree = DfsTree::Construct<false>(adj);
