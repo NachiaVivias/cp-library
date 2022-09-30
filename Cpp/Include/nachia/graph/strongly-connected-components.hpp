@@ -41,6 +41,7 @@ struct SCC{
             sep.push_back(p2);
         }
         induce = CsrArray<int>::FromRaw(std::move(csr), std::move(sep));
+        componentNum = induce.size();
     }
 
     int numComponents() const { return componentNum; }
