@@ -10,7 +10,7 @@
 
 体 $\mathbb{F} _ p$ 上の $h \times w$ 型行列 $A$ を管理する。スカラーの型には `atcoder::static_modint<p>` ( $p$ は奇素数) およびそれに準ずる構造体を指定できる。
 
-## struct nachia::TwoDRectangeQuery
+## struct nachia::MatrixModulo
 
 ### テンプレート引数
 
