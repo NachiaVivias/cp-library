@@ -15,14 +15,14 @@ int main() {
         scanf("%d", &v);
     }
 
-    auto G = nachia::Graph(n, edges, true);
+    auto G = nachia::Graph(n, edges, false);
     auto scc = nachia::SCC(G);
     auto sccv = scc.getCsr();
     int scccnt = scc.numComponents();
 
     printf("%d\n", scccnt);
     for(int i=0; i<scccnt; i++){
-        printf("%d\n", (int)sccv[i].size());
+        printf("%d", (int)sccv[i].size());
         for(auto v : sccv[i]) printf(" %d", v);
         printf("\n");
     }
