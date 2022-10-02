@@ -69,15 +69,17 @@ bool is_connected(int u, int v);
 - $0 \leq v \lt n$
 - 償却 平均 $O( \log n )$ 時間
 
-$2$ 頂点 $u$ , $v$ が連結かどうかの真偽値を返す。
+$2$ 頂点 $u$ , $v$ が連結であるなら true 、そうでなければ false を返す。
 
 ## 備考
 
 現状 splay tree を用いているが、今後 randomized BST を用いるように変更するかもしれない。
 
+参考[1] で紹介されている、名前がついているかどうかよく知らないアルゴリズムを使っている。このアルゴリズムは各連結成分の頂点数が小さいと高速に動作するが、一方で、例えば全域木 + α を構築してからその辺をすべて取り除くというような操作列では低速になる。 union-find やマージ過程を表す木を構築するなどで処理できる場合は、そのほうが何十倍も高速だろう。
+
 ## 参考
 
-hotman78 \| online dynamic connectivity(削除可能union-find)の作り方を詳しく解説！！！ [https://qiita.com/hotman78/items/78cd3aa50b05a57738d4](https://qiita.com/hotman78/items/78cd3aa50b05a57738d4)
+[1] hotman78 \| online dynamic connectivity(削除可能union-find)の作り方を詳しく解説！！！ [https://qiita.com/hotman78/items/78cd3aa50b05a57738d4](https://qiita.com/hotman78/items/78cd3aa50b05a57738d4)
 
 ---
 
