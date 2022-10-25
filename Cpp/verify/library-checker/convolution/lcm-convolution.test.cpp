@@ -1,11 +1,11 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/lcm_convolution"
 
-#include <iostream>
+#include "../../../Include/nachia/array/divisor-convolution.hpp"
+#include "../../../Include/nachia/misc/fastio.hpp"
+
 #include <cassert>
 #include <vector>
 #include <utility>
-
-#include "../../../Include/nachia/array/divisor-convolution.hpp"
 
 namespace nachia{
 
@@ -46,16 +46,18 @@ public:
 
 
 int main(){
-    using namespace std;
     using modint = nachia::StaticModint<998244353>;
 
+    using nachia::cin;
+    using nachia::cout;
+
     int N; cin >> N;
-    vector<modint> A(N+1);
+    std::vector<modint> A(N+1);
     for(int i=1; i<=N; i++){ int a; cin >> a; A[i] = a; }
-    vector<modint> B(N+1);
+    std::vector<modint> B(N+1);
     for(int i=1; i<=N; i++){ int a; cin >> a; B[i] = a; }
     
-    A = nachia::LcmConvolution(move(A), move(B));
+    A = nachia::LcmConvolution(std::move(A), std::move(B));
     
     for(int i=1; i<=N; i++){
         if(i != 1) cout << ' ';
@@ -64,12 +66,3 @@ int main(){
     cout << '\n';
     return 0;
 }
-
-struct ios_do_not_sync{
-    ios_do_not_sync(){
-        std::ios::sync_with_stdio(false);
-        std::cin.tie(nullptr);
-    }
-} ios_do_not_sync_instance;
-
-
