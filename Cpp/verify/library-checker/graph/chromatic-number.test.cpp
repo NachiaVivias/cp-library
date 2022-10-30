@@ -1,18 +1,21 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/chromatic_number"
 
 #include "../../../Include/nachia/graph/chromatic-number.hpp"
-
-#include <iostream>
+#include "../../../Include/nachia/misc/fastio.hpp"
 #include <cassert>
 
 
 
 int main(){
-    using namespace std;
-    int N,M; cin >> N >> M;
-    vector<vector<int>> E(N,vector<int>(N,0));
+    using nachia::cin;
+    using nachia::cout;
+
+    int N = cin.nextU32();
+    int M = cin.nextU32();
+    std::vector<std::vector<int>> E(N, std::vector<int>(N, 0));
     for(int i=0; i<M; i++){
-        int u,v; cin >> u >> v;
+        int u = cin.nextU32();
+        int v = cin.nextU32();
         E[u][v] = E[v][u] = 1;
     }
     int ans = nachia::ChromaticNumber(E);
@@ -28,12 +31,3 @@ int main(){
     cout << ans << "\n";
     return 0;
 }
-
-struct ios_do_not_sync{
-  ios_do_not_sync(){
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-  }
-} ios_do_not_sync_instance;
-
-

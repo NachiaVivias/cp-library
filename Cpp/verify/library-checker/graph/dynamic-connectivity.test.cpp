@@ -1,10 +1,8 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/dynamic_graph_vertex_add_component_sum"
-
 #include "../../../Include/nachia/graph/dynamic-connectivity.hpp"
-
+#include "../../../Include/nachia/misc/fastio.hpp"
 #include <vector>
 #include <algorithm>
-#include <iostream>
 #include <cassert>
 
 
@@ -170,23 +168,22 @@ namespace LCT{
     using LCT = nachia::LinkCutTree;
 }
 
-
-#include <iostream>
-
 int main(){
-    using namespace std;
-    int N,Q; cin >> N >> Q;
+    using nachia::cin;
+    using nachia::cout;
+    int N = cin.nextU32();
+    int Q = cin.nextU32();
 
     nachia::OnlineFullyDynamicConnectivityBySplayEtt dycon(N);
     LCT::LCT component_sum(N);
 
     for(int i=0; i<N; i++){
-        int a; cin >> a;
+        int a = cin.nextU32();
         component_sum.set(i, { (LCT::u64)a });
     }
 
     for(int i=0; i<Q; i++){
-        int t; cin >> t;
+        int t = cin.nextU32();
         if(t == 0){
             int u,v; cin >> u >> v;
             auto forestlink = dycon.link(u, v);
@@ -195,7 +192,8 @@ int main(){
             }
         }
         else if(t == 1){
-            int u,v; cin >> u >> v;
+            int u = cin.nextU32();
+            int v = cin.nextU32();
             auto [forestcut, forestlink] = dycon.cut(u, v);
             if(forestcut.first != -1){
                 component_sum.evert(forestcut.first);
@@ -206,22 +204,15 @@ int main(){
             }
         }
         else if(t == 2){
-            int v,x; cin >> v >> x;
+            int v = cin.nextU32();
+            int x = cin.nextU32();
             component_sum.set(v, { component_sum.get(v).x + x });
         }
         else if(t == 3){
-            int v; cin >> v;
+            int v = cin.nextU32();
             auto ans = component_sum.prod(v).x;
             cout << ans << '\n';
         }
     }
     return 0;
 }
-
-
-struct ios_do_not_sync{
-    ios_do_not_sync(){
-        std::ios::sync_with_stdio(false);
-        std::cin.tie(nullptr);
-    }
-} ios_do_not_sync_instance;

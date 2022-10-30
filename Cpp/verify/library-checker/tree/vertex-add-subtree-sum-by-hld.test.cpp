@@ -1,7 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/vertex_add_subtree_sum"
 #include "../../../Include/nachia/tree/heavy-light-decomposition.hpp"
-
-#include <iostream>
+#include "../../../Include/nachia/misc/fastio.hpp"
 #include <cstdint>
 
 
@@ -59,12 +58,15 @@ using RQ = Segtree<RQS,RQop,RQe>;
 
 
 int main(){
-    int N, Q; std::cin >> N >> Q;
+    using nachia::cin;
+    using nachia::cout;
+
+    int N, Q; cin >> N >> Q;
     std::vector<RQS> A(N);
-    for(auto& a : A) std::cin >> a.a;
+    for(auto& a : A) cin >> a.a;
     std::vector<std::pair<int,int>> edges(N-1);
     for(int i=1; i<N; i++){
-        int p; std::cin >> p;
+        int p; cin >> p;
         edges[i-1] = { p, i };
     }
 
@@ -73,27 +75,17 @@ int main(){
     for(int i=0; i<N; i++) rq.set(hld.to_seq(i), A[i]);
 
     for(int i=0; i<Q; i++){
-        int t; std::cin >> t;
+        int t; cin >> t;
         if(t == 0){
-            int p,x; std::cin >> p >> x;
+            int p,x; cin >> p >> x;
             rq.set(hld.to_seq(p), { rq.get(hld.to_seq(p)).a + (uint64_t)x });
         }
         if(t == 1){
-            int p; std::cin >> p;
+            int p; cin >> p;
             auto range = hld.subtree(p);
             uint64_t ans = rq.prod(range.first, range.second).a;
-            std::cout << ans << "\n";
+            cout << ans << "\n";
         }
     }
     return 0;
 }
-
-
-struct ios_do_not_sync{
-    ios_do_not_sync(){
-        std::ios::sync_with_stdio(false);
-        std::cin.tie(nullptr);
-    }
-} ios_do_not_sync_instance;
-
-

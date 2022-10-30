@@ -1,8 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/vertex_set_path_composite"
 #include "../../../Include/nachia/tree/heavy-light-decomposition.hpp"
 #include "../../../Include/nachia/graph/graph.hpp"
-
-#include <iostream>
+#include "../../../Include/nachia/misc/fastio.hpp"
 #include <cstdint>
 
 
@@ -81,11 +80,14 @@ using RQ = Segtree<RQS,RQop,RQe>;
 
 
 int main(){
-    int N, Q; std::cin >> N >> Q;
+    using nachia::cin;
+    using nachia::cout;
+
+    int N, Q; cin >> N >> Q;
     std::vector<RQS> A(N);
-    for(auto& a : A) std::cin >> a.a >> a.b;
+    for(auto& a : A) cin >> a.a >> a.b;
     std::vector<std::pair<int, int>> edges(N-1);
-    for(auto& e : edges) std::cin >> e.first >> e.second;
+    for(auto& e : edges) cin >> e.first >> e.second;
 
     auto hld = nachia::HeavyLightDecomposition(nachia::Graph(N, edges, true).getAdjacencyArray());
     RQ rq1(N);
@@ -94,30 +96,20 @@ int main(){
     for(int i=0; i<N; i++) rq2.set(N-1-hld.to_seq(i),A[i]);
 
     for(int i=0; i<Q; i++){
-        int t; std::cin >> t;
+        int t; cin >> t;
         if(t == 0){
-            int p,c,d; std::cin >> p >> c >> d;
+            int p,c,d; cin >> p >> c >> d;
             rq1.set(hld.to_seq(p), RQS{(uint64_t)c,(uint64_t)d});
             rq2.set(N-1-hld.to_seq(p), RQS{(uint64_t)c,(uint64_t)d});
         }
         if(t == 1){
-            int u,v,x; std::cin >> u >> v >> x;
+            int u,v,x; cin >> u >> v >> x;
             int g = hld.lca(u,v);
             uint64_t px = x;
             for(auto I : hld.path(g,u,false,true)) px = rq2.prod(I.first,I.second)(px);
             for(auto I : hld.path(g,v,true,false)) px = rq1.prod(I.first,I.second)(px);
-            std::cout << px << "\n";
+            cout << px << "\n";
         }
     }
     return 0;
 }
-
-
-struct ios_do_not_sync{
-    ios_do_not_sync(){
-        std::ios::sync_with_stdio(false);
-        std::cin.tie(nullptr);
-    }
-} ios_do_not_sync_instance;
-
-

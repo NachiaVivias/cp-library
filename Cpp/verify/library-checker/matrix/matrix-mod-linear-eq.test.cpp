@@ -1,8 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/system_of_linear_equations"
 #include "../../../Include/nachia/linear/matrix-modulo.hpp"
-
-
-#include <iostream>
+#include "../../../Include/nachia/misc/fastio.hpp"
 
 
 namespace nachia_verify{
@@ -45,31 +43,23 @@ void verify_main(){
     using modint = Modint<998244353>;
     using matrix = nachia::MatrixModulo<modint>;
 
-    int h,w; std::cin >> h >> w;
+    int h,w; nachia::cin >> h >> w;
     matrix A(h, w+1);
-    for(int i=0; i<h; i++) for(int j=0; j<w; j++){ int a; std::cin >> a; A[i][j] = a; }
-    for(int i=0; i<h; i++){ int a; std::cin >> a; A[i][w] = -modint(a); }
+    for(int i=0; i<h; i++) for(int j=0; j<w; j++){ A[i][j] = nachia::cin.nextU32(); }
+    for(int i=0; i<h; i++){ A[i][w] = -modint(nachia::cin.nextU32()); }
     auto sol = A.linear_equation();
-    if(sol.height() == 0){ std::cout << "-1\n"; }
+    if(sol.height() == 0){ nachia::cout << "-1\n"; }
     else{
-        std::cout << (sol.height()-1) << "\n";
-        for(int i=0; i<w; i++){ if(i) std::cout << " "; std::cout << sol[0][i].val(); } std::cout << "\n";
+        nachia::cout << (sol.height()-1) << '\n';
+        for(int i=0; i<w; i++){ if(i) nachia::cout << ' '; nachia::cout << sol[0][i].val(); } nachia::cout << '\n';
         for(int i=1; i<sol.height(); i++){
-            for(int j=0; j<sol.width()-1; j++){ if(j) std::cout << " "; std::cout << sol[i][j].val(); }
-            std::cout << "\n";
+            for(int j=0; j<sol.width()-1; j++){ if(j) nachia::cout << ' '; nachia::cout << sol[i][j].val(); }
+            nachia::cout << '\n';
         }
     }
 }
 
 }
-
-
-struct ios_do_not_sync{
-    ios_do_not_sync(){
-        std::ios::sync_with_stdio(false);
-        std::cin.tie(nullptr);
-    }
-} ios_do_not_sync_instance;
 
 int main() {
     nachia_verify::verify_main();

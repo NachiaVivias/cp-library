@@ -1,18 +1,21 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/biconnected_components"
 #include "../../../Include/nachia/graph/biconnected-components.hpp"
-#include <cstdio>
+#include "../../../Include/nachia/misc/fastio.hpp"
 #include <algorithm>
 #include <cassert>
 
 void Exit(const char* e){ puts(e); exit(0); }
 
 int main() {
-    int n; scanf("%d", &n);
-    int m; scanf("%d", &m);
+    using nachia::cin;
+    using nachia::cout;
+
+    int n = cin.nextU32();
+    int m = cin.nextU32();
     std::vector<std::pair<int, int>> edges(m);
     for(auto& [u,v] : edges){
-        scanf("%d", &u);
-        scanf("%d", &v);
+        u = cin.nextU32();
+        v = cin.nextU32();
     }
 
     auto G = nachia::Graph(n, edges, true);
@@ -36,11 +39,11 @@ int main() {
         }
     }
 
-    printf("%d\n", bccnt);
+    cout << bccnt << '\n';
     for(int i=0; i<bccnt; i++){
-        printf("%d\n", (int)bcv[i].size());
-        for(auto v : bcv[i]) printf(" %d", v);
-        printf("\n");
+        cout << (int)bcv[i].size();
+        for(auto v : bcv[i]) cout << ' ' << v;
+        cout << '\n';
     }
     return 0;
 }

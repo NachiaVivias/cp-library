@@ -1,9 +1,7 @@
 #define PROBLEM "https://yukicoder.me/problems/no/1600"
 #include "../../Include/nachia/tree/heavy-light-decomposition.hpp"
 #include "../../Include/nachia/graph/graph.hpp"
-
-
-#include <iostream>
+#include "../../../Include/nachia/misc/fastio.hpp"
 #include <vector>
 #include <algorithm>
 #include <set>
@@ -58,6 +56,7 @@ nachia::HeavyLightDecomposition hld;
 
 
 void read_graph(){
+  using nachia::cin;
   cin >> N >> M;
   E.resize(N);
   vector<pair<int,int>> idE;
@@ -151,6 +150,8 @@ mll shortest_using(int u,int v,int z){
 
 
 int main(){
+  using nachia::cin;
+  using nachia::cout;
   read_graph();
   initLCA();
   build_flows();
@@ -166,11 +167,3 @@ int main(){
   }
   return 0;
 }
-
-struct ios_do_not_sync{
-  ios_do_not_sync(){
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-  }
-} ios_do_not_sync_inst;
-

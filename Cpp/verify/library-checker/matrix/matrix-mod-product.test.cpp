@@ -1,8 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/matrix_product"
 #include "../../../Include/nachia/linear/matrix-modulo.hpp"
-
-
-#include <iostream>
+#include "../../../Include/nachia/misc/fastio.hpp"
 
 
 namespace nachia_verify{
@@ -45,20 +43,20 @@ void verify_main(){
     using modint = Modint<998244353>;
     using matrix = nachia::MatrixModulo<modint>;
 
-    int N, M, K; std::cin >> N >> M >> K;
+    int N = nachia::cin.nextU32();
+    int M = nachia::cin.nextU32();
+    int K = nachia::cin.nextU32();
 
     matrix A(N, M);
     for(int y=0; y<N; y++) for(int x=0; x<M; x++){
-        int a; std::cin >> a;
-        A[y][x] = a;
+        A[y][x] = nachia::cin.nextU32();
     }
     assert(A.height() == N);
     assert(A.width() == M);
     
     matrix B(M, K);
     for(int y=0; y<M; y++) for(int x=0; x<K; x++){
-        int a; std::cin >> a;
-        B[y][x] = a;
+        B[y][x] = nachia::cin.nextU32();
     }
     assert(B.height() == M);
     assert(B.width() == K);
@@ -68,10 +66,10 @@ void verify_main(){
     assert(C.width() == K);
     for(int y=0; y<N; y++){
         for(int x=0; x<K; x++){
-            if(x != 0) std::cout << " ";
-            std::cout << C[y][x].val();
+            if(x != 0) nachia::cout << ' ';
+            nachia::cout << C[y][x].val();
         }
-        std::cout << "\n";
+        nachia::cout << '\n';
     }
 }
 

@@ -1,18 +1,21 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/scc"
 #include "../../../Include/nachia/graph/strongly-connected-components.hpp"
-#include <cstdio>
+#include "../../../Include/nachia/misc/fastio.hpp"
 #include <algorithm>
 #include <cassert>
 
 void Exit(const char* e){ puts(e); exit(0); }
 
 int main() {
-    int n; scanf("%d", &n);
-    int m; scanf("%d", &m);
+    using nachia::cin;
+    using nachia::cout;
+
+    int n = cin.nextU32();
+    int m = cin.nextU32();
     std::vector<std::pair<int, int>> edges(m);
     for(auto& [u,v] : edges){
-        scanf("%d", &u);
-        scanf("%d", &v);
+        u = cin.nextU32();
+        v = cin.nextU32();
     }
 
     auto G = nachia::Graph(n, edges, false);
@@ -20,11 +23,11 @@ int main() {
     auto sccv = scc.getCsr();
     int scccnt = scc.numComponents();
 
-    printf("%d\n", scccnt);
+    cout << scccnt << '\n';
     for(int i=0; i<scccnt; i++){
-        printf("%d", (int)sccv[i].size());
-        for(auto v : sccv[i]) printf(" %d", v);
-        printf("\n");
+        cout << (int)sccv[i].size();
+        for(auto v : sccv[i]) cout << ' ' << v;
+        cout << '\n';
     }
     return 0;
 }

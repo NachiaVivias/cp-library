@@ -1,7 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/point_add_rectangle_sum"
 #include "../../../Include/nachia/multi-dimensional/two-d-rectangle-query.hpp"
+#include "../../../Include/nachia/misc/fastio.hpp"
 
-#include <iostream>
 #include <string>
 
 struct BIT{
@@ -31,11 +31,14 @@ bool operator<(ReversedInt l, ReversedInt r){ return r.x < l.x; }
 
 
 int main(){
-    int N,Q; std::cin >> N >> Q;
+    using nachia::cin;
+    using nachia::cout;
+
+    int N,Q; cin >> N >> Q;
     std::vector<std::pair<ReversedInt, std::string>> P;
     std::vector<int> A;
     for(int i=0; i<N; i++){
-        int x, y, w; std::cin >> x >> y >> w;
+        int x, y, w; cin >> x >> y >> w;
         P.push_back({ ReversedInt{x}, int_to_compstr(y) });
         A.push_back(w);
     }
@@ -44,15 +47,15 @@ int main(){
 
     // read all queries first
     for(int i=0; i<Q; i++){
-        int t; std::cin >> t;
+        int t; cin >> t;
         if(t == 0) /* additional point */ {
-            int x, y, w; std::cin >> x >> y >> w;
+            int x, y, w; cin >> x >> y >> w;
             queries.push_back({ t, (int)P.size(), w });
             P.push_back({ ReversedInt{x}, int_to_compstr(y) });
             A.push_back(0);
         }
         if(t == 1) /* query */ {
-            int xl, yl, xr, yr; std::cin >> xl >> yl >> xr >> yr;
+            int xl, yl, xr, yr; cin >> xl >> yl >> xr >> yr;
             queries.push_back({ t, xl, xr, yl, yr });
         }
     }
@@ -81,19 +84,9 @@ int main(){
             ){
                 ans += rq[qq.d].sum(qq.r) - rq[qq.d].sum(qq.l);
             }
-            std::cout << ans << "\n";
+            cout << ans << '\n';
         }
     }
     
     return 0;
 }
-
-
-struct ios_do_not_sync{
-  ios_do_not_sync(){
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-  }
-} ios_do_not_sync_instance;
-
-

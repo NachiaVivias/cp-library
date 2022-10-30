@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/matrix_det"
 #include "../../../Include/nachia/linear/matrix-modulo.hpp"
-
+#include "../../../Include/nachia/misc/fastio.hpp"
 using u32 = unsigned int;
 using u64 = unsigned long long;
 
@@ -55,30 +55,12 @@ public:
 };
 
 
-
-#include <vector>
-#include <algorithm>
-#include <iostream>
-#include <cassert>
-#include <cstdint>
-
-
 int main() {
-    int N; std::cin >> N;
+    int N = nachia::cin.nextU32();
     const unsigned int MOD = 998244353;
     nachia::MatrixModulo<LazyMontgomeryModint<998244353>> A(N, N);
-    for(int y=0; y<N; y++) for(int x=0; x<N; x++){ unsigned int a; std::cin >> a; A[y][x] = a; }
+    for(int y=0; y<N; y++) for(int x=0; x<N; x++) A[y][x] = nachia::cin.nextU32();
     unsigned int ans = *A.det();
-    std::cout << ans << "\n";
+    nachia::cout << ans << "\n";
     return 0;
 }
-
-
-struct ios_do_not_sync{
-  ios_do_not_sync(){
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-  }
-} ios_do_not_sync_instance;
-
-

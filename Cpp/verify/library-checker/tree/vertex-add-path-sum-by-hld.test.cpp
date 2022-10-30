@@ -1,8 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/vertex_add_path_sum"
 #include "../../../Include/nachia/tree/heavy-light-decomposition.hpp"
 #include "../../../Include/nachia/graph/graph.hpp"
-
-#include <iostream>
+#include "../../../Include/nachia/misc/fastio.hpp"
 #include <cstdint>
 
 struct BIT{
@@ -32,11 +31,14 @@ struct BIT{
 };
 
 int main() {
-    int N,Q; std::cin >> N >> Q;
+    using nachia::cin;
+    using nachia::cout;
+    
+    int N,Q; cin >> N >> Q;
     std::vector<int> A(N);
-    for(int i=0; i<N; i++) std::cin >> A[i];
+    for(int i=0; i<N; i++) cin >> A[i];
     std::vector<std::pair<int, int>> edges(N-1);
-    for(auto& e : edges) std::cin >> e.first >> e.second;
+    for(auto& e : edges) cin >> e.first >> e.second;
 
     auto hld = nachia::HeavyLightDecomposition(nachia::Graph(N, edges, true).getAdjacencyArray());
     BIT rq(N);
@@ -44,29 +46,19 @@ int main() {
     for(int i=0; i<N; i++) rq.add(hld.to_seq(i),A[i]);
 
     for(int i=0; i<Q; i++){
-        int t; std::cin >> t;
+        int t; cin >> t;
         if(t == 0){
-            int p,x; std::cin >> p >> x;
+            int p,x; cin >> p >> x;
             rq.add(hld.to_seq(p),x);
         }
         if(t == 1){
-            int u,v; std::cin >> u >> v;
+            int u,v; cin >> u >> v;
             int g = hld.lca(u,v);
             int64_t res = 0;
             for(auto I : hld.path(g,u,true)) res += rq.sum(I.first, I.second);
             for(auto I : hld.path(g,v,false)) res += rq.sum(I.first, I.second);
-            std::cout << res << "\n";
+            cout << res << "\n";
         }
     }
     return 0;
 }
-
-
-struct ios_do_not_sync{
-    ios_do_not_sync(){
-        std::ios::sync_with_stdio(false);
-        std::cin.tie(nullptr);
-    }
-} ios_do_not_sync_instance;
-
-
