@@ -36,7 +36,7 @@ Graph(int n, const std::vector<Edge>& edges, bool undirected = false); // (3)
 Graph(int n, std::vector<Edge>&& edges, bool undirected = false); // (3)
 ```
 
-$n$ は頂点数である。 `undirected` には、構築するグラフが無効グラフなら `true` 、有向グラフなら `false` 与えること。
+$n$ は頂点数である。 `undirected` には、構築するグラフが有向グラフなら `true` 、有向グラフなら `false` 与えること。
 
 - $0 \leq n \leq 10^8$
 - $0 \leq m \leq 10^8$
