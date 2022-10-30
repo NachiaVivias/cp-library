@@ -12,7 +12,7 @@ struct BIT{
     }
     void add(int p, long long x){
         p += 1;
-        while(p < A.size()){ A[p] += x; p += p & -p; }
+        while(p < (int)A.size()){ A[p] += x; p += p & -p; }
     }
 };
 
