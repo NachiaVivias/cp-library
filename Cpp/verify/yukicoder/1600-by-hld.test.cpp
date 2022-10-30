@@ -1,7 +1,7 @@
 #define PROBLEM "https://yukicoder.me/problems/no/1600"
 #include "../../Include/nachia/tree/heavy-light-decomposition.hpp"
 #include "../../Include/nachia/graph/graph.hpp"
-#include "../../../Include/nachia/misc/fastio.hpp"
+#include "../../Include/nachia/misc/fastio.hpp"
 #include <vector>
 #include <algorithm>
 #include <set>
