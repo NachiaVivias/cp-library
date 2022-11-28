@@ -29,6 +29,10 @@
 
 - [$2$ 次元矩形クエリ `<nachia/multi-dimensional/two-d-rectangle-query.hpp>`](multi-dimensional/two-d-rectangle-query.md)
 
+### String
+
+- [永続文字列 `<nachia/string/persistent-string.hpp>`](string/persistent-string.md)
+
 ### Tree
 
 - [cluster のマージ過程：静的な top tree `<nachia/tree/static-top-tree.hpp>`](tree/static-top-tree.md)
