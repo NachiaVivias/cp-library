@@ -8,9 +8,9 @@
 
 ## 主な機能
 
-文字列（バイト列）の連結、分割を非破壊的に行う。十分少ない回数のコピーペーストで生成できるならば、長さ $2^{60}$ まで表現できる。
+文字列（バイト列）の連結、分割を非破壊的に行う。コピーペーストの繰り返しによって通常よりも長い文字列を生成でき、長さ $2^{60}$ まで表現できる。
 
-内部で 128bit 非負整数型 __uint128 型を使用する。この部分は修正予定である。
+$1$ バイトずつ二分探索木の葉に乗せるのに比べて、メモリ使用量を抑えるようにしている。
 
 ## struct nachia::PersistentString
 
@@ -21,7 +21,7 @@ PersistentString(const std::string& s = "");
 PersistentString(const char* s);
 ```
 
-- $n$ を文字列の長さとして、 $n\leq 2^{30}$
+- $n$ を文字列の長さとして、 $n\leq 2^{28}$
 - $O(n)$ 空間
 
 文字列を与えて初期化する。
@@ -36,10 +36,12 @@ bool empty() const noexcept; // (2)
 size_t size() const noexcept; // (2)
 ```
 
-- (1) $O(\log n)$ 時間（ $n$ は文字列長）
+- (1)
+  - $\text{pos}\leq\text{size}$
+  - $O(\log n)$ 時間（ $n$ は文字列長）
 - (2) 定数時間
 
-std::string::substr と同様である。例外処理はその限りではない。
+メインの機能は std::string のものと同様である。
 
 ### operator+ , +=
 
@@ -102,8 +104,7 @@ int main(){
     int Q; std::cin >> Q;
     for(int i=0; i<Q; i++){
         unsigned int l,r,p; std::cin >> l >> r >> p;
-        S = S.inserted(S.substr(l, r-l), p);
-        S = S.substr(0, M);
+        S = S.inserted(S.substr(l, r-l), p).substr(0, M);
     }
     std::cout << S.to_string() << '\n';
     return 0;

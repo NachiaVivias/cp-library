@@ -10,25 +10,56 @@ namespace nachia_internal{
 using u32 = unsigned int;
 
 struct Elem{
-    __uint128_t b12 = 0;
-    static constexpr u32 Cap = 16;
-    static Elem merge(Elem l, Elem r, u32 rz) noexcept { return Elem{ (l.b12 << (rz*8)) | r.b12 }; }
-    static std::pair<Elem, Elem> split(Elem l, u32 rz) noexcept { return std::make_pair(Elem{ l.b12 >> (rz*8) }, Elem{ l.b12 & ~(~(__uint128_t)0 << (rz*8)) }); }
-    void append(char c) noexcept { b12 = (b12 << 8) | (unsigned char)c; }
-    char access(u32 p) const noexcept { return (char)((b12 >> (p*8)) & 255); }
+    unsigned long long b[4] = {};
+    static constexpr u32 Cap = 32;
+    void operator<<=(u32 x) noexcept {
+        if(x & 128){ b[3] = b[1]; b[2] = b[0]; b[2] = b[1] = 0; }
+        if(x & 64){ b[3] = b[2]; b[2] = b[1]; b[1] = b[0]; b[0] = 0; }
+        x %= 64;
+        if(x == 0) return;
+        u32 y = 64 - x;
+        b[3] = b[3] << x | b[2] >> y;
+        b[2] = b[2] << x | b[1] >> y;
+        b[1] = b[1] << x | b[0] >> y;
+        b[0] = b[0] << x;
+    }
+    void operator>>=(u32 x) noexcept {
+        if(x & 128){ b[0] = b[2]; b[1] = b[3]; b[2] = b[3] = 0; }
+        if(x & 64){ b[0] = b[1]; b[1] = b[2]; b[2] = b[3]; b[3] = 0; }
+        x %= 64;
+        if(x == 0) return;
+        u32 y = 64 - x;
+        b[0] = b[0] >> x | b[1] << y;
+        b[1] = b[1] >> x | b[2] << y;
+        b[2] = b[2] >> x | b[3] << y;
+        b[3] = b[3] >> x;
+    }
+    void operator|=(const Elem& x) noexcept {
+        b[0] |= x.b[0]; b[1] |= x.b[1]; b[2] |= x.b[2]; b[3] |= x.b[3];
+    }
+    void operator&=(u32 h) noexcept {
+        int d = 0;
+        while(h >= 64){ d++; h--; }
+        if(d < 4) b[d++] &= ~(~0ull << h);
+        for(; d<4; d++) b[d++] = 0;
+    }
+    static Elem merge(Elem l, Elem r, u32 lz) noexcept { lz <<= 3; r <<= lz; r |= l; return r; }
+    static std::pair<Elem, Elem> split(Elem l, u32 lz) noexcept { lz <<= 3; auto r = l; r >>= lz; l &= lz; return std::make_pair(l, r); }
+    void append(u32 p, char c) noexcept { b[p>>3] |= (unsigned long long)c << ((p&7)<<3); }
+    char access(u32 p) const noexcept { return (char)((b[p>>3] >> ((p&7)<<3)) & 255); }
 };
 
 struct Node;
-struct LNode;
-struct MNode;
+struct LeafNode;
+struct MidNode;
 struct SharedPtrNodeObj;
 
 struct Np{
     Node *p;
     void release();
     Np() : p(nullptr) {}
-    Np(const MNode& src);
-    Np(const LNode& src);
+    Np(const MidNode& src);
+    Np(const LeafNode& src);
     Np(const Np& new_l, const Np& new_r);
     Np(const Np& src);
     Np(Np&& src) noexcept : p(src.p){ src.p = nullptr; }
@@ -40,53 +71,53 @@ struct Np{
     bool operator!() const noexcept { return !p; }
     Np& operator=(const Np& src);
     Np& operator=(Np&& src);
-    MNode* mid() const noexcept { return (MNode*)p; }
-    LNode* leaf() const noexcept { return (LNode*)p; }
+    MidNode* mid() const noexcept { return (MidNode*)p; }
+    LeafNode* leaf() const noexcept { return (LeafNode*)p; }
 };
 
 struct Node{
     static constexpr const int RANK_SH = 0;
-    u32 st;
+    u32 state;
     u32 refcnt;
     size_t size;
-    u32 rank() const noexcept { return st>>RANK_SH; }
-    bool isLeaf() const noexcept { return st == 0; }
-    Node(u32 new_st, size_t new_size) : st(new_st), refcnt(1), size(new_size) {}
+    u32 rank() const noexcept { return state>>RANK_SH; }
+    bool isLeaf() const noexcept { return state == 0; }
+    Node(u32 new_state, size_t new_size) : state(new_state), refcnt(1), size(new_size) {}
     ~Node(){}
     void dump(std::string& o) const;
 };
 
-struct MNode : public Node {
+struct MidNode : public Node {
     Np l;
     Np r;
-    MNode(const MNode& src) : Node(src), l(src.l) , r(src.r){}
-    MNode(const Np& new_l, const Np& new_r)
+    MidNode(const MidNode& src) : Node(src), l(src.l) , r(src.r){}
+    MidNode(const Np& new_l, const Np& new_r)
         : Node((std::max(new_l->rank(), new_r->rank()) + 1) << RANK_SH, new_l->size + new_r->size)
         , l(new_l)
         , r(new_r) {}
-    ~MNode(){}
+    ~MidNode(){}
 };
 
-struct LNode : public Node {
+struct LeafNode : public Node {
     Elem a;
-    LNode(Elem elem, size_t sz) : Node(0, sz), a(elem) {}
-    ~LNode(){}
+    LeafNode(Elem elem, size_t sz) : Node(0, sz), a(elem) {}
+    ~LeafNode(){}
 };
 
 void Node::dump(std::string& o) const {
-    if(isLeaf()){ for(size_t j=0; j<size; j++) o.push_back(((LNode*)this)->a.b12 >> ((size-1-j)*8)); }
-    else{ ((MNode*)this)->l->dump(o); ((MNode*)this)->r->dump(o); }
+    if(isLeaf()){ for(size_t j=0; j<size; j++) o.push_back(((LeafNode*)this)->a.access(j)); }
+    else{ ((MidNode*)this)->l->dump(o); ((MidNode*)this)->r->dump(o); }
 }
 
 
 void Np::release(){
     if(!p) return;
-    if(!--p->refcnt){ if(p->isLeaf()) delete((LNode*)p); else delete((MNode*)p); }
+    if(!--p->refcnt){ if(p->isLeaf()) delete((LeafNode*)p); else delete((MidNode*)p); }
     p = nullptr;
 }
-Np::Np(const MNode& src) : p(new MNode(src)) {}
-Np::Np(const LNode& src) : p(new LNode(src)) {}
-Np::Np(const Np& new_l, const Np& new_r) : p(new MNode(new_l, new_r)) {}
+Np::Np(const MidNode& src) : p(new MidNode(src)) {}
+Np::Np(const LeafNode& src) : p(new LeafNode(src)) {}
+Np::Np(const Np& new_l, const Np& new_r) : p(new MidNode(new_l, new_r)) {}
 Np::Np(const Np& src) : p(src.p){ if(p){ p->refcnt++; } }
 Np& Np::operator=(const Np& src){ release(); p = src.p; if(p){ p->refcnt++; } return *this; }
 Np& Np::operator=(Np&& src){ release(); p = src.p; src.p = nullptr; return *this; }
@@ -123,18 +154,18 @@ Np BST::mergeDirect(const Np& l, const Np& r){
 Np BST::leafmerge(const Np& l, const Np& r){
     size_t sumsz = l->size + r->size;
     Elem la = l.leaf()->a, ra = r.leaf()->a;
-    if(sumsz <= Elem::Cap) return Np(LNode(Elem::merge(la, ra, r->size), sumsz));
+    if(sumsz <= Elem::Cap) return Np(LeafNode(Elem::merge(la, ra, l->size), sumsz));
     if(r->size > l->size){
-        auto [rla, rra] = Elem::split(ra, sumsz/2);
+        auto [rla, rra] = Elem::split(ra, r->size - sumsz/2);
         return Np(
-            Np(LNode(Elem::merge(la, rla, r->size - sumsz/2), (sumsz+1)/2)),
-            Np(LNode(rra, sumsz/2))
+            Np(LeafNode(Elem::merge(la, rla, l->size), (sumsz+1)/2)),
+            Np(LeafNode(rra, sumsz/2))
         );
     }
-    auto [lla, lra] = Elem::split(la, l->size - sumsz/2);
+    auto [lla, lra] = Elem::split(la, sumsz/2);
     return Np(
-        Np(LNode(lla, sumsz/2)),
-        Np(LNode(Elem::merge(lra, ra, r->size), (sumsz+1)/2))
+        Np(LeafNode(lla, sumsz/2)),
+        Np(LeafNode(Elem::merge(lra, ra, l->size - sumsz/2), (sumsz+1)/2))
     );
 }
 
@@ -164,8 +195,8 @@ std::pair<Np, Np> BST::split(const Np& c, size_t where){
     if(where == 0) return std::make_pair(Np(), c);
     if(c->size <= where) return std::make_pair(c, Np());
     if(c->isLeaf()){
-        auto [l, r] = Elem::split(c.leaf()->a, c->size - where);
-        return std::make_pair(Np(LNode(l, where)), Np(LNode(r, c->size - where)));
+        auto [l, r] = Elem::split(c.leaf()->a, where);
+        return std::make_pair(Np(LeafNode(l, where)), Np(LeafNode(r, c->size - where)));
     }
     if(c.mid()->l->size == where) return std::make_pair(c.mid()->l, c.mid()->r);
     if(where < c.mid()->l->size){
@@ -179,7 +210,7 @@ std::pair<Np, Np> BST::split(const Np& c, size_t where){
 Np BST::splitL(const Np& c, size_t where){
     if(where == 0) return Np();
     if(c->size <= where) return c;
-    if(c->isLeaf()) return Np(LNode(Elem::split(c.leaf()->a, c->size - where).first, where));
+    if(c->isLeaf()) return Np(LeafNode(Elem::split(c.leaf()->a, where).first, where));
     if(c.mid()->l->size == where) return c.mid()->l;
     if(where < c.mid()->l->size) return splitL(c.mid()->l, where);
     return merge(c.mid()->l, splitL(c.mid()->r, where - c.mid()->l->size));
@@ -188,7 +219,7 @@ Np BST::splitL(const Np& c, size_t where){
 Np BST::splitR(const Np& c, size_t where){
     if(where == 0) return c;
     if(c->size <= where) return Np();
-    if(c->isLeaf()) return Np(LNode(Elem::split(c.leaf()->a, c->size - where).second, c->size - where));
+    if(c->isLeaf()) return Np(LeafNode(Elem::split(c.leaf()->a, where).second, c->size - where));
     if(c.mid()->l->size == where) return c.mid()->r;
     if(where < c.mid()->l->size) return merge(splitR(c.mid()->l, where), c.mid()->r);
     return splitR(c.mid()->r, where - c.mid()->l->size);
@@ -199,8 +230,8 @@ Np BST::construct(const std::string& s){
     auto dfs = [&](auto& dfs, size_t l, size_t r) -> Np {
         if(l + Elem::Cap >= r){
             Elem q;
-            for(size_t j=0; j<r-l; j++) q.append(s[l+j]);
-            return Np(LNode(q, r-l));
+            for(size_t j=0; j<r-l; j++) q.append(j, s[l+j]);
+            return Np(LeafNode(q, r-l));
         }
         size_t m = (l+r) / 2;
         return BST::merge(dfs(dfs, l, m), dfs(dfs, m, r));
