@@ -11,6 +11,7 @@
 
 - [Biconnected Components ( 2-連結成分 ) `<nachia/graph/biconnected-components.hpp>`](graph/biconnected-components.md)
 - [頂点彩色数 `<nachia/graph/chromatic-number.hpp>`](graph/chromatic-number.md)
+- [Dijkstra法 ( ダイクストラ法 ) `<nachia/graph/dijkstra.hpp>`](graph/dijkstra.md)
 - [Online Dynamic Connectivity `<nachia/graph/dynamic-connectivity.hpp>`](graph/dynamic-connectivity.md)
 - [Graph 構造体・辺のリスト `<nachia/graph/graph.hpp>`](graph/graph.md)
 - [Strongly Connected Components ( 強連結成分 ) `<nachia/graph/strongly-connected-components.hpp>`](graph/strongly-connected-components.md)
