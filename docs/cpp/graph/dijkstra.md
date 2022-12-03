@@ -112,7 +112,7 @@ int main(){
     for(int i=0; i<M; i++){
         int u,v,c; cin >> u >> v >> c;
         G.addEdge(u, v);
-        W[i] = {c};
+        W[i] = c;
     }
 
     // 最短路長の上限
