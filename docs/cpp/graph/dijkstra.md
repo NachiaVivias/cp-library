@@ -91,14 +91,14 @@ std::vector<int> pathTo(int v) const
 
 ## 使用例
 
-[Library Checker | Shorest Path](https://judge.yosupo.jp/problem/shortest_path)
+[Library Checker \| Shorest Path](https://judge.yosupo.jp/problem/shortest_path)
 
 ```c++
 #define PROBLEM "https://judge.yosupo.jp/problem/shortest_path"
 
-#include "nachia/graph/dijkstra.hpp"
-#include "nachia/graph/graph.hpp"
-#include "nachia/misc/fastio.hpp"
+#include <nachia/graph/dijkstra.hpp>
+#include <nachia/graph/graph.hpp>
+#include <nachia/misc/fastio.hpp>
 
 int main(){
     using nachia::cin, nachia::cout;
