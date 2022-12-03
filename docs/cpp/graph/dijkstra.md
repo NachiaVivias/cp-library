@@ -50,7 +50,7 @@ DijkstraShortestPath(
 
 `Inf` は最短距離が存在しない場合または `Inf` 以上であった場合に設定される値である。
 
-- 頂点数： $0 \leq n \leq 10^7$
+- 頂点数： $1 \leq n \leq 10^7$
 - 辺数： $0 \leq m \leq 10^7$
 - 始点の個数： $1 \leq k \leq 10^7$
 - $\text{weight.size()}=N$
