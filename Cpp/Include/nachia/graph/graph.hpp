@@ -23,6 +23,7 @@ public:
     Graph(int n, std::vector<Edge>&& edges, bool undirected = false) : m_n(n), m_e(edges), m_isUndir(undirected) {}
     int numVertices() const noexcept { return m_n; }
     int numEdges() const noexcept { return int(m_e.size()); }
+    int addNode() noexcept { return m_n++; }
     int addEdge(int from, int to){ m_e.push_back({ from, to }); return numEdges() - 1; }
     Edge& operator[](int ei) noexcept { return m_e[ei]; }
     const Edge& operator[](int ei) const noexcept { return m_e[ei]; }
@@ -44,7 +45,7 @@ public:
         assert(n == int(mapping.size()));
         for(int i=0; i<n; i++) assert(-1 <= mapping[i] && mapping[i] < num);
         std::vector<int> indexV(n), newV(num);
-        for(int i=0; i<n; i++) if(mapping[i] >= 0) indexV[i] = ++newV[mapping[i]];
+        for(int i=0; i<n; i++) if(mapping[i] >= 0) indexV[i] = newV[mapping[i]]++;
         std::vector<Graph> res; res.reserve(num);
         for(int i=0; i<num; i++) res.emplace_back(newV[i], isUndirected());
         for(auto e : m_e) if(mapping[e.from] == mapping[e.to] && mapping[e.to] >= 0) res[mapping[e.to]].addEdge(indexV[e.from], indexV[e.to]);

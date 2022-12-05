@@ -8,9 +8,7 @@ namespace nachia{
 
 class BiconnectedComponents{
 private:
-    int mn;
-    int mm;
-    int mnum_bcs;
+    int mn, mm, mnum_bcs;
     Graph mG;
     std::vector<std::pair<int,int>> m_bcVtxPair;
 public:
@@ -41,12 +39,12 @@ public:
             int pp = parent[p];
             if(low[p] < vtxToDfsi[pp]){
                 low[p] = low[pp];
-                m_bcVtxPair.push_back(std::make_pair(low[p], p));
+                m_bcVtxPair.push_back({ low[p], p });
             }
             else{
                 low[p] = num_bcs++;
-                m_bcVtxPair.push_back(std::make_pair(low[p], pp));
-                m_bcVtxPair.push_back(std::make_pair(low[p], p));
+                m_bcVtxPair.push_back({ low[p], pp });
+                m_bcVtxPair.push_back({ low[p], p });
             }
         }
         for(int s=0; s<mn; s++) if(adj[s].size() == 0) m_bcVtxPair.push_back(std::make_pair(num_bcs++, s));
@@ -68,11 +66,10 @@ public:
 
     CsrArray<int> getBcEdges() const {
         auto bct = getBcTree().getAdjacencyArray();
-        std::vector<int> bfsP(bct.size(), -1);
-        std::vector<int> bfsD(bct.size(), 0);
-        std::vector<int> bfs(bct.size());
+        int z = bct.size();
+        std::vector<int> bfsP(z, -1), bfsD(z, 0), bfs(z);
         int p0 = 0, p1 = 0;
-        for(int s=0; s<bct.size(); s++) if(bfsP[s] < 0){
+        for(int s=0; s<z; s++) if(bfsP[s] < 0){
             for(bfs[p1++]=s; p0<p1; p0++){
                 int p = bfs[p0];
                 for(auto e : bct[p]) if(bfsP[p] != e){
