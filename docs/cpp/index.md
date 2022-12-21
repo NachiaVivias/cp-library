@@ -11,6 +11,7 @@
 
 - [Biconnected Components ( 2-連結成分 ) `<nachia/graph/biconnected-components.hpp>`](graph/biconnected-components.md)
 - [頂点彩色数 `<nachia/graph/chromatic-number.hpp>`](graph/chromatic-number.md)
+- [Connected Components ( 連結成分 ) `<nachia/graph/connected-components.hpp>`](graph/connected-components.md)
 - [Dijkstra法 ( ダイクストラ法 ) `<nachia/graph/dijkstra.hpp>`](graph/dijkstra.md)
 - [Online Dynamic Connectivity `<nachia/graph/dynamic-connectivity.hpp>`](graph/dynamic-connectivity.md)
 - [Graph 構造体・辺のリスト `<nachia/graph/graph.hpp>`](graph/graph.md)
@@ -38,6 +39,7 @@
 
 - [cluster のマージ過程：静的な top tree `<nachia/tree/static-top-tree.hpp>`](tree/static-top-tree.md)
 - [heavy-light decomposition `<nachia/tree/heavy-light-decomposition.hpp>`](tree/heavy-light-decomposition.md)
+- [木の重心分解 `<nachia/tree/centroid-decomposition.hpp>`](tree/centroid-decomposition.md)
 - [重心分解二分探索木 `<nachia/tree/centroid-decomposition-binary-tree.hpp>`](tree/centroid-decomposition-binary-tree.md)
 - [木の中心 `<nachia/tree/tree-center.hpp>`](tree/tree-center.md)
 - [木の重心 `<nachia/tree/tree-centroid.hpp>`](tree/tree-centroid.md)
