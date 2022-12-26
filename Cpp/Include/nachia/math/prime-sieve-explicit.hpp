@@ -1,10 +1,8 @@
 #pragma once
-
 #include <vector>
 #include <algorithm>
 #include <cassert>
 #include <iostream>
-
 
 namespace nachia{
 

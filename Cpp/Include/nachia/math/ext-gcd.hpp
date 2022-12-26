@@ -1,8 +1,8 @@
 #pragma once
-
 #include <utility>
 #include <algorithm>
 #include <cassert>
+
 namespace nachia{
 
 // ax + by = gcd(a,b)

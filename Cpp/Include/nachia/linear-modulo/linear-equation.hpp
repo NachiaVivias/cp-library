@@ -1,9 +1,11 @@
+#pragma once
 #include "../linear-modulo/matrix-modulo.hpp"
 
 namespace nachia{
 
 template<class Elem>
 MatrixModulo<Elem> LinearEquation(MatrixModulo<Elem> g){
+    int w = g.numColumn(), h = g.numRow();
     int y = 0;
     std::vector<std::pair<int,int>> det_var;
     std::vector<int> rank_var;
