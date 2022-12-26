@@ -38,16 +38,20 @@ MatrixModulo(int new_h, int new_w);
 
 $h \times w$ 型零行列で初期化される。
 
-### height, width
+### height, width, numRow, numColumn
 
 ```c++
 int height() const;
 int width() const;
+int numRow() const;
+int numColumn() const;
 ```
 
 - $O(1)$ 時間
 
-`height` は $h$ の値、 `width` は $w$ の値を返す。
+`height` , `numRow` は $h$ の値を返す。
+
+`width` , `numColumn` は $w$ の値を返す。
 
 行列 $A$ の型を取得する。
 
@@ -63,10 +67,10 @@ typename std::vector<Elem>::const_iterator operator[](int y) const;
 $y$ 行目の先頭を指すイテレータを取得する。
 
 
-### identity
+### Identity
 
 ```c++
-static MatrixModulo identity(int idx);
+static MatrixModulo Identity(int idx);
 ```
 
 - $n=\text{idx}$

@@ -21,6 +21,7 @@
 ### Linear Modulo
 
 - [行列（剰余体 : $\mathbb{F}_p=\mathbb{Z}/p\mathbb{Z}$ ） `<nachia/linear/matrix-modulo.hpp>`](linear-modulo/matrix-modulo.md)
+- [線型方程式 `<nachia/linear/linear-equation.hpp>`](linear-modulo/linear-equation.md)
 
 ### Math
 

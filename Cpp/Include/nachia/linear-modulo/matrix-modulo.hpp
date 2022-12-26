@@ -16,13 +16,25 @@ private:
 
 public:
     
-    MatrixModulo(int new_h, int new_w){ h = new_h; w = new_w; elems.assign(h * w, 0); }
-    MatrixModulo(const MatrixModulo&) = default;
-    int height() const { return h; }
-    int width() const { return w; }
+    MatrixModulo(int new_h=0, int new_w=0){ h = new_h; w = new_w; elems.assign(h * w, 0); }
+    MatrixModulo(MatrixModulo const&) = default;
+    int numRow() const { return h; }
+    int numColumn() const { return w; }
+    int height() const { return numRow(); }
+    int width() const { return numColumn(); }
     typename std::vector<Elem>::iterator operator[](int y){ return elems.begin() + (y * w); }
     typename std::vector<Elem>::const_iterator operator[](int y) const { return elems.begin() + (y * w); }
-    static MatrixModulo identity(int idx){ auto res = MatrixModulo(idx, idx); for(int i = 0; i < idx; i++) res[i][i] = 1; return res; }
+    static MatrixModulo Identity(int idx){ auto res = MatrixModulo(idx, idx); for(int i = 0; i < idx; i++) res[i][i] = 1; return res; }
+    void swapColumns(int x1, int x2){
+        assert(0 <= x1 && x1 < numColumn());
+        assert(0 <= x2 && x2 < numColumn());
+        for(int y=0; y<numRow(); y++) std::swap((*this)[y][x1], (*this)[y][x2]);
+    }
+    void swapRows(int y1, int y2){
+        assert(0 <= y1 && y1 < numRow());
+        assert(0 <= y2 && y2 < numRow());
+        for(int x=0; x<numColumn(); x++) std::swap((*this)[y1][x], (*this)[y2][x]);
+    }
     MatrixModulo operator*(const MatrixModulo& r) const {
         assert(width() == r.height());
         auto res = MatrixModulo(h, r.w);
@@ -64,34 +76,17 @@ public:
         }
         return y;
     }
-    MatrixModulo linear_equation() const {
-        MatrixModulo g = *this;
-        int y = 0;
-        std::vector<std::pair<int,int>> det_var;
-        std::vector<int> rank_var;
-        for (int d=0; d<w-1; d++) {
-            int tg = -1;
-            for (int i=y; i<h; i++) { if (g[i][d].val() != 0){ tg = i; break; } }
-            if (tg == -1){ rank_var.push_back(d); continue; }
-            for (int j=d; j<w; j++) std::swap(g[y][j], g[tg][j]);
-            tg = y;
-            Elem const_coeff = g[y][d].inv();
-            for (int j=d; j<w; j++) g[y][j] *= const_coeff;
-            for (int i=0; i<h; i++) if (i != y) for(int j=w-1; j>=d; j--) g[i][j] -= g[i][d] * g[y][j];
-            det_var.push_back(std::make_pair(d,y));
-            y++;
+    MatrixModulo pow(unsigned long long i){
+        auto a = *this;
+        auto res = Identity(height());
+        while(i){
+            if(i % 2 == 1) res = res * a;
+            a = a * a;
+            i /= 2;
         }
-        for (int i=y; i<h; i++) if (g[i][w-1].val() != 0) return MatrixModulo(0,0);
-        MatrixModulo solution(1 + rank_var.size(), w);
-        for (auto [x,i] : det_var) { solution[0][x] = -g[i][w-1]; }
-        solution[0][w-1] = 1;
-        for (int d=0; d<(int)rank_var.size(); d++) {
-            int varid = rank_var[d];
-            solution[d+1][varid] = -Elem(1);
-            for (auto [x,i] : det_var) { solution[d+1][x] = g[i][varid]; }
-        }
-        return solution;
+        return res;
     }
 };
+
 
 } // namespace nachia
