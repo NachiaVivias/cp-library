@@ -1,5 +1,5 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/matrix_det"
-#include "../../../Include/nachia/linear/matrix-modulo.hpp"
+#include "../../../Include/nachia/linear-modulo/matrix-modulo.hpp"
 #include "../../../Include/nachia/misc/fastio.hpp"
 using u32 = unsigned int;
 using u64 = unsigned long long;

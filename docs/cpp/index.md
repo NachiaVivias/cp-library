@@ -18,9 +18,9 @@
 - [Strongly Connected Components ( 強連結成分 ) `<nachia/graph/strongly-connected-components.hpp>`](graph/strongly-connected-components.md)
 - [Two-Edge-Connected Components ( 2-辺連結成分 ) `<nachia/graph/two-edge-connected-components.hpp>`](graph/two-edge-connected-components.md)
 
-### Linear
+### Linear Modulo
 
-- [行列（剰余体 : $\mathbb{F}_p=\mathbb{Z}/p\mathbb{Z}$ ） `<nachia/linear/matrix-modulo.hpp>`](linear/matrix-modulo.md)
+- [行列（剰余体 : $\mathbb{F}_p=\mathbb{Z}/p\mathbb{Z}$ ） `<nachia/linear/matrix-modulo.hpp>`](linear-modulo/matrix-modulo.md)
 
 ### Math
 

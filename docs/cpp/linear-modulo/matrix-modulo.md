@@ -4,7 +4,7 @@
 
 ## ソースコード
 
-[nachia/linear/matrix-modulo.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/linear/matrix-modulo.hpp)
+[nachia/linear-modulo/matrix-modulo.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/linear-modulo/matrix-modulo.hpp)
 
 ## 主な機能
 

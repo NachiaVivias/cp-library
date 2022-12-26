@@ -1,5 +1,5 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/system_of_linear_equations"
-#include "../../../Include/nachia/linear/matrix-modulo.hpp"
+#include "../../../Include/nachia/linear-modulo/matrix-modulo.hpp"
 #include "../../../Include/nachia/misc/fastio.hpp"
 
 
