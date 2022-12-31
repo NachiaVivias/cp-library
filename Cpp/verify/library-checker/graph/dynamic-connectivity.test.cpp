@@ -156,9 +156,7 @@ struct LinkCutTree {
 
 
 namespace LCT{
-    using u32 = unsigned int;
     using u64 = unsigned long long;
-    const u32 MOD = 998244353;
 
     struct S{
         u64 x = 0;
