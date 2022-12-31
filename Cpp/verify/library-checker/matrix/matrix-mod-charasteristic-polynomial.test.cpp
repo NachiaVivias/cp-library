@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/characteristic_polynomial"
 #include "../../../Include/nachia/linear-modulo/matrix-modulo.hpp"
-#include "../../../Include/nachia/linear-modulo/characteristic-polinomial.hpp"
+#include "../../../Include/nachia/linear-modulo/characteristic-polynomial.hpp"
 #include "../../../Include/nachia/math-modulo/static-modint.hpp"
 #include "../../../Include/nachia/misc/fastio.hpp"
 
