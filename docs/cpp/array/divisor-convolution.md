@@ -19,9 +19,9 @@
 
 ```c++
 template<class Elem>
-void DivisorZeta(::std::vector<Elem>& a);
+void DivisorZeta(std::vector<Elem>& a);
 template<class Elem>
-void DivisorReversedZeta(::std::vector<Elem>& a);
+void DivisorReversedZeta(std::vector<Elem>& a);
 ```
 
 - $n = $ `a.size()` ${}-1$
@@ -42,9 +42,9 @@ $1 \leq s$ について、 $a[s]$ の値を次の値で上書きする。
 
 ```c++
 template<class Elem>
-void DivisorMobius(::std::vector<Elem>& a);
+void DivisorMobius(std::vector<Elem>& a);
 template<class Elem>
-void DivisorReversedMobius(::std::vector<Elem>& a);
+void DivisorReversedMobius(std::vector<Elem>& a);
 ```
 
 - $n = $ `a.size()` ${}-1$
@@ -62,7 +62,7 @@ $a[0]$ の値は無視される。
 
 ```c++
 template<class Elem>
-::std::vector<Elem> GcdConvolution(::std::vector<Elem> a, ::std::vector<Elem> b);
+std::vector<Elem> GcdConvolution(std::vector<Elem> a, std::vector<Elem> b);
 ```
 
 - `a.size()` $=$ `b.size()`
@@ -81,7 +81,7 @@ $$c[k] = \sum _ {k=\gcd(i,j) , 1 \leq i \leq n , 1 \leq j \leq n} a[i] b[j] \hsp
 
 ```c++
 template<class Elem>
-::std::vector<Elem> LcmConvolution(::std::vector<Elem> a, ::std::vector<Elem> b);
+std::vector<Elem> LcmConvolution(std::vector<Elem> a, std::vector<Elem> b);
 ```
 
 - `a.size()` $=$ `b.size()`

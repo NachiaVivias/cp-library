@@ -58,7 +58,7 @@ $n$ 以下の素数の個数を返す。
 ### SegmentedSieveExplicit
 
 ```c++
-::std::vector<bool> SegmentedSieveExplicit(long long l, long long r);
+std::vector<bool> SegmentedSieveExplicit(long long l, long long r);
 ```
 
 - $d = r-l$

@@ -65,16 +65,16 @@ int PrimeCountingExplicit(int n){
     using namespace prime_sieve_explicit_internal;
     if(n < 2) return 0;
     CalcPrimeListUntil(n);
-    auto res = ::std::upper_bound(prime_list.begin(), prime_list.end(), n) - prime_list.begin();
+    auto res = std::upper_bound(prime_list.begin(), prime_list.end(), n) - prime_list.begin();
     return (int)res;
 }
 
 // [l, r)
-::std::vector<bool> SegmentedSieveExplicit(long long l, long long r){
+std::vector<bool> SegmentedSieveExplicit(long long l, long long r){
     assert(0 <= l); assert(l <= r);
     long long d = r - l;
     if(d == 0) return {};
-    ::std::vector<bool> res(d, true);
+    std::vector<bool> res(d, true);
     for(long long p=2; p*p<=r; p++) if(IsprimeExplicit(p)){
         long long il = (l+p-1)/p, ir = (r+p-1)/p;
         if(il <= p) il = p;

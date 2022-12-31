@@ -28,7 +28,7 @@ $n$ 頂点で辺を持たないグラフで、初期化する。
 ### link
 
 ```c++
-::std::pair<int, int> link(int u, int v);
+std::pair<int, int> link(int u, int v);
 ```
 
 - $0 \leq u \lt n$
@@ -53,7 +53,7 @@ ForestCutQuery cut(int u, int v);
 
 グラフの辺 $\lbrace u,v \rbrace $ を削除する。
 
-返り値は全域森における辺の削除 `forest_cut` と辺の追加 `forest_link` の組である。返り値を利用する場合、削除を先に行わなければならない。いずれも `::std::pair<int, int>` 型。
+返り値は全域森における辺の削除 `forest_cut` と辺の追加 `forest_link` の組である。返り値を利用する場合、削除を先に行わなければならない。いずれも `std::pair<int, int>` 型。
 
 全域森の辺を削除する必要がある場合は `forest_cut` はその辺の両端の頂点番号、それ以外の場合は $(-1,-1)$ を返す。
 

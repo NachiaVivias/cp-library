@@ -119,21 +119,21 @@ struct SplayTreeByIdx{
         R2->prepareUp();
         return R2;
     }
-    static ::std::pair<MyType*, MyType*> split_l(MyType *R){
+    static std::pair<MyType*, MyType*> split_l(MyType *R){
         if(!R->is_root()) R->splay();
         MyType* Rl = R->l;
         Rl->p = NIL;
         R->l = NIL;
         R->prepareUp();
-        return ::std::make_pair(Rl, R);
+        return std::make_pair(Rl, R);
     }
-    static ::std::pair<MyType*, MyType*> split_r(MyType *R){
+    static std::pair<MyType*, MyType*> split_r(MyType *R){
         if(!R->is_root()) R->splay();
         MyType* Rr = R->r;
         Rr->p = NIL;
         R->r = NIL;
         R->prepareUp();
-        return ::std::make_pair(R, Rr);
+        return std::make_pair(R, Rr);
     }
 
     MyType* search_flag(unsigned int mask){
@@ -178,13 +178,13 @@ template<
 >
 struct EulerTourTree{
     struct new_Key {
-        ::std::pair<int, int> edgeidx;
+        std::pair<int, int> edgeidx;
     };
     
     using SplayNode = SplayTreeByIdx<S, new_Key, op, e>;
-    ::std::vector<SplayNode*> nodes;
+    std::vector<SplayNode*> nodes;
     
-    ::std::unordered_map<unsigned long long, SplayNode*> node_searcher;
+    std::unordered_map<unsigned long long, SplayNode*> node_searcher;
 
     static unsigned long long edgeid_compress(int u, int v){
         return ((unsigned long long)u << 32) | v;
@@ -202,12 +202,12 @@ struct EulerTourTree{
         nodes.assign(n, SplayNode::get_nil());
     }
 
-    ::std::pair<SplayNode*, SplayNode*> create_edge(int u, int v, S x){
+    std::pair<SplayNode*, SplayNode*> create_edge(int u, int v, S x){
         auto edgeuv = SplayNode::get_new_node(x, {{u,v}});
         node_searcher.insert_or_assign(edgeid_compress(u, v), edgeuv);
         auto edgevu = SplayNode::get_new_node(x, {{v,u}});
         node_searcher.insert_or_assign(edgeid_compress(v, u), edgevu);
-        return ::std::make_pair(edgeuv, edgevu);
+        return std::make_pair(edgeuv, edgevu);
     }
 
     SplayNode* expose(int v){
@@ -240,7 +240,7 @@ struct EulerTourTree{
         return i->second;
     }
 
-    ::std::pair<SplayNode*, SplayNode*> cut(int u, int v){
+    std::pair<SplayNode*, SplayNode*> cut(int u, int v){
         evert(u);
         SplayNode* Hvu = find_ettnode(v, u);
         SplayNode* Huv = find_ettnode(u, v);
@@ -250,7 +250,7 @@ struct EulerTourTree{
         [[maybe_unused]] auto [edgevu, Hu2] = SplayNode::split_r(Hvu);
         delete_node(u, v);
         delete_node(v, u);
-        return ::std::make_pair(SplayNode::merge(Hu, Hu2), Hv);
+        return std::make_pair(SplayNode::merge(Hu, Hu2), Hv);
     }
 
     S get(int u){
@@ -317,11 +317,11 @@ private:
 
     int n = 0;
     int RanksCount = 0;
-    ::std::vector<dycon_internal::DyConETT::ETT> etts;
+    std::vector<dycon_internal::DyConETT::ETT> etts;
 
-    ::std::list<::std::unordered_set<int>> edges2;
-    using Edges2Iterator = ::std::list<::std::unordered_set<int>>::iterator;
-    ::std::vector<::std::unordered_map<int, Edges2Iterator>> edges;
+    std::list<std::unordered_set<int>> edges2;
+    using Edges2Iterator = std::list<std::unordered_set<int>>::iterator;
+    std::vector<std::unordered_map<int, Edges2Iterator>> edges;
     
     using SplayNode = typename dycon_internal::DyConETT::ETT::SplayNode;
 
@@ -334,7 +334,7 @@ private:
                 etts[k].set(u, { dycon_internal::DyConETT::FLAG_EDGEMARK, 1 });
             }
             fu->second->insert(v);
-            ::std::swap(u,v);
+            std::swap(u,v);
         }
     }
     void erase_ranked_edge(int k, int u, int v){
@@ -346,7 +346,7 @@ private:
                 edges2.erase(fu->second);
                 edges[k].erase(fu);
             }
-            ::std::swap(u,v);
+            std::swap(u,v);
         }
     }
 
@@ -362,7 +362,7 @@ private:
         return *(fu->second->begin());
     }
 
-    ::std::pair<int,int> replace(int k, int u, int v){
+    std::pair<int,int> replace(int k, int u, int v){
         if(k >= RanksCount) return {-1,-1};
         if(!etts[k].is_connected(u, v)) return {-1,-1};
         auto [Hu, Hv] = etts[k].cut(u, v);
@@ -372,8 +372,8 @@ private:
             return {s,t};
         }
         if(Hu->prod().z > Hv->prod().z){
-            ::std::swap(u, v);
-            ::std::swap(Hu, Hv);
+            std::swap(u, v);
+            std::swap(Hu, Hv);
         }
         while(Hu->prod().flags & dycon_internal::DyConETT::FLAG_JUSTRANK){
             Hu = Hu->search_flag(dycon_internal::DyConETT::FLAG_JUSTRANK);
@@ -414,11 +414,11 @@ public:
     }
 
     struct ForestCutQuery{
-        ::std::pair<int, int> forest_cut;
-        ::std::pair<int, int> forest_link;
+        std::pair<int, int> forest_cut;
+        std::pair<int, int> forest_link;
     };
 
-    ::std::pair<int, int> link(int u, int v){
+    std::pair<int, int> link(int u, int v){
         if(etts[0].is_connected(u, v)){
             add_ranked_edge(0, u, v);
             return {-1,-1};
