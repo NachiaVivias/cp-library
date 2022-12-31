@@ -1,4 +1,4 @@
-# Strongly-Connected Components ( 2-辺連結成分 )
+# Strongly-Connected Components ( 強連結成分 )
 
 [C++ 用ライブラリ一覧に戻る](../index.md)
 
