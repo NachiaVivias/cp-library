@@ -20,7 +20,8 @@
 int ChromaticNumber(std::vector<std::vector<int>> adjacency_matrix);
 ```
 
-- $1 \leq n \leq 30$
+- $1 \leq n \leq 30$ （間違った答えを返す可能性がある。今後修正する。）
+- $1 \leq n \leq 20$ （正しい答えを返すことが保証される。）
 - `adjacency_matrix` は $n \times n$ の行列
 - 頂点 $i$ と頂点 $j$ を結ぶ辺があるとき $\text{adjacency\_matrix}[i][j]=1$ 、ないとき $\text{adjacency\_matrix}[i][j]=0$
 - $\text{adjacency\_matrix}[i][i]=0$  （自己ループはない）
