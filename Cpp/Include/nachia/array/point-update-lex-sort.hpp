@@ -10,31 +10,14 @@ namespace nachia {
 
 template<class T>
 struct PointUpdateLexSort{
+public:
     using MyType = PointUpdateLexSort;
+private:
     int k = 0;
     std::vector<T> valbuf;
     std::vector<int> mutpos;
     std::vector<int> sPos;
     int xsPos = 0;
-    struct Iter {
-        const MyType *p;
-        int i;
-        int operator*() const { return p->sPos[i]; }
-    };
-    PointUpdateLexSort(){}
-    PointUpdateLexSort(std::vector<T> A){
-        k = A.size();
-        valbuf = std::move(A);
-    }
-    Iter mutate(int pos, T val){
-        assert(0 <= pos); assert(pos < k);
-        valbuf.push_back(std::move(val));
-        mutpos.emplace_back(pos);
-        return Iter{ this, (int)mutpos.size() };
-    }
-    int count() const { return (int)mutpos.size() + 1; }
-    int maxSortedPos() const { return xsPos; }
-    Iter last() const { return Iter{ this, count()-1 }; }
     struct DfsNode{
         std::vector<int> TBuf, TList, TPos, VBuf;
         PointUpdateLexSort *p;
@@ -100,6 +83,26 @@ struct PointUpdateLexSort{
             for(int i=TPos[l]; i<bufi; i++) TList[i] = TBuf[i];
         }
     };
+public:
+    struct Iter {
+        const MyType *p;
+        int i;
+        int operator*() const { return p->sPos[i]; }
+    };
+    PointUpdateLexSort(){}
+    PointUpdateLexSort(std::vector<T> A){
+        k = A.size();
+        valbuf = std::move(A);
+    }
+    Iter mutate(int pos, T val){
+        assert(0 <= pos); assert(pos < k);
+        valbuf.push_back(std::move(val));
+        mutpos.emplace_back(pos);
+        return Iter{ this, (int)mutpos.size() };
+    }
+    int count() const { return (int)mutpos.size() + 1; }
+    int maxSortedPos() const { return xsPos; }
+    Iter last() const { return Iter{ this, count()-1 }; }
     void proc(){
         auto v = DfsNode();
         v.MakeTBuf(this);
