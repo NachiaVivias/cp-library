@@ -43,13 +43,13 @@ int main() {
     auto hld = nachia::HeavyLightDecomposition(nachia::Graph(N, edges, true).getAdjacencyArray());
     BIT rq(N);
 
-    for(int i=0; i<N; i++) rq.add(hld.to_seq(i),A[i]);
+    for(int i=0; i<N; i++) rq.add(hld.toSeq(i),A[i]);
 
     for(int i=0; i<Q; i++){
         int t; cin >> t;
         if(t == 0){
             int p,x; cin >> p >> x;
-            rq.add(hld.to_seq(p),x);
+            rq.add(hld.toSeq(p),x);
         }
         if(t == 1){
             int u,v; cin >> u >> v;

@@ -91,16 +91,16 @@ int main(){
 
     auto hld = nachia::HeavyLightDecomposition(nachia::Graph(N, edges, true).getAdjacencyArray());
     RQ rq1(N);
-    for(int i=0; i<N; i++) rq1.set(hld.to_seq(i),A[i]);
+    for(int i=0; i<N; i++) rq1.set(hld.toSeq(i),A[i]);
     RQ rq2(N);
-    for(int i=0; i<N; i++) rq2.set(N-1-hld.to_seq(i),A[i]);
+    for(int i=0; i<N; i++) rq2.set(N-1-hld.toSeq(i),A[i]);
 
     for(int i=0; i<Q; i++){
         int t; cin >> t;
         if(t == 0){
             int p,c,d; cin >> p >> c >> d;
-            rq1.set(hld.to_seq(p), RQS{(uint64_t)c,(uint64_t)d});
-            rq2.set(N-1-hld.to_seq(p), RQS{(uint64_t)c,(uint64_t)d});
+            rq1.set(hld.toSeq(p), RQS{(uint64_t)c,(uint64_t)d});
+            rq2.set(N-1-hld.toSeq(p), RQS{(uint64_t)c,(uint64_t)d});
         }
         if(t == 1){
             int u,v,x; cin >> u >> v >> x;
