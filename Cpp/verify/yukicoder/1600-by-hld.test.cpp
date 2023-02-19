@@ -109,12 +109,13 @@ void build_flows(){
   
   nachia::Dsu G2(N);
   for(Edge e : flows){
-    int g = G2.leader(LCA(e.u,e.v));
+    int g = G2.label(LCA(e.u,e.v));
     for(int s : {e.u,e.v}){
-      int p = G2.leader(s);
+      int p = G2.label(s);
       while(p != g){
         flowIdx[p] = e.i;
-        p = G2.merge(P[p],p);
+        G2.merge(P[p], p, G2.label(P[p]));
+        p = G2.label(p);
       }
     }
   }
