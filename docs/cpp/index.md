@@ -6,6 +6,7 @@
 
 - [CSR 表現を用いた二次元配列 `<nachia/array/csr-array.hpp>`](array/csr-array.md)
 - [約数包除・GCD畳み込み `<nachia/array/divisor-convolution.hpp>`](array/divisor-convolution.md)
+- [一点更新列で得られる配列の辞書順比較 `<nachia/array/point-update-lex-sort.hpp>`](array/point-update-lex-sort.md)
 
 ### Graph
 
