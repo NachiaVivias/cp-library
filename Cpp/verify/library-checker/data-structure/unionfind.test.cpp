@@ -1,4 +1,4 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/point_add_rectangle_sum"
+#define PROBLEM "https://judge.yosupo.jp/problem/unionfind"
 #include "../../../Include/nachia/set/dsu.hpp"
 #include "../../../Include/nachia/misc/fastio.hpp"
 
