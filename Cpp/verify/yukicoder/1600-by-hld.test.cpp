@@ -1,6 +1,7 @@
 #define PROBLEM "https://yukicoder.me/problems/no/1600"
 #include "../../Include/nachia/tree/heavy-light-decomposition.hpp"
 #include "../../Include/nachia/graph/graph.hpp"
+#include "../../Include/nachia/set/dsu.hpp"
 #include "../../Include/nachia/misc/fastio.hpp"
 #include <vector>
 #include <algorithm>
@@ -24,16 +25,6 @@ struct mll{
   mll operator-(const mll& r) const { mll res = *this; res -= r; return res; }
   mll operator*(const mll& r) const { mll res = *this; res *= r; return res; }
   mll operator-() const { return v ? mll(MOD-v) : mll(0); }
-};
-
-struct DSU{
-  vector<int> V;
-  DSU(int n){
-    V.resize(n);
-    rep(i,n) V[i] = i;
-  }
-  int leader(int a){ if(V[a] == a) return a; return V[a] = leader(V[a]); }
-  void merge(int r,int c){ V[leader(c)] = leader(r); }
 };
 
 struct Edge{ int u,v,i; };
@@ -63,11 +54,11 @@ void read_graph(){
   cost.resize(M);
   cost[0] = 2;
   for(int i=1; i<M; i++) cost[i] = cost[i-1] * 2;
-  DSU G1(N);
+  nachia::Dsu G1(N);
   rep(i,M){
     int u,v; cin >> u >> v; u--; v--;
     J.push_back({u,v,i});
-    if(G1.leader(u) == G1.leader(v)){
+    if(G1.same(u, v)){
       flows.push_back({u,v,i});
     }
     else{
@@ -116,15 +107,14 @@ void build_flows(){
 
   flowIdx.assign(N,-1);
   
-  DSU G2(N);
+  nachia::Dsu G2(N);
   for(Edge e : flows){
     int g = G2.leader(LCA(e.u,e.v));
     for(int s : {e.u,e.v}){
       int p = G2.leader(s);
       while(p != g){
         flowIdx[p] = e.i;
-        G2.merge(P[p],p);
-        p = G2.leader(p);
+        p = G2.merge(P[p],p);
       }
     }
   }
