@@ -1,4 +1,5 @@
 #pragma once
+#include "../graph/graph.hpp"
 #include "../array/csr-array.hpp"
 #include <vector>
 
@@ -29,6 +30,10 @@ std::vector<int> UnitTreeCentroid(const CsrArray<int>& T){
     }
     for(int e : T[c]) if(Z[e]*2 == Z[c]) return std::vector{ c, e };
     return { c };
+}
+
+std::vector<int> UnitTreeCentroid(const Graph& T){
+    return UnitTreeCentroid(T.getAdjacencyArray(true));
 }
 
 } // namespace nachia

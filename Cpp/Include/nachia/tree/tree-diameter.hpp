@@ -1,4 +1,5 @@
 #pragma once
+#include "../graph/graph.hpp"
 #include "../array/csr-array.hpp"
 #include <vector>
 
@@ -31,6 +32,10 @@ std::vector<int> UnitTreeDiameter(const CsrArray<int>& T){
     res.reserve(sz);
     while(P[res.back()] != -1){ res.push_back(P[res.back()]);}
     return res;
+}
+
+std::vector<int> UnitTreeDiameter(const Graph& T){
+    return UnitTreeDiameter(T.getAdjacencyArray(true));
 }
 
 } // namespace nachia

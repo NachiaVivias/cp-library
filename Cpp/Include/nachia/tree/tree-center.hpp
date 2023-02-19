@@ -1,4 +1,5 @@
 #pragma once
+#include "../graph/graph.hpp"
 #include "tree-diameter.hpp"
 
 namespace nachia{
@@ -11,6 +12,10 @@ std::vector<int> UnitTreeCenter(const CsrArray<int>& T){
         return { diameter[diameter.size() / 2] };
     }
     return { diameter[diameter.size() / 2 - 1], diameter[diameter.size() / 2] };
+}
+
+std::vector<int> UnitTreeCenter(const Graph& T){
+    return UnitTreeCenter(T.getAdjacencyArray(true));
 }
 
 } // namespace nachia

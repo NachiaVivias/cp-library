@@ -15,15 +15,19 @@ $n$ 頂点の木の隣接リスト表現を `CsrArray<int>` で入力すると�
 ### UnitTreeDiameter
 
 ```c++
+std::vector<int> UnitTreeDiameter(const Graph& T);
 std::vector<int> UnitTreeDiameter(const CsrArray<int>& T);
 ```
 
-[AdjacencyList とは？](./../graph/adjacency-list.md)
+[nachia::Graph とは？](./../graph/graph.md)
+[nachia::CsrArray とは？](./../array/csr-array.md)
 
-- $1 \leq n \leq 10^8$
+- 頂点数 $n$ : $1 \leq n \leq 10^8$
 - $O(n)$ 時間
 
 木の直径のパスを表す頂点列を求める。
+
+木は `nachia::Graph` で与えるほか、隣接頂点のリストを表す `nachia::CsrArray<int>` で与えてもよい。
 
 ---
 

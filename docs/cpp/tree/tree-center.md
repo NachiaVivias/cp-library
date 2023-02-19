@@ -8,7 +8,7 @@
 
 ## 主な機能
 
-$n$ 頂点の木の隣接リスト表現を `CsrArray<int>` で入力すると、木の中心を求める。
+木を入力すると、木の中心を求める。
 
 ここで木の中心とは、直径のパス上の中央単一の点あるいは辺である。
 
@@ -19,15 +19,19 @@ $n$ 頂点の木の隣接リスト表現を `CsrArray<int>` で入力すると�
 ### UnitTreeCenter
 
 ```c++
+std::vector<int> UnitTreeCentroid(const Graph& T);
 std::vector<int> UnitTreeCenter(const CsrArray<int>& T);
 ```
 
-[AdjacencyList とは？](./../graph/adjacency-list.md)
+[nachia::Graph とは？](./../graph/graph.md)
+[nachia::CsrArray とは？](./../array/csr-array.md)
 
-- $1 \leq n \leq 10^8$
+- 頂点数 $n$ : $1 \leq n \leq 10^8$
 - $O(n)$ 時間
 
 木の中心を求める。
+
+木は `nachia::Graph` で与えるほか、隣接頂点のリストを表す `nachia::CsrArray<int>` で与えてもよい。
 
 ---
 

@@ -19,15 +19,19 @@ $n$ が奇数なら $1$ つの頂点番号を、偶数なら $2$ つの頂点番
 ### UnitTreeCentroid
 
 ```c++
+std::vector<int> UnitTreeCentroid(const Graph& T);
 std::vector<int> UnitTreeCentroid(const CsrArray<int>& T);
 ```
 
-[AdjacencyList とは？](./../graph/adjacency-list.md)
+[nachia::Graph とは？](./../graph/graph.md)
+[nachia::CsrArray とは？](./../array/csr-array.md)
 
-- $1 \leq n \leq 10^8$
+- 頂点数 $n$ : $1 \leq n \leq 10^8$
 - $O(n)$ 時間
 
 木の重心をすべて求める。
+
+木は `nachia::Graph` で与えるほか、隣接頂点のリストを表す `nachia::CsrArray<int>` で与えてもよい。
 
 ---
 
