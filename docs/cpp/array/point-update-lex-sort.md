@@ -29,7 +29,7 @@
 ### コンストラクタ
 
 ```c++
-PointUpdateLexSort<K>(); // dummy
+PointUpdateLexSort<K>(); // (dummy)
 PointUpdateLexSort<K>(std::vector<K> A); // (1)
 ```
 
@@ -37,7 +37,7 @@ PointUpdateLexSort<K>(std::vector<K> A); // (1)
 - $K$ は演算子 `<` で比較できる
 - $O(n)$ 時間
 
-(0) ダミーのインスタンスを作成する。いかなる操作も呼び出してはいけない。
+(dummy) ダミーのインスタンスを作成する。いかなる操作も呼び出してはいけない。
 
 (1) ユーザーは最初の配列を与える。
 
