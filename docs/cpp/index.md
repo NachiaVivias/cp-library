@@ -35,6 +35,11 @@
 
 - [$2$ 次元矩形クエリ `<nachia/multi-dimensional/two-d-rectangle-query.hpp>`](multi-dimensional/two-d-rectangle-query.md)
 
+### Set
+
+- [disjoint set union `<nachia/set/dsu.hpp>`](set/dsu.md)
+- [分割の列挙 `<nachia/set/enumerate-partitions.hpp>`](set/enumerate-partitions.md)
+
 ### String
 
 - [永続文字列 `<nachia/string/persistent-string.hpp>`](string/persistent-string.md)
