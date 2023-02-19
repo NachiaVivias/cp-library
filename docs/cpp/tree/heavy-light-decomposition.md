@@ -11,7 +11,7 @@ $n$ 頂点の静的な根付き無向木 $T$ がある。頂点には番号(0-ba
 - $2$ 頂点 $x,y$ の Lowest Common Ancestor を $\mathrm{LCA}(x,y)$ と表す。
 - $2$ 頂点 $x,y$ 間の距離（各辺の長さは $1$ とする） を $\mathrm{dist}(x,y)$ と表す。
 
-$T$ の頂点を適切な順序に並べた列を $A=(A[0],A[1],A[2], \ldots ,A[n-1])$ とする。各要素は [`to_vtx`](#to_vtx) で得られる。
+$T$ の頂点を適切な順序に並べた列を $A=(A[0],A[1],A[2], \ldots ,A[n-1])$ とする。各要素は [`toVtx`](#toVtx) で得られる。
 
 $T$ に対して、以下の操作を行う。前処理の計算量は $O(n)$ である。
 
@@ -27,20 +27,29 @@ $T$ に対して、以下の操作を行う。前処理の計算量は $O(n)$ �
 ### コンストラクタ
 
 ```c++
-nachia::HeavyLightDecomposition(const CsrArray<int>& E = CsrArray<int>::Construct(1, {}));
+nachia::HeavyLightDecomposition(
+    const Graph& tree,
+    int root = 0
+);
+
+nachia::HeavyLightDecomposition(
+    const CsrArray<int>& E = CsrArray<int>::Construct(1, {}),
+    int root = 0
+);
 ```
 
-- $E\text{.size()} = n$
-- $1 \leq n \leq 5\times 10^6$
-- $E[u]$ は頂点 $u$ に隣接する頂点のリストである。根付き木の親から子へ向かう辺は含まれていなければいけないが、親へ向かう辺は含まなくてもよい。
+- 頂点数 $n$ : $1 \leq n \leq 5\times 10^6$
+- $0\leq\text{root}\lt n$
 - $O(n)$ 時間
 
-頂点 $0$ を根として前処理を行う。
+$\text{root}$ を根として、 heavy-light decomposition を行う。
 
-### to\_seq
+木は隣接リストで与えてもよい。その場合、根付き木の親から子へ向かう辺は含まれていなければいけないが、親へ向かう辺は含まなくてもよい。
+
+### toSeq
 
 ```c++
-int to_seq(int vertex) const;
+int toSeq(int vertex) const;
 ```
 
 - 引数を $v$ として、 $0 \leq v \lt n$
@@ -48,16 +57,33 @@ int to_seq(int vertex) const;
 
 $A[i]=v$ を満たす $i$ を返す。
 
-### to\_vtx
+### toVtx
 
 ```c++
-int to_vtx(int seqidx) const;
+int toVtx(int seqidx) const;
 ```
 
 - 引数を $i$ として、 $0 \leq i \lt n$
 - $O(1)$ 時間
 
 $A[i]$ を返す。
+
+### toSeq2In, toSeq2Out
+
+```c++
+int toSeq2In(int vertex) const;
+int toSeq2Out(int vertex) const;
+```
+
+- 引数を $i$ として、 $0 \leq i \lt n$
+- $O(1)$ 時間
+
+`toSeq` で得られる順序と同じ順序で DFS を行いながら、各頂点で次の $2$ 回タイミングを記録したとする。
+
+- (In) その頂点に初めて訪れたとき
+- (Out) その頂点の子をすべて訪れた後、最後にその頂点を訪れたとき
+
+これにより $2n$ 回タイミングが記録されるが、それに順に $0,1,\ldots ,2n-1$ の番号を振る。この関数では、このように付けられた番号を取得する。
 
 ### depth
 
@@ -70,10 +96,10 @@ int depth(int p) const;
 
 頂点 $p$ の深さ（つまり、根と頂点 $p$ との距離）を返す。
 
-### parent\_of
+### parentOf
 
 ```c++
-int parent_of(int v) const;
+int parentOf(int v) const;
 ```
 
 - $0 \leq v \lt n$
@@ -81,10 +107,21 @@ int parent_of(int v) const;
 
 頂点 $v$ の親の番号を返す。 $v$ が根の場合は $-1$ を返す。
 
-### heavy\_child\_of
+### heavyRootOf
 
 ```c++
-int heavy_child_of(int v) const;
+int heavyRootOf(int v) const;
+```
+
+- $0 \leq v \lt n$
+- $O(1)$ 時間
+
+頂点 $v$ と同じ heavy path に含まれている頂点のうち、最も根に近い頂点を返す。
+
+### heavyChildOf
+
+```c++
+int heavyChildOf(int v) const;
 ```
 
 - $0 \leq v \lt n$
