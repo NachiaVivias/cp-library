@@ -22,9 +22,9 @@
 
 ### Linear Modulo
 
-- [固有多項式 `<nachia/linear/characteristic-polynomial.hpp>`](linear-modulo/characteristic-polynomial.md)
-- [線型方程式 `<nachia/linear/linear-equation.hpp>`](linear-modulo/linear-equation.md)
-- [行列（剰余体 : $\mathbb{F}_p=\mathbb{Z}/p\mathbb{Z}$ ） `<nachia/linear/matrix-modulo.hpp>`](linear-modulo/matrix-modulo.md)
+- [固有多項式 `<nachia/linear-modulo/characteristic-polynomial.hpp>`](linear-modulo/characteristic-polynomial.md)
+- [線型方程式 `<nachia/linear-modulo/linear-equation.hpp>`](linear-modulo/linear-equation.md)
+- [行列（剰余体 : $\mathbb{F}_p=\mathbb{Z}/p\mathbb{Z}$ ） `<nachia/linear-modulo/matrix-modulo.hpp>`](linear-modulo/matrix-modulo.md)
 
 ### Math
 
