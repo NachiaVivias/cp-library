@@ -1,5 +1,6 @@
 #pragma once
 #include "../array/csr-array.hpp"
+#include "../graph/graph.hpp"
 #include <vector>
 #include <algorithm>
 
@@ -20,10 +21,10 @@ private:
 
 public:
 
-    HeavyLightDecomposition(const CsrArray<int>& E = CsrArray<int>::Construct(1, {})){
+    HeavyLightDecomposition(const CsrArray<int>& E = CsrArray<int>::Construct(1, {}), int root = 0){
         N = E.size();
         P.assign(N, -1);
-        I = {0};
+        I = {root};
         I.reserve(N);
         for(int i=0; i<(int)I.size(); i++){
             int p = I[i];
@@ -46,9 +47,9 @@ public:
         for(int p : I) if(nx[p] != -1) PP[nx[p]] = p;
 
         PD.assign(N,N);
-        PD[0] = 0;
+        PD[root] = 0;
         D.assign(N,0);
-        for(int p : I) if(p != 0){
+        for(int p : I) if(p != root){
             PP[p] = PP[PP[p]];
             PD[p] = std::min(PD[PP[p]], PD[P[p]]+1);
             D[p] = D[P[p]]+1;
@@ -71,15 +72,20 @@ public:
         I.resize(N);
         for(int i=0; i<N; i++) I[rangeL[i]] = i;
     }
+    
+    HeavyLightDecomposition(const Graph& tree, int root = 0)
+        : HeavyLightDecomposition(tree.getAdjacencyArray(true), root) {}
 
     int depth(int p) const { return D[p]; }
-    int to_seq(int vertex) const { return rangeL[vertex]; }
-    int to_vtx(int seqidx) const { return I[seqidx]; }
-    int parent_of(int v) const { return P[v]; }
-    int heavy_root_of(int v) const { return PP[v]; }
-    int heavy_child_of(int v) const {
-        if(to_seq(v) == N-1) return -1;
-        int cand = to_vtx(to_seq(v) + 1);
+    int toSeq(int vertex) const { return rangeL[vertex]; }
+    int toVtx(int seqidx) const { return I[seqidx]; }
+    int toSeq2In(int vertex) const { return rangeL[vertex] * 2 - D[vertex]; }
+    int toSeq2Out(int vertex) const { return rangeR[vertex] * 2 - D[vertex]; }
+    int parentOf(int v) const { return P[v]; }
+    int heavyRootOf(int v) const { return PP[v]; }
+    int heavyChildOf(int v) const {
+        if(toSeq(v) == N-1) return -1;
+        int cand = toVtx(toSeq(v) + 1);
         if(PP[v] == PP[cand]) return cand;
         return -1;
     }
