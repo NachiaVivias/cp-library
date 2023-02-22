@@ -40,9 +40,11 @@ DijkstraShortestPath(
 )
 ```
 
+[Graph とは？](./../graph/graph.md)
+
 メインの計算を行う。
 
-`graph` は無向でも有向でもよい。
+`graph` は無向でも有向でもよい。無向の場合、各辺は双方向に通行可能とする。
 
 `weight` は各辺の重みである。
 
@@ -53,7 +55,7 @@ DijkstraShortestPath(
 - 頂点数： $1 \leq n \leq 10^7$
 - 辺数： $0 \leq m \leq 10^7$
 - 始点の個数： $1 \leq k \leq 10^7$
-- $\text{weight.size()}=N$
+- $\text{weight.size()}=m$
 - `weight` の要素は非負
 - $O((n+m+k) \log (m+k))$ 時間 （ heap として std::priority_queue を使用したときのダイクストラ法の計算量）
 
