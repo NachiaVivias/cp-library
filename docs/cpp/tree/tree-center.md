@@ -24,6 +24,7 @@ std::vector<int> UnitTreeCenter(const CsrArray<int>& T);
 ```
 
 [nachia::Graph とは？](./../graph/graph.md)
+
 [nachia::CsrArray とは？](./../array/csr-array.md)
 
 - 頂点数 $n$ : $1 \leq n \leq 10^8$

@@ -22,6 +22,8 @@
 BiconnectedComponents(Graph G = Graph(0, true));
 ```
 
+[nachia::Graph とは？](./../graph/graph.md)
+
 - 頂点数： $1 \leq n \leq 1 \times 10^7$
 - 辺数： $1 \leq m \leq 1 \times 10^7$
 - $G$ は自己ループを含まない無向グラフ。

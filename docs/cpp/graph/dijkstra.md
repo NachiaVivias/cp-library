@@ -40,7 +40,7 @@ DijkstraShortestPath(
 )
 ```
 
-[Graph とは？](./../graph/graph.md)
+[nachia::Graph とは？](./../graph/graph.md)
 
 メインの計算を行う。
 

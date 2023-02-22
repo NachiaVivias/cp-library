@@ -27,7 +27,7 @@ CentroidDecompositionBinaryTree(); // (#)
 nachia::CentroidDecompositionBinaryTree(const CsrArray<int>& adj); // (1)
 ```
 
-[AdjacencyList とは？](./../graph/adjacency-list.md)
+[nachia::CsrArray とは？](./../array/csr-array.md)
 
 `(#)` ダミーを生成する。このコンストラクタで生成したインスタンスでクエリを呼んではいけない。
 

@@ -20,7 +20,7 @@ $n$ 頂点の木の同型判定問題の効率的なアルゴリズムである�
 AHUAlgorithmLinearTime(const Graph& E, int root = 0);
 ```
 
-[Graph とは？](./../graph/graph.md)
+[nachia::Graph とは？](./../graph/graph.md)
 
 - $E$ は無向グラフで、木である
 - $1 \leq n \leq 10^8$

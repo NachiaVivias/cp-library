@@ -29,6 +29,8 @@
 ChordalGraphRecognizer(Graph g);
 ```
 
+[nachia::Graph とは？](./../graph/graph.md)
+
 - 頂点数： $0 \leq n \leq 2 \times 10^7$
 - 辺数： $0 \leq m \leq 2 \times 10^7$
 - $G$ は単純無向グラフ

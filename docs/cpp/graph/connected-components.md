@@ -21,6 +21,8 @@ ConnectedComponents(const CsrArray<int>& adj);
 ConnectedComponents(Graph G = Graph(0, true));
 ```
 
+[nachia::Graph とは？](./../graph/graph.md)
+
 - 頂点数： $0 \leq n \leq 1 \times 10^7$
 - 辺数： $0 \leq m \leq 1 \times 10^7$
 - $G$ は無向グラフ

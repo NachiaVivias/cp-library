@@ -24,7 +24,9 @@ nachia::CentroidDecomposition(CsrArray<int> edges); // (1)
 nachia::CentroidDecomposition(const Graph& g); // (2)
 ```
 
-[CsrArray とは？](../array/csr-array.md)
+[nachia::Graph とは？](./../graph/graph.md)
+
+[nachia::CsrArray とは？](./../array/csr-array.md)
 
 `(#)` ダミーを生成する。このコンストラクタで生成したインスタンスでは他のメンバを使用してはいけない。
 

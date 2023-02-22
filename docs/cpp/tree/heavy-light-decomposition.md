@@ -38,6 +38,10 @@ nachia::HeavyLightDecomposition(
 );
 ```
 
+[nachia::Graph とは？](./../graph/graph.md)
+
+[nachia::CsrArray とは？](./../array/csr-array.md)
+
 - 頂点数 $n$ : $1 \leq n \leq 5\times 10^6$
 - $0\leq\text{root}\lt n$
 - $O(n)$ 時間
