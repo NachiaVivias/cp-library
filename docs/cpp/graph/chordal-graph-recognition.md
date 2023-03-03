@@ -70,7 +70,7 @@ std::vector<int> findInducedCycle();
 
 長さ $4$ のサイクルをなすような誘導部分グラフが存在する場合、そのうちの $1$ つについて、そのサイクルを $1$ 周するような順番に並べた頂点列を返す。存在しない場合の戻り値は不定であるので、代わりに `isChordalGraph` の返り値で判断すること。
 
-### findInducedCycle
+### getPerfectEliminationOrdering
 
 ```c++
 std::vector<int> getPerfectEliminationOrdering();
