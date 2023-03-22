@@ -30,10 +30,8 @@
 ### (コンストラクタ)
 
 ```c++
-Graph(int n = 0, bool undirected = false); // (1)
+Graph(int n = 0, bool undirected = false, int m = 0); // (1)
 Graph(int n, const std::vector<std::pair<int, int>>& edges, bool undirected = false); // (2)
-Graph(int n, const std::vector<Edge>& edges, bool undirected = false); // (3)
-Graph(int n, std::vector<Edge>&& edges, bool undirected = false); // (3)
 ```
 
 $n$ は頂点数である。 `undirected` には、構築するグラフが有向グラフなら `true` 、有向グラフなら `false` 与えること。
@@ -43,15 +41,11 @@ $n$ は頂点数である。 `undirected` には、構築するグラフが有�
 
 (1)
 
-- 辺をもたないグラフを構築する。
+- $n$ 頂点 $m$ 辺であるとして構築する。ただし、辺の内容は未初期化となる。
 
 (2)
 
 - 辺 $i$ は `edges[i].first` から `edges[i].second` までを結ぶものとしてグラフを構築する。
-
-(3)
-
-- 辺 $i$ は `edges[i]` であるものとしてグラフを構築する。
 
 ### 諸 getter
 
