@@ -12,9 +12,9 @@ private:
 
     void recalcProd(){
         Prod[0].resize(A[0].size() + 1);
-        for(size_t i=0; i<A[0].size(); i++) Prod[0][i+1] = A[0][i] + Prod[0][i];
+        for(std::size_t i=0; i<A[0].size(); i++) Prod[0][i+1] = A[0][i] + Prod[0][i];
         Prod[1].resize(A[1].size() + 1);
-        for(size_t i=0; i<A[1].size(); i++) Prod[1][i+1] = Prod[1][i] + A[1][i];
+        for(std::size_t i=0; i<A[1].size(); i++) Prod[1][i+1] = Prod[1][i] + A[1][i];
     }
 public:
 
