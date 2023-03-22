@@ -1,33 +1,12 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/queue_operate_all_composite"
 #include "../../../Include/nachia/array/deque-operate-aggregation.hpp"
 #include "../../../Include/nachia/misc/fastio.hpp"
-
-
-namespace Problem{
-
-using u32 = unsigned int;
-using u64 = unsigned long long;
-
-const u32 MOD = 998244353;
-
-struct Val{
-    u32 a;
-    u32 b;
-
-    u32 operator()(u32 x) const { return ((u64)x * a + b) % MOD; }
-};
-
-Val operator+(Val l, Val r){
-    Val res;
-    res.a = (u64)l.a * r.a % MOD;
-    res.b = ((u64)l.b * r.a + r.b) % MOD;
-    return res;
-}
-}
+#include "affine-mod-strict.hpp"
 
 int main(){
     using nachia::cin, nachia::cout;
-    nachia::DequeOperateAggregation<Problem::Val> ds;
+    using Val = AffineModStrict<998244353>;
+    nachia::DequeOperateAggregation<Val> ds(Val::Identity());
 
     int Q; cin >> Q;
     for(int i=0; i<Q; i++){
@@ -41,7 +20,7 @@ int main(){
         }
         if(ty == 2){
             unsigned int x; cin >> x;
-            unsigned int ans = ds.allProd()(x);
+            unsigned int ans = ds.allProd().eval(x);
             cout << ans << '\n';
         }
     }
