@@ -5,6 +5,7 @@
 ### Array
 
 - [平衡二分探索木による配列 `<nachia/array/bbst-list.hpp>`](array/bbst-list.md)
+- [Cartesian tree `<nachia/array/cartesian-tree.hpp>`](array/cartesian-tree.md)
 - [CSR 表現を用いた二次元配列 `<nachia/array/csr-array.hpp>`](array/csr-array.md)
 - [集約値取得可能な deque `<nachia/array/deque-operate-aggregation.hpp>`](array/deque-operate-aggregation.md)
 - [約数包除・GCD畳み込み `<nachia/array/divisor-convolution.hpp>`](array/divisor-convolution.md)

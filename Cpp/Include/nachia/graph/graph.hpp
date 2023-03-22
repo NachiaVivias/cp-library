@@ -14,13 +14,21 @@ public:
         void reverse(){ std::swap(from, to); }
     };
     using Base = std::vector<std::pair<int, int>>;
-    Graph(int n = 0, bool undirected = false) : m_n(n), m_e(), m_isUndir(undirected) {}
+    Graph(int n = 0, bool undirected = false, int m = 0) : m_n(n), m_e(m), m_isUndir(undirected) {}
     Graph(int n, const std::vector<std::pair<int, int>>& edges, bool undirected = false) : m_n(n), m_isUndir(undirected){
         m_e.resize(edges.size());
         for(std::size_t i=0; i<edges.size(); i++) m_e[i] = { edges[i].first, edges[i].second };
     }
-    Graph(int n, const std::vector<Edge>& edges, bool undirected = false) : m_n(n), m_e(edges), m_isUndir(undirected) {}
-    Graph(int n, std::vector<Edge>&& edges, bool undirected = false) : m_n(n), m_e(edges), m_isUndir(undirected) {}
+    template<class Cin>
+    static Graph Input(Cin& cin, int n, bool undirected, int m, bool offset = 0){
+        Graph res(n, undirected, m);
+        for(int i=0; i<m; i++){
+            int u, v; cin >> u >> v;
+            res[i].from = u - offset;
+            res[i].to = v - offset;
+        }
+        return res;
+    }
     int numVertices() const noexcept { return m_n; }
     int numEdges() const noexcept { return int(m_e.size()); }
     int addNode() noexcept { return m_n++; }
