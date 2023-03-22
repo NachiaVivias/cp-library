@@ -27,7 +27,7 @@ int main(){
         }
         if(ty == 4){
             unsigned int x; cin >> x;
-            unsigned int ans = ds.allProd().eval(x);
+            unsigned int ans = ds.sum().eval(x);
             cout << ans << '\n';
         }
     }

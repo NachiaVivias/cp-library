@@ -52,7 +52,7 @@ public:
         A[1].pop_back();
         Prod[1].pop_back();
     }
-    Val allProd(){ return Prod[0].back() + Prod[1].back(); }
+    Val sum(){ return Prod[0].back() + Prod[1].back(); }
 };
 
 } // namespace nachia
