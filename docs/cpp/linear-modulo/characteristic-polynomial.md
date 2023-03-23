@@ -21,7 +21,7 @@ std::vector<Elem> CharacteristicPolynomial(MatrixModulo<Elem> mat);
 
 - `mat` は $n\times n$ 型行列
 - $0 \leq n$
-- $O(h^2w)$ 時間
+- $O(n^3)$ 時間
 
 `mat` で表される行列の固有多項式を計算する。返り値を `a` とすろと、 `a` は長さ $n+1$ の列であり、 `a[i]` は固有多項式の ${\lambda }^i$ の係数である。
 
