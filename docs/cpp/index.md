@@ -9,7 +9,9 @@
 - [CSR 表現を用いた二次元配列 `<nachia/array/csr-array.hpp>`](array/csr-array.md)
 - [集約値取得可能な deque `<nachia/array/deque-operate-aggregation.hpp>`](array/deque-operate-aggregation.md)
 - [約数包除・GCD畳み込み `<nachia/array/divisor-convolution.hpp>`](array/divisor-convolution.md)
+- [遅延セグメント木 `<nachia/array/lazy-segtree.hpp>`](array/lazy-segtree.md)
 - [一点更新列で得られる配列の辞書順比較 `<nachia/array/point-update-lex-sort.hpp>`](array/point-update-lex-sort.md)
+- [セグメント木 `<nachia/array/segtree.hpp>`](array/segtree.md)
 
 ### Graph
 
@@ -33,10 +35,16 @@
 
 - [$N$ 以下の素数の個数 `<nachia/math/counting-primes.hpp>`](math/counting-primes.md)
 - [明示的な素数篩（エラトステネスの篩） `<nachia/math/prime-sieve-explicit.hpp>`](math/prime-sieve-explicit.md)
+- [有理数の二分探索 `<nachia/math/rational-number-search.hpp>`](math/rational-number-search.md)
 
 ### Multi-dimensional
 
 - [$2$ 次元矩形クエリ `<nachia/multi-dimensional/two-d-rectangle-query.hpp>`](multi-dimensional/two-d-rectangle-query.md)
+
+### Range Query
+
+- [point set range min `<nachia/range-query/point-set-range-min.hpp>`](range-query/point-set-range-min.md)
+- [range add range min `<nachia/range-query/range-add-range-min.hpp>`](range-query/range-add-range-min.md)
 
 ### Set
 

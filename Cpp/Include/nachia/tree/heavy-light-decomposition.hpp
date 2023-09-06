@@ -80,7 +80,7 @@ public:
     int toSeq(int vertex) const { return rangeL[vertex]; }
     int toVtx(int seqidx) const { return I[seqidx]; }
     int toSeq2In(int vertex) const { return rangeL[vertex] * 2 - D[vertex]; }
-    int toSeq2Out(int vertex) const { return rangeR[vertex] * 2 - D[vertex]; }
+    int toSeq2Out(int vertex) const { return rangeR[vertex] * 2 - D[vertex] - 1; }
     int parentOf(int v) const { return P[v]; }
     int heavyRootOf(int v) const { return PP[v]; }
     int heavyChildOf(int v) const {
