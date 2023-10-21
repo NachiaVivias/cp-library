@@ -53,4 +53,22 @@ std::vector<Elem> LcmConvolution(std::vector<Elem> a, std::vector<Elem> b){
     return a;
 }
 
+template<class Elem>
+void SumForCoprimeIndex(std::vector<Elem>& f){
+    if((int)f.size() <= 1) return;
+    Elem q = f[1];
+    for(int i=2; i<(int)f.size(); i++) q += f[i];
+    std::vector<int> F(f.size()); F[1] = -1;
+    DivisorMobius(F);
+    DivisorReversedZeta(f);
+    f[1] -= f[1];
+    Elem t = f[1];
+    for(int i=2; i<(int)f.size(); i++){
+        if(F[i] == 0) f[i] = f[1];
+        if(F[i] == -1){ t = f[1]; t -= f[i]; f[i] = t; }
+    }
+    DivisorZeta(f);
+    for(int i=1; i<(int)f.size(); i++){ t = q; t -= f[i]; f[i] = t; }
+}
+
 } // namespace nachia
