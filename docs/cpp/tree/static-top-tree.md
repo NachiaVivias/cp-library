@@ -26,7 +26,7 @@ StaticTopTree(int n, std::vector<std::pair<int,int>> tree, int root = 0);
 - $2 \leq n \leq 10^7$
 - `tree` の要素を $(u,v)$ とすると、 $0\leq u\lt n$ かつ $0\leq v \lt n$
 - `tree` を辺集合とすると、グラフは $n$ 頂点の木をなす
-- $2 \leq \text{root} \lt N$
+- $2 \leq \text{root} \lt n$
 - $O(n\log n)$ 時間
 
 $n$ 頂点の木を cluster のマージ過程で表す。マージ過程の情報は `m_node` から得られる。
@@ -55,7 +55,7 @@ $\text{ty}$ はノードの種類である。
 
 存在するならば左の子に対応する cluster を $s _ 1\rightarrow t _ 1$ 、右の子に対応する cluster を $s _ 2\rightarrow t _ 2$ とおく。
 
-- `TyEdge` ： $1$ つの辺を表すノードである。子は持たない。ノード $0$ からノード $N-1$ がちょうどこの種類で、ノード $i$ が辺 $i$ に対応する。
+- `TyEdge` ： $1$ つの辺を表すノードである。子は持たない。ノード $0$ からノード $n-2$ がちょうどこの種類で、ノード $i$ が辺 $i$ に対応する。
 - `TyCompress` ： $t _ 1=s _ 2$ が保証され、 $s _ 1\rightarrow t _ 2$ を新しい cluster とする。
 - `TyRake1` ： $t _ 1=s _ 2$ が保証され、 $s _ 1\rightarrow t _ 1$ を新しい cluster とする。
 - `TyRake2` ： $s _ 1=s _ 2$ が保証され、 $s _ 2\rightarrow t _ 2$ を新しい cluster とする。
