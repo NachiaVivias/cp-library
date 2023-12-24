@@ -37,6 +37,10 @@
 - [明示的な素数篩（エラトステネスの篩） `<nachia/math/prime-sieve-explicit.hpp>`](math/prime-sieve-explicit.md)
 - [有理数の二分探索 `<nachia/math/rational-number-search.hpp>`](math/rational-number-search.md)
 
+### Misc
+
+- [ビット演算 `<nachia/misc/bit-operations.hpp>`](misc/bit-operations.md)
+
 ### Multi-dimensional
 
 - [$2$ 次元矩形クエリ `<nachia/multi-dimensional/two-d-rectangle-query.hpp>`](multi-dimensional/two-d-rectangle-query.md)
@@ -48,6 +52,7 @@
 
 ### Set
 
+- [decremental predecessor problem `<nachia/set/decremental-predecessor-query>`](set/decremental-predecessor-query.md)
 - [disjoint set union `<nachia/set/dsu.hpp>`](set/dsu.md)
 - [分割の列挙 `<nachia/set/enumerate-partitions.hpp>`](set/enumerate-partitions.md)
 
