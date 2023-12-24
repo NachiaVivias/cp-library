@@ -50,6 +50,7 @@
 
 - [disjoint set union `<nachia/set/dsu.hpp>`](set/dsu.md)
 - [分割の列挙 `<nachia/set/enumerate-partitions.hpp>`](set/enumerate-partitions.md)
+- [subset sum problem `<nachia/set/subset-sum.hpp>`](set/subset-sum.md)
 
 ### String
 
