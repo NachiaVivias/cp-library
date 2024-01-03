@@ -44,6 +44,7 @@
 ### Range Query
 
 - [point set range min `<nachia/range-query/point-set-range-min.hpp>`](range-query/point-set-range-min.md)
+- [range add count top k `<nachia/range-query/range-add-count-top-k.hpp>`](range-query/range-add-count-top-k.md)
 - [range add range min `<nachia/range-query/range-add-range-min.hpp>`](range-query/range-add-range-min.md)
 
 ### Set
