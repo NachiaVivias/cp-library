@@ -25,7 +25,7 @@ std::vector<int> SubsetSumHalfBruteforce(long long X, std::vector<long long> A);
 ```
 
 - $n\leq 60$
-- 任意の部分和 $s$ について、 $|s| \leq 2\times 10^{18}$
+- 任意の部分和 $s$ について、 $\lvert s\rvert \leq 2\times 10^{18}$
 - $O(2^{n/2})$ 時間。
 
 半分全列挙による解法。
