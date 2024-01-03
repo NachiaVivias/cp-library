@@ -25,9 +25,11 @@ int ChromaticNumber(std::vector<std::vector<int>> adjacency_matrix);
 - 頂点 $i$ と頂点 $j$ を結ぶ辺があるとき $\text{adjacency\_matrix}[i][j]=1$ 、ないとき $\text{adjacency\_matrix}[i][j]=0$
 - $\text{adjacency\_matrix}[i][i]=0$  （自己ループはない）
 - $\text{adjacency\_matrix}[i][j]=\text{adjacency\_matrix}[j][i]$
-- $\textcolor{orange}{O(2^n)}$ 時間
+- 条件付きで $\textcolor{orange}{O(2^n)}$ 時間
 
 グラフの頂点彩色数を返す。
+
+`__GNUC__` が定義されている場合、 `__builtin_parity` 関数を呼び出す。そうでない場合、相当する演算を $O(2^n)$ 回行う。
 
 ## 参考
 

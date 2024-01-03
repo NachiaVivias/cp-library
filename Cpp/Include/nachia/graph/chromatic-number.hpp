@@ -27,17 +27,17 @@ int ChromaticNumber(std::vector<std::vector<int>> adjacency_matrix){
     u32 n = D.size();
     u32 nn = 1 << n;
     std::vector<u32> E(n,nn-1);
-    for(int i=0; i<n; i++) for(int j=0; j<n; j++) if(i!=j) if(D[i][j] == 1) E[i] -= (1<<j);
+    for(u32 i=0; i<n; i++) for(u32 j=0; j<n; j++) if(i!=j) if(D[i][j] == 1) E[i] -= (1<<j);
     std::vector<u32> A(nn>>1,0); A[0] = 1;
-    for(int d=0; d<n-1; d++) for(u32 i=0; i<(1<<d); i++) A[i|(1<<d)] = A[i] + A[i&E[d]];
+    for(u32 d=0; d<n-1; d++) for(u32 i=0; i<((u32)1<<d); i++) A[i|(1<<d)] = A[i] + A[i&E[d]];
     std::vector<u32> T(nn>>1,0); T[0] = 1;
-    for(u32 d=0; d<n-1; d++) for(u32 i=0; i<(1<<d); i++) T[i|(1<<d)] = T[i] + ((E[d] & (nn>>1)) ? T[i&E[d]] : 0);
+    for(u32 d=0; d<n-1; d++) for(u32 i=0; i<((u32)1<<d); i++) T[i|(1<<d)] = T[i] + ((E[d] & (nn>>1)) ? T[i&E[d]] : 0);
 
     bool graph_empty = true;
     for(auto e : E) if(e != (nn-1)) graph_empty = false;
     if(graph_empty) return 1;
 
-    for(int d=1; d<n; d++){
+    for(u32 d=1; d<n; d++){
         u32 h = 1 << (d-1);
         std::vector<u64> P(d+2), Q(d+2);
         for(u32 p=0; p<(nn>>1); p+=(1<<d)){
@@ -58,7 +58,7 @@ int ChromaticNumber(std::vector<std::vector<int>> adjacency_matrix){
                 for(u32 j=0; j<=d; j++) P[j] += i[j];
             }
         }
-        for(int j=0; j<=d; j++){
+        for(u32 j=0; j<=d; j++){
             P[j+1] += P[j] >> 32;
             P[j] -= (P[j] >> 32) << 32;
             Q[j+1] += Q[j] >> 32;
