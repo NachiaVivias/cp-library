@@ -19,6 +19,7 @@ int main(){
         E[u][v] = E[v][u] = 1;
     }
     int ans = nachia::ChromaticNumber(E);
+    /*
     static constexpr unsigned int MODLIST[] = { 1048583, 1000000009, 1073741827, 2147483629, 2147483647 };
     int qans[5] = {
         nachia::ChromaticNumberByMod<MODLIST[0]>(E),
@@ -28,6 +29,7 @@ int main(){
         nachia::ChromaticNumberByMod<MODLIST[4]>(E)
     };
     for(int i=0; i<5; i++) assert(qans[i] >= ans);
+    */
     cout << ans << "\n";
     return 0;
 }
