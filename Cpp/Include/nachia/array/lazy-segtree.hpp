@@ -11,10 +11,12 @@ template<
     S mapping(F f, S x)
 >
 struct LazySegtree {
+private:
 
     struct Node { S s; F f; bool propagated; };
     int N;
     int logN;
+    int xN;
     std::vector<Node> A;
 
     void mapf(Node& a, F f){
@@ -32,14 +34,49 @@ struct LazySegtree {
         A[i].f = A[0].f;
         A[i].propagated = true;
     }
+    
+    // bool cmp(S)
+    template<class E>
+    int minLeft2(int r, E cmp, int a = 0, int b = 0, int i = -1){
+        static S x;
+        if(i == -1){ a=0; b=N; i=1; x = A[0].s; }
+        if(r <= a) return a;
+        if(b <= r){
+            S nx = op(A[i].s, x);
+            if(cmp(nx)){ x = nx; return a; }
+        }
+        if(b-a == 1) return b;
+        spread(i);
+        int q = minLeft2(r, cmp, (a+b)/2, b, i*2+1);
+        if(q > (a+b)/2) return q;
+        return minLeft2(r, cmp, a, (a+b)/2, i*2);
+    }
+    // bool cmp(S)
+    template<class E>
+    int maxRight2(int l, E cmp, int a = 0, int b = 0, int i = -1){
+        static S x;
+        if(i == -1){ a=0; b=N; i=1; x = A[0].s; }
+        if(b <= l) return b;
+        if(l <= a){
+            S nx = op(x, A[i].s);
+            if(cmp(nx)){ x = nx; return b; }
+        }
+        if(b - a == 1) return a;
+        spread(i);
+        int q = maxRight2(l, cmp, a, (a+b)/2, i*2);
+        if(q < (a+b)/2) return q;
+        return maxRight2(l, cmp, (a+b)/2, b, i*2+1);
+    }
+public:
 
-    LazySegtree() : N(0), logN(-1){}
+    LazySegtree() : N(0), logN(-1), xN(0){}
     LazySegtree(int n, S e, F id){
-        N=1; logN=0;
+        N=1; logN=0; xN=n;
         while(N<n){ N *= 2; logN++; }
         A.assign(N*2, { e, id, true });
     }
-    LazySegtree(const std::vector<S>& a, S e, F id) : LazySegtree(a.size(), std::move(e), std::move(id)){
+    LazySegtree(const std::vector<S>& a, S e, F id)
+        : LazySegtree(a.size(), std::move(e), std::move(id)){
         for(std::size_t i=0; i<a.size(); i++) A[i+N].s = a[i];
         for(int i=N-1; i>=1; i--) mergev(i);
     }
@@ -89,37 +126,18 @@ struct LazySegtree {
         return op(q1, q2);
     }
     S allProd() const { return A[1].s; }
+
     // bool cmp(S)
     template<class E>
-    int minLeft(int r, E cmp, int a = 0, int b = 0, int i = -1){
-        static S x;
-        if(i == -1){ a=0; b=N; i=1; x = A[0].s; }
-        if(r <= a) return a;
-        if(b <= r){
-            S nx = op(A[i].s, x);
-            if(cmp(nx)){ x = nx; return a; }
-        }
-        if(b - a == 1) return b;
-        spread(i);
-        int q = minLeft(r, cmp, (a+b)/2, b, i*2+1);
-        if(q > (a+b)/2) return q;
-        return minLeft(r, cmp, a, (a+b)/2, i*2);
+    int minLeft(int r, E cmp){
+        return minLeft2(r, cmp);
     }
+
     // bool cmp(S)
     template<class E>
-    int maxRight(int l, E cmp, int a = 0, int b = 0, int i = -1){
-        static S x;
-        if(i == -1){ a=0; b=N; i=1; x = A[0].s; }
-        if(b <= l) return b;
-        if(l <= a){
-            S nx = op(x, A[i].s);
-            if(cmp(nx)){ x = nx; return b; }
-        }
-        if(b - a == 1) return a;
-        spread(i);
-        int q = maxRight(l, cmp, a, (a+b)/2, i*2);
-        if(q < (a+b)/2) return q;
-        return maxRight(l, cmp, (a+b)/2, b, i*2+1);
+    int maxRight(int l, E cmp){
+        int x = maxRight2(l, cmp);
+        return x > xN ? xN : x;
     }
 };
 
