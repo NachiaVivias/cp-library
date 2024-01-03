@@ -11,13 +11,45 @@ struct Segtree {
 private:
     int N;
     std::vector<S> A;
+    int xN;
 
     void mergev(int i){
         if(i < N) A[i] = op(A[i*2], A[i*2+1]);
     }
+
+    template<class E>
+    int minLeft2(int r, E cmp, int a = 0, int b = 0, int i = -1) const {
+        static S x;
+        if(i == -1){ a=0; b=N; i=1; x=A[0]; }
+        if(r <= a) return a;
+        if(b <= r){
+            S nx = op(A[i], x);
+            if(cmp(nx)){ x = nx; return a; }
+        }
+        if(b - a == 1) return b;
+        int q = minLeft2(r, cmp, (a+b)/2, b, i*2+1);
+        if(q > (a+b)/2) return q;
+        return minLeft2(r, cmp, a, (a+b)/2, i*2);
+    }
+    
+    template<class E>
+    int maxRight2(int l, E cmp, int a = 0, int b = 0, int i = -1) const {
+        static S x;
+        if(i == -1){ a=0; b=N; i=1; x=A[0]; }
+        if(b <= l) return b;
+        if(l <= a){
+            S nx = op(x, A[i]);
+            if(cmp(nx)){ x = nx; return b; }
+        }
+        if(b - a == 1) return a;
+        int q = maxRight2(l, cmp, a, (a+b)/2, i*2);
+        if(q < (a+b)/2) return q;
+        return maxRight2(l, cmp, (a+b)/2, b, i*2+1);
+    }
+
 public:
     Segtree() : N(0) {}
-    Segtree(int n, S e){
+    Segtree(int n, S e) : xN(n) {
         N = 1; while (N < n) N *= 2;
         A.assign(N * 2, e);
     }
@@ -49,34 +81,15 @@ public:
 
     // bool cmp(S)
     template<class E>
-    int minLeft(int r, E cmp, int a = 0, int b = 0, int i = -1){
-        static S x;
-        if(i == -1){ a=0; b=N; i=1; x=A[0]; }
-        if(r <= a) return a;
-        if(b <= r){
-            S nx = op(A[i], x);
-            if(cmp(nx)){ x = nx; return a; }
-        }
-        if(b - a == 1) return b;
-        int q = minLeft(r, cmp, (a+b)/2, b, i*2+1);
-        if(q > (a+b)/2) return q;
-        return minLeft(r, cmp, a, (a+b)/2, i*2);
+    int minLeft(int r, E cmp) const {
+        return minLeft2(r, cmp);
     }
 
     // bool cmp(S)
     template<class E>
-    int maxRight(int l, E cmp, int a = 0, int b = 0, int i = -1){
-        static S x;
-        if(i == -1){ a=0; b=N; i=1; x=A[0]; }
-        if(b <= l) return b;
-        if(l <= a){
-            S nx = op(x, A[i]);
-            if(cmp(nx)){ x = nx; return b; }
-        }
-        if(b - a == 1) return a;
-        int q = maxRight(l, cmp, a, (a+b)/2, i*2);
-        if(q < (a+b)/2) return q;
-        return maxRight(l, cmp, (a+b)/2, b, i*2+1);
+    int maxRight(int l, E cmp) const {
+        int x = maxRight2(l, cmp);
+        return x > xN ? xN : x;
     }
 };
 
