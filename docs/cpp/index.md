@@ -13,6 +13,11 @@
 - [一点更新列で得られる配列の辞書順比較 `<nachia/array/point-update-lex-sort.hpp>`](array/point-update-lex-sort.md)
 - [セグメント木 `<nachia/array/segtree.hpp>`](array/segtree.md)
 
+### Geometry
+
+- [ドロネー三角形分割 `<nachia/geometry/delaunay-triangulation.hpp>`](geometry/delaunay-triangulation.md)
+- [2 次元整数座標のデータ型 `<nachia/geometry/veci2.hpp>`](geometry/veci2.md)
+
 ### Graph
 
 - [Biconnected Components ( 2-連結成分 ) `<nachia/graph/biconnected-components.hpp>`](graph/biconnected-components.md)
