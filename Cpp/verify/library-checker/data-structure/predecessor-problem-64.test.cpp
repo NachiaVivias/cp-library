@@ -15,7 +15,10 @@ int main(){
         if(c == 0) structure.insert(k);
         else if(c == 1) structure.erase(k);
         else if(c == 2) cout << (char)('0'+structure.count(k)) << '\n';
-        else if(c == 3) cout << structure.noLessThan(k) << '\n';
+        else if(c == 3){
+            int buf = structure.noLessThan(k);
+            cout << (N == buf ? -1 : buf) << '\n';
+        }
         else if(c == 4) cout << structure.noGreaterThan(k) << '\n';
     }
 
