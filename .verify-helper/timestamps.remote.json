@@ -1,5 +1,6 @@
 {
 "Cpp/verify/compile/array/point-update-lex-sort/v0.test.cpp": "2023-02-08 02:59:06 +0900",
+"Cpp/verify/compile/geometry/delaunay-triangulation/v0.test.cpp": "2024-01-09 01:18:07 +0900",
 "Cpp/verify/library-checker/convolution/gcd-convolution.test.cpp": "2023-10-21 14:28:36 +0900",
 "Cpp/verify/library-checker/convolution/lcm-convolution.test.cpp": "2023-10-21 14:28:36 +0900",
 "Cpp/verify/library-checker/data-structure/deque-operate-all-composite.test.cpp": "2023-03-22 14:54:55 +0900",
