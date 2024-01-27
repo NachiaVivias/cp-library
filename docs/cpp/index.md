@@ -26,6 +26,7 @@
 - [Connected Components ( 連結成分 ) `<nachia/graph/connected-components.hpp>`](graph/connected-components.md)
 - [Dijkstra法 ( ダイクストラ法 ) `<nachia/graph/dijkstra.hpp>`](graph/dijkstra.md)
 - [Online Dynamic Connectivity `<nachia/graph/dynamic-connectivity.hpp>`](graph/dynamic-connectivity.md)
+- [オイラー路 `<nachia/graph/eulerian-trail.hpp>`](graph/eulerian-trail.md)
 - [Graph 構造体・辺のリスト `<nachia/graph/graph.hpp>`](graph/graph.md)
 - [Strongly Connected Components ( 強連結成分 ) `<nachia/graph/strongly-connected-components.hpp>`](graph/strongly-connected-components.md)
 - [Two-Edge-Connected Components ( 2-辺連結成分 ) `<nachia/graph/two-edge-connected-components.hpp>`](graph/two-edge-connected-components.md)
