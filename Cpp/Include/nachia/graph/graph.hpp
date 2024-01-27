@@ -12,8 +12,8 @@ public:
     struct Edge{
         int from, to;
         void reverse(){ std::swap(from, to); }
+        int xorval() const { return from ^ to; }
     };
-    using Base = std::vector<std::pair<int, int>>;
     Graph(int n = 0, bool undirected = false, int m = 0) : m_n(n), m_e(m), m_isUndir(undirected) {}
     Graph(int n, const std::vector<std::pair<int, int>>& edges, bool undirected = false) : m_n(n), m_isUndir(undirected){
         m_e.resize(edges.size());
@@ -47,6 +47,7 @@ public:
         assert(numVertices() == int(mapping.size()));
         for(int i=0; i<numVertices(); i++) assert(0 <= mapping[i] && mapping[i] < newV);
         for(auto& e : m_e){ e.from = mapping[e.from]; e.to = mapping[e.to]; }
+        m_n = newV;
     }
     std::vector<Graph> induce(int num, const std::vector<int>& mapping) const {
         int n = numVertices();
