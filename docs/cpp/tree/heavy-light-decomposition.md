@@ -13,7 +13,7 @@ $n$ 頂点の静的な根付き無向木 $T$ がある。頂点には番号(0-ba
 
 $T$ の頂点を適切な順序に並べた列を $A=(A[0],A[1],A[2], \ldots ,A[n-1])$ とする。各要素は [`toVtx`](#toVtx) で得られる。
 
-$T$ に対して、以下の操作を行う。前処理の計算量は $O(n)$ である。
+様々なメンバを持つ。特に、 $T$ に対して以下の計算を行う。前処理の計算量は $O(n)$ である。
 
 - [`lca(x,y)`](#lca) ： $\text{LCA}(x,y)$ を求める。（ $O(\log n)$ 時間）
 - [`path(r,c)`](#path) ： $r$ とその子孫 $c$ について、 $r,c$ 間の単純パス上の頂点列を $A$ の区間 $O(\log n)$ 個で表す。（ $O(\log n)$ 時間）
@@ -53,7 +53,7 @@ $\text{root}$ を根として、 heavy-light decomposition を行う。
 ### toSeq
 
 ```c++
-int toSeq(int vertex) const;
+int toSeq(int vtx) const;
 ```
 
 - 引数を $v$ として、 $0 \leq v \lt n$
@@ -75,8 +75,8 @@ $A[i]$ を返す。
 ### toSeq2In, toSeq2Out
 
 ```c++
-int toSeq2In(int vertex) const;
-int toSeq2Out(int vertex) const;
+int toSeq2In(int vtx) const;
+int toSeq2Out(int vtx) const;
 ```
 
 - 引数を $i$ として、 $0 \leq i \lt n$
@@ -111,27 +111,19 @@ int parentOf(int v) const;
 
 頂点 $v$ の親の番号を返す。 $v$ が根の場合は $-1$ を返す。
 
-### heavyRootOf
+### heavyRootOf, heavyChildOf
 
 ```c++
-int heavyRootOf(int v) const;
+int heavyRootOf(int v) const;  // (1)
+int heavyChildOf(int v) const; // (2)
 ```
 
 - $0 \leq v \lt n$
 - $O(1)$ 時間
 
-頂点 $v$ と同じ heavy path に含まれている頂点のうち、最も根に近い頂点を返す。
+(1) : 頂点 $v$ と同じ heavy path に含まれている頂点のうち、最も根に近い頂点を返す。
 
-### heavyChildOf
-
-```c++
-int heavyChildOf(int v) const;
-```
-
-- $0 \leq v \lt n$
-- $O(1)$ 時間
-
-頂点 $v$ に heavy path でつながれた子の番号を返す。存在しない場合、 $-1$ を返す。
+(2) : 頂点 $v$ に heavy path でつながれた子の番号を返す。存在しない場合、 $-1$ を返す。
 
 ### lca
 
@@ -158,14 +150,14 @@ $\text{dist}(x,y)$ を返す。
 ### path
 
 ```c++
-vector<pair<int,int>> path(int r, int c, bool include_root = true, bool reverse_path = false) const;
+vector<Range> path(int r, int c, bool include_root = true, bool reverse_path = false) const;
 ```
 
 - $0 \leq r,c \lt n$
 - $r=c$ または、頂点 $r$ は頂点 $c$ の祖先である。
 - $O(\log n)$ 時間
 
-$r$ から $c$ へ向かう単純パスをいくつかの**半開**区間 $[l _ 0,r _ 0),[l _ 1,r _ 1),\cdots ,[l _ {k-1},r _ {k-1})$ で表し、ペアの列 $ \left( (l _ 0,r _ 0),(l _ 1,r _ 1) \ldots (l_{k-1},r_{k-1}) \right) $ を返す。
+$r$ から $c$ へ向かう単純パスをいくつかの**半開**区間 $[l _ 0,r _ 0),[l _ 1,r _ 1),\cdots ,[l _ {k-1},r _ {k-1})$ で表し、一列に並べて返す。
 
 パスに含まれる頂点の列を $(r=I _ 0,I _ 1,I _ 2, \cdots ,I _ {L-1}=c)$ 、と表したとき、 $2$ つの数列
 
@@ -182,16 +174,26 @@ $r$ から $c$ へ向かう単純パスをいくつかの**半開**区間 $[l _ 
 
 $c$ から $r$ へ向かうパスを扱うときは、数列 $A$ を逆順にとり、 `reverse_path` を真にしてこの関数を利用するとよい。
 
+`Range` は以下で定義される。
+
+```c++
+struct Range{
+    int l; int r;
+    int size() const { return r-l; }
+    bool includes(int x) const { return l <= x && x < r; }
+};
+```
+
 ### subtree
 
 ```c++
-pair<int,int> subtree(int r) const;
+Range subtree(int r) const;
 ```
 
 - $0 \leq r \lt n$
 - $O(1)$ 時間
 
-頂点 $r$ の部分木を**半開**区間 $[l _ 0,r _ 0)$ で表し、ペア $l _ 1,r _ 1$ を返す。
+頂点 $r$ の部分木を**半開**区間 $[l _ 0,r _ 0)$ で表したものを返す。
 
 頂点 $r$ の部分木に含まれる頂点をある DFS の行きがけ順に並べた列を $(r=I _ 0,I _ 1, \cdots ,I _ {L-1})$ としたとき、 $2$ つの数列
 
@@ -226,6 +228,22 @@ int la(int from, int to, int d) const;
 $0 \leq d \leq \text{dist(from,to)}$ のとき、 $\text{from}$ から $\text{to}$ へ向かう単純パスにおいて、 $\text{from}$ から距離 $d$ の位置にある頂点を返す。それ以外のとき、 $-1$ を返す。
 
 これは、 $\text{from}$ を根としたときの Level Ancestor と同じことである。
+
+### children
+
+```c++
+ChildrenIterRange children(int v) const;
+```
+
+- $1 \leq v \lt n$
+
+次のように呼び出すことで、 $v$ の子が列挙される。
+
+```c++
+for(int w : hld.children(v)){
+    // do with w
+}
+```
 
 ## 参考
 
