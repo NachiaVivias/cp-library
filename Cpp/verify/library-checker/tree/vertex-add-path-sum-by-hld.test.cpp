@@ -55,8 +55,8 @@ int main() {
             int u,v; cin >> u >> v;
             int g = hld.lca(u,v);
             int64_t res = 0;
-            for(auto I : hld.path(g,u,true)) res += rq.sum(I.first, I.second);
-            for(auto I : hld.path(g,v,false)) res += rq.sum(I.first, I.second);
+            for(auto I : hld.path(g,u,true)) res += rq.sum(I.l, I.r);
+            for(auto I : hld.path(g,v,false)) res += rq.sum(I.l, I.r);
             cout << res << "\n";
         }
     }
