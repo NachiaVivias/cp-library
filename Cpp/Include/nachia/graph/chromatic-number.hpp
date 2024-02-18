@@ -48,7 +48,7 @@ int ChromaticNumber(std::vector<std::vector<int>> adjacency_matrix){
                 a += (u64)i[h+j] * xb;
                 b += (u64)i[j] * xa;
                 i[j] = (u32)(a - b);
-                if((a >> 32) < (b >> 32)) b += (u64)1 << 32;
+                if((a << 32) < (b << 32)) b += (u64)1 << 32;
                 a >>= 32; b >>= 32;
             }
             i[d] = (u32)(a - b);

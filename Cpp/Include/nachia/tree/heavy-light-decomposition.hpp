@@ -76,11 +76,12 @@ public:
     HeavyLightDecomposition(const Graph& tree, int root = 0)
         : HeavyLightDecomposition(tree.getAdjacencyArray(true), root) {}
 
+    int numVertices() const { return N; }
     int depth(int p) const { return D[p]; }
-    int toSeq(int vertex) const { return rangeL[vertex]; }
+    int toSeq(int vtx) const { return rangeL[vtx]; }
     int toVtx(int seqidx) const { return I[seqidx]; }
-    int toSeq2In(int vertex) const { return rangeL[vertex] * 2 - D[vertex]; }
-    int toSeq2Out(int vertex) const { return rangeR[vertex] * 2 - D[vertex] - 1; }
+    int toSeq2In(int vtx) const { return rangeL[vtx] * 2 - D[vtx]; }
+    int toSeq2Out(int vtx) const { return rangeR[vtx] * 2 - D[vtx] - 1; }
     int parentOf(int v) const { return P[v]; }
     int heavyRootOf(int v) const { return PP[v]; }
     int heavyChildOf(int v) const {
@@ -101,24 +102,28 @@ public:
         return depth(u) + depth(v) - depth(lca(u,v)) * 2;
     }
 
-    std::vector<std::pair<int,int>> path(int r, int c, bool include_root = true, bool reverse_path = false) const {
+    struct Range{
+        int l; int r;
+        int size() const { return r-l; }
+        bool includes(int x) const { return l <= x && x < r; }
+    };
+
+    std::vector<Range> path(int r, int c, bool include_root = true, bool reverse_path = false) const {
         if(PD[c] < PD[r]) return {};
-        std::vector<std::pair<int,int>> res(PD[c]-PD[r]+1);
+        std::vector<Range> res(PD[c]-PD[r]+1);
         for(int i=0; i<(int)res.size()-1; i++){
-            res[i] = std::make_pair(rangeL[PP[c]], rangeL[c]+1);
+            res[i] = { rangeL[PP[c]], rangeL[c]+1 };
             c = P[PP[c]];
         }
         if(PP[r] != PP[c] || D[r] > D[c]) return {};
-        res.back() = std::make_pair(rangeL[r]+(include_root?0:1), rangeL[c]+1);
-        if(res.back().first == res.back().second) res.pop_back();
+        res.back() = { rangeL[r]+(include_root?0:1), rangeL[c]+1 };
+        if(res.back().l == res.back().r) res.pop_back();
         if(!reverse_path) std::reverse(res.begin(),res.end());
-        else for(auto& a : res) a = std::make_pair(N - a.second, N - a.first);
+        else for(auto& a : res) a = { N - a.r, N - a.l };
         return res;
     }
 
-    std::pair<int,int> subtree(int p){
-        return std::make_pair(rangeL[p], rangeR[p]);
-    }
+    Range subtree(int p) const { return { rangeL[p], rangeR[p] }; }
 
     int median(int x, int y, int z) const {
         return lca(x,y) ^ lca(y,z) ^ lca(x,z);
@@ -136,6 +141,26 @@ public:
             p = P[PP[p]];
         }
         return I[rangeL[p] - d];
+    }
+
+    struct ChildrenIterRange {
+    struct Iter {
+        const HeavyLightDecomposition& hld; int s;
+        int operator*() const { return hld.toVtx(s); }
+        Iter& operator++(){
+            s += hld.subtree(hld.I[s]).size();
+            return *this;
+        }
+        Iter operator++(int) const { auto a = *this; return ++a; }
+        bool operator==(Iter& r) const { return s == r.s; }
+        bool operator!=(Iter& r) const { return s != r.s; }
+    };
+        const HeavyLightDecomposition& hld; int v;
+        Iter begin() const { return { hld, hld.rangeL[v] + 1 }; }
+        Iter end() const { return { hld, hld.rangeR[v] }; }
+    };
+    ChildrenIterRange children(int v) const {
+        return ChildrenIterRange{ *this, v };
     }
 };
 

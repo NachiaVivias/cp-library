@@ -83,7 +83,7 @@ int main(){
         if(t == 1){
             int p; cin >> p;
             auto range = hld.subtree(p);
-            uint64_t ans = rq.prod(range.first, range.second).a;
+            uint64_t ans = rq.prod(range.l, range.r).a;
             cout << ans << "\n";
         }
     }
