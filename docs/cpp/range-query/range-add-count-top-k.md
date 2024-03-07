@@ -36,6 +36,7 @@ RangeAddCountTopK(                            // (1)
 );
 ```
 
+* $1 \leq n$
 * $1 \leq nk \leq 10^8$
 * `fZero` は $0$ として扱われる。
 * 以降、 `Min` よりも大きくない要素は扱われない。
@@ -54,12 +55,12 @@ RangeAddCountTopK(                            // (1)
 void rangeAdd(int l, int r, Elem x);
 ```
 
-* $0 \leq l \leq r \lt n$
+* $0 \leq l \leq r \leq n$
 * $O( k \log n )$ 時間
 
 各要素に $x$ を足す。
 
-### min
+### rangeTopK, topK
 
 ```c++
 std::vector<Node> rangeTopK(int l, int r);  // (1)
