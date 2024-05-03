@@ -21,7 +21,7 @@ int AddInt(int l, int r){ return l + r; }
 void solve(nachia::Xoshiro256pp& rng){
     int N = rng.random_unsigned(100, 300);
 
-    auto ds = nachia::Segtree<int, AddInt>(N, 0);
+    auto ds = nachia::Segtree<int, AddInt>(std::vector<int>(N, 1), 0);
     for(int i=0; i<=N; i++){
         for(int j=0; j<=N+1; j++){
             int f = ds.minLeft(i, [&](int x){ return x <= j; });
