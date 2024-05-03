@@ -11,7 +11,7 @@
 配列 $(a[0],a[1],\ldots ,a[n])$ に対して、次の計算を高速化する。
 
 * $l,r,x$ : $l\leq i \lt r$ について、 $a[i]$ の値を $a[i]+x$ で上書きする。
-* $l,r$ : $a[l],a[l+1],\ldots ,a[r-1]$ について、大きい順に $K$ 種類の値と、それらが現れる個数を得る。
+* $l,r$ : $a[l],a[l+1],\ldots ,a[r-1]$ について、大きい順に $K$ 種類の値と、それらが現れる個数を重み付きで得る。
 
 ## 構造体テンプレート RangeAddCountTopK
 
@@ -36,6 +36,7 @@ RangeAddCountTopK(                            // (1)
 );
 ```
 
+* $1 \leq n$
 * $1 \leq nk \leq 10^8$
 * `fZero` は $0$ として扱われる。
 * 以降、 `Min` よりも大きくない要素は扱われない。
@@ -46,7 +47,7 @@ RangeAddCountTopK(                            // (1)
 --
 
 * (0) : ダミーを構築する。このインスタンスでは操作をしてはいけない。
-* (1) : $n$ 要素を `fillV` で初期化する。各要素の重みは `fillF` で初期化する。
+* (1) : $n$ 要素の値をすべて `fillV` で初期化する。各要素の重みは `fillF` で初期化する。
 
 ### rangeAdd
 
@@ -54,12 +55,12 @@ RangeAddCountTopK(                            // (1)
 void rangeAdd(int l, int r, Elem x);
 ```
 
-* $0 \leq l \leq r \lt n$
+* $0 \leq l \leq r \leq n$
 * $O( k \log n )$ 時間
 
 各要素に $x$ を足す。
 
-### min
+### rangeTopK, topK
 
 ```c++
 std::vector<Node> rangeTopK(int l, int r);  // (1)
@@ -69,7 +70,7 @@ std::vector<Node> topK();                   // (2)
 * $0 \leq l \leq r \leq n$
 * $O( k \log n )$ 時間
 
-(1) : 返り値の $i$ 番目の要素は、大きいほうから $k$ 種類目の値 $x$ とその重み和 $f$ の組 $(x,f)$ 。 $k$ 種類目が存在しない場合 $(x,f)=(-\infty,0)$ である。
+(1) : 返り値の $i$ 番目の要素は、大きいほうから $k$ 種類目の値 $x$ とその重みの和 $f$ の組 $(x,f)$ 。 $k$ 種類目が存在しない場合 $(x,f)=(-\infty,0)$ である。
 
 (2) : $l=0,r=n$ と等価。 $O(k)$ 時間。
 

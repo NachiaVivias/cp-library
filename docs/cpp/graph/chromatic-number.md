@@ -21,10 +21,10 @@ int ChromaticNumber(std::vector<std::vector<int>> adjacency_matrix);
 ```
 
 - $1 \leq n \leq 31$
-- `adjacency_matrix` は $n \times n$ の行列
-- 頂点 $i$ と頂点 $j$ を結ぶ辺があるとき $\text{adjacency\_matrix}[i][j]=1$ 、ないとき $\text{adjacency\_matrix}[i][j]=0$
-- $\text{adjacency\_matrix}[i][i]=0$  （自己ループはない）
-- $\text{adjacency\_matrix}[i][j]=\text{adjacency\_matrix}[j][i]$
+- `adjacency_matrix` は $n \times n$ の行列（以下、 $\text{adj}$ で参照する。）
+- 頂点 $i$ と頂点 $j$ を結ぶ辺があるとき $\text{adj}[i][j]=1$ 、ないとき $\text{adj}[i][j]=0$
+- $\text{adj}[i][i]=0$  （自己ループはない）
+- $\text{adj}[i][j]=\text{adj}[j][i]$
 - 条件付きで $\color{red}{O(2^n)}$ 時間
 
 グラフの頂点彩色数を返す。

@@ -235,9 +235,9 @@ $0 \leq d \leq \text{dist(from,to)}$ のとき、 $\text{from}$ から $\text{to
 ChildrenIterRange children(int v) const;
 ```
 
-- $1 \leq v \lt n$
+- $0 \leq v \lt n$
 
-次のように呼び出すことで、 $v$ の子が列挙される。
+次のように呼び出すことで、 $v$ の子が列挙される。 $1$ ステップごとに $O(1)$ 時間で返す。
 
 ```c++
 for(int w : hld.children(v)){

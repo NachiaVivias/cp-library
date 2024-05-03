@@ -114,6 +114,9 @@ CsrArray<int> getEdgeIndexArray() const;
 
 引数 `undirected` でこの関数の動作における有向・無向を設定できる。
 
+* `undirected == false` なら、辺番号 $i$ ( $0\leq i \lt m$ ) は返り値の配列中に $1$ 回ずつ現れる。
+* `undirected == true` なら、辺番号 $i$ ( $0\leq i \lt m$ ) は返り値の配列中に $2$ 回ずつ現れる。
+
 ### getAdjacencyArray
 
 ```c++
