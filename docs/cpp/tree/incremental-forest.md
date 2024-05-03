@@ -141,6 +141,7 @@ for(int w : forest.children(v)){
 ## 参考
 
 * https://twitter.com/kude_coder/status/1781708815517569192
+* [codeforces blog "Binary Lifting, No Memory Wasted" (By Urbanowicz)](https://codeforces.com/blog/entry/74847)
 
 ---
 
