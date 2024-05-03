@@ -50,6 +50,7 @@
 ### Multi-dimensional
 
 - [$2$ 次元矩形クエリ `<nachia/multi-dimensional/two-d-rectangle-query.hpp>`](multi-dimensional/two-d-rectangle-query.md)
+- [グリッド上の隣接関係 `<nachia/multi-dimensional/grid-adj.hpp>`](multi-dimensional/grid-adj.md)
 
 ### Range Query
 
