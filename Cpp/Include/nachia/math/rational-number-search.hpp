@@ -73,15 +73,15 @@ private:
             break;
         case 3:
             if(tl + 1 == tr){
-                a0 += a1 * tl;
-                b0 += b1 * tl;
+                a0 += a1 * tl; a1 += a0;
+                b0 += b1 * tl; b1 += b0;
                 return st(0);
             }
             break;
         case 4:
             if(tl + 1 == tr){
-                a1 += a0 * tl;
-                b1 += b0 * tl;
+                a1 += a0 * tl; a0 += a1;
+                b1 += b0 * tl; b0 += b1;
                 return st(0);
             }
             break;
