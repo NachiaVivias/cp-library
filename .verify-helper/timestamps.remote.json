@@ -32,6 +32,7 @@
 "Cpp/verify/library-checker/tree/vertex-add-subtree-sum-by-hld.test.cpp": "2024-02-18 20:32:07 +0900",
 "Cpp/verify/library-checker/tree/vertex-set-path-composite-by-hld.test.cpp": "2024-02-18 20:32:07 +0900",
 "Cpp/verify/unit/array/coprime-conv.test.cpp": "2023-10-21 14:37:53 +0900",
+"Cpp/verify/unit/array/segtree-bsearch.test.cpp": "2024-05-03 16:44:41 +0900",
 "Cpp/verify/yukicoder/1600-by-hld.test.cpp": "2024-02-18 20:32:07 +0900",
 "Cpp/verify/yukicoder/1976-by-treedp.test.cpp": "2024-05-03 16:28:36 +0900",
 "Cpp/verify/yukicoder/1983-by-tecc-and-conc.test.cpp": "2024-05-03 16:28:36 +0900",
