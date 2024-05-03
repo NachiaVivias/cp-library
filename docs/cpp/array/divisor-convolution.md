@@ -96,6 +96,22 @@ $a[0]$ の値は無視される。
 
 $$c[k] = \sum _ {k=\operatorname{lcm}(i,j) , 1 \leq i \leq n , 1 \leq j \leq n} a[i] b[j] \hspace{10px} (1 \leq k \leq n)$$
 
+### SumForCoprimeIndex
+
+```c++
+template<class Elem>
+void SumForCoprimeIndex(std::vector<Elem>& f);
+```
+
+- $n := $ `a.size()` ${}-1$
+- $1 \leq n \leq 10^8$
+- `Elem` は可換環： `Elem` どうしで演算 `+=` , `-=` , `*=` ができる
+- $O(n \log \log n)$ 時間
+
+$f[0]$ は無視される。
+
+$k=1,2,\ldots ,n$ について $g[k]=\sum_{1\leq i\leq n,\text{gcd}(k,i)=1}f[i]$ を計算する。 $f[k]$ に $g[k]$ を代入して返る。
+
 ---
 
 [TOP PAGE](https://nachiavivias.github.io/cp-library/)
