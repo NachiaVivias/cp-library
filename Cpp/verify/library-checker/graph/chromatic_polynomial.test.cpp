@@ -1,5 +1,5 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/chromatic_polynomial"
-#include "../../../Include/nachia/graph/counting/chromatic-polynomial.hpp"
+#include "../../../Include/nachia/counting/chromatic-polynomial.hpp"
 #include <vector>
 #include <utility>
 #include <cstdio>
