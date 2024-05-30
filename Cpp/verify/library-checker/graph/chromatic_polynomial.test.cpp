@@ -2,6 +2,7 @@
 #include "../../../Include/nachia/graph/counting/chromatic-polynomial.hpp"
 #include <vector>
 #include <utility>
+#include <cstdio>
 
 namespace nachia{
 
