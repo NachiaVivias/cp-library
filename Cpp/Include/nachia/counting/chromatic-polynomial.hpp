@@ -1,5 +1,5 @@
 #pragma once
-#include "../../bit-convolution/set-power-series-power-projection.hpp"
+#include "../bit-convolution/set-power-series-power-projection.hpp"
 #include <vector>
 #include <utility>
 #include <cassert>
