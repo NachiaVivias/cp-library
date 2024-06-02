@@ -30,11 +30,13 @@ struct FNode {
 };
 
 struct Iterator {
+    using Item = typename Node::Item;
     FNode* p = nullptr;
     bool isEnd() const { return p->z == 0; }
     unsigned int index() const { return p->z ? p->re()->index() : p->p->z; }
-    const typename Node::Item& operator*() const { return p->re()->kv; }
-    const typename Node::Item* operator->() const { return &p->re()->kv; }
+    const Item& operator*() const { return p->re()->kv; }
+    const Item* operator->() const { return &p->re()->kv; }
+    Item getOr(Item ifEnd) const { return isEnd() ? ifEnd : (* *this); }
     bool operator==(Iterator r) const { return p == r.p; }
     bool operator!=(Iterator r) const { return p != r.p; }
     bool operator<(Iterator r) const { return index() < r.index(); }
@@ -43,8 +45,8 @@ struct Iterator {
     bool operator>=(Iterator r) const { return index() >= r.index(); }
     Iterator& operator++(){ p = p->re()->next(); return *this; }
     Iterator& operator--(){ p = (isEnd() ? p->p->back() : p->re()->prev()); return *this; }
-    Iterator operator++(int) const { auto res = *this; return ++res; }
-    Iterator operator--(int) const { auto res = *this; return --res; }
+    Iterator operator++(int) { auto res = *this; ++*this; return res; }
+    Iterator operator--(int) { auto res = *this; --*this; return res; }
 };
 
 struct Node : public FNode {
@@ -77,7 +79,7 @@ struct Node : public FNode {
         return res;
     }
     static Node* Construct(std::vector<std::pair<Key, Payload>> val){
-        for(size_t i=0; i+1<val.size(); i++) assert(val[i].first < val[i+1].first);
+        for(size_t i=0; i+1<val.size(); i++) assert(!(val[i+1].first < val[i].first));
         auto s = [&](auto& s, int l, int r) -> Node* {
             if(l == r) return GetNil();
             int m = (l + r) / 2;
@@ -372,6 +374,18 @@ struct Node : public FNode {
         auto p = root()->uBound(std::move(key)).second;
         return p == Node::NIL ? end() : Iterator{p};
     }
+    Iterator lBoundL(Key key){
+        auto p = root()->lBound(std::move(key)).first;
+        return p == Node::NIL ? end() : Iterator{p};
+    }
+    Iterator uBoundL(Key key){
+        auto p = root()->uBound(std::move(key)).first;
+        return p == Node::NIL ? end() : Iterator{p};
+    }
+    Iterator find(Key key){
+        auto p = lBound(key);
+        return (p.isEnd() || key < p->key) ? end() : p;
+    }
     Iterator insert(Key k, Payload v){
         auto x = Node::NewNode(std::move(k), std::move(v));
         rt.p = root()->insert(x);
@@ -395,6 +409,7 @@ struct Node : public FNode {
         rt.p = root()->insert(i.p->re());
         return i;
     }
+    void set(Iterator pos, Payload val){ pos.p->re()->set(val); }
     void output(){ root()->output(); }
     
 private:
