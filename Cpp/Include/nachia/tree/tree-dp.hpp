@@ -1,3 +1,4 @@
+#pragma once
 #include "../graph/graph.hpp"
 #include <vector>
 #include <utility>
@@ -6,14 +7,20 @@
 
 namespace nachia{
 
+
+template<class S>
+class TreeDP{
+public:
+
 template<
-    class S,
+    class NodeInitializer,
     class RakeFunc,
     class CompressFunc,
-    typename std::enable_if_t<std::is_invocable_r_v<S, RakeFunc, S, S>, void*> = nullptr,
+    typename std::enable_if_t<std::is_invocable_r_v<S, NodeInitializer, int>, void*> = nullptr,
+    typename std::enable_if_t<std::is_invocable_r_v<S, RakeFunc, S, S, int>, void*> = nullptr,
     typename std::enable_if_t<std::is_invocable_r_v<S, CompressFunc, S, int, int>, void*> = nullptr
 >
-class AnyDirectionTreeDP{
+class Solver{
 private:
     std::vector<S> low;
     std::vector<S> high;
@@ -26,12 +33,14 @@ public:
 
     // S rake(S a, S b)
     // S compress(S a, int edgeIndex, int newRoot)
-    AnyDirectionTreeDP(const Graph& tree, std::vector<S> node, RakeFunc _rake, CompressFunc _compress)
+    Solver(const Graph& tree, NodeInitializer _node, RakeFunc _rake, CompressFunc _compress)
         : rake(std::move(_rake))
         , compress(std::move(_compress))
     {
         int n = tree.numVertices();
         auto adj = tree.getEdgeIndexArray(true);
+        std::vector<S> node; node.reserve(n);
+        for(int v=0; v<n; v++) node.push_back(_node(v));
         XorEdge.resize(n-1);
         for(int i=0; i<n-1; i++) XorEdge[i] = tree[i].from ^ tree[i].to;
         std::vector<int> bfs(n, 0);
@@ -47,7 +56,7 @@ public:
         for(int i=n-1; i>=1; i--){
             int w = bfs[i];
             int v = w ^ XorEdge[P[w]];
-            low[v] = rake(low[v], compress(low[w], P[w], v));
+            low[v] = rake(low[v], compress(low[w], P[w], v), v);
         }
         
         high = node;
@@ -61,27 +70,34 @@ public:
                 if(P[v] == e) continue;
                 int w = v ^ XorEdge[e];
                 high[w] = fold;
-                fold = rake(compress(low[w], e, v), fold);
+                fold = rake(compress(low[w], e, v), fold, v);
             }
             fold = node[v];
             for(int ci=0; ci<C; ci++){
                 int e = adj[v][ci];
                 if(P[v] == e) continue;
                 int w = v ^ XorEdge[e];
-                high[w] = rake(high[w], fold);
-                fold = rake(fold, compress(low[w], e, v));
+                high[w] = rake(high[w], fold, v);
+                fold = rake(fold, compress(low[w], e, v), v);
             }
         }
     }
 
+    int edgeBetween(int u, int v){
+        if(P[u] >= 0 && XorEdge[P[u]] == (u^v)) return P[u];
+        return P[v];
+    }
+
     S getAtVtx(int i){
         if(i == 0) return low[i];
-        return rake(compress(high[i], P[i], i), low[i]);
+        return rake(compress(high[i], P[i], i), low[i], i);
     }
     S getAtEdge(int root, int edge){
         if(P[root] == edge) return low[root];
         return high[root ^ XorEdge[edge]];
     }
+};
+
 };
 
 } // namespace nachia
