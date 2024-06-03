@@ -11,21 +11,21 @@ int main(){
         tree.addEdge(u, v);
     }
 
-    struct Semiclaster {
+    struct Semicluster {
         int height = 0;
         int diam = 0;
     };
-    auto treedp = nachia::TreeDP<Semiclaster>::Solver(
+    auto treedp = nachia::TreeDP<Semicluster>::Solver(
         tree,
-        [](int){ return Semiclaster(); },
-        [](Semiclaster a, Semiclaster b, int){
-            Semiclaster res;
+        [](int){ return Semicluster(); },
+        [](Semicluster a, Semicluster b, int){
+            Semicluster res;
             res.height = std::max(a.height, b.height);
             res.diam = std::max({ a.diam, b.diam, a.height + b.height });
             return res;
         },
-        [](Semiclaster a, int, int){
-            Semiclaster res;
+        [](Semicluster a, int, int){
+            Semicluster res;
             res.height = a.height + 1;
             res.diam = std::max(a.diam, res.height);
             return res;

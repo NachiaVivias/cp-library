@@ -4,7 +4,7 @@
 
 ## ソースコード
 
-[nachia/tree/any-direction-tree-dp.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/tree/any-direction-tree-dp.hpp)
+[nachia/tree/tree-dp.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/tree/tree-dp.hpp)
 
 ## 主な機能
 
@@ -31,21 +31,22 @@
 ### テンプレート引数
 
 ```c++
-template<
-    class S,
-    class RakeFunc,
-    class CompressFunc
->
+template<class S>
 ```
 
-これらのテンプレート引数がコンストラクタの引数から推論されることを想定している。
+強クラスターに対して計算される値の型を `S` として指定する。
+
+## Solver 構造体
+
+`Solver` 構造体は、 `TreeDP<S>` の内部に入れ子で実装される。
+テンプレート引数を持つが、これらはすべてコンストラクタの引数から推論されることを想定している。
 
 ### コンストラクタ
 
 ```c++
-AnyDirectionTreeDP(
+TreeDP<S>::Solver::Solver(
     const Graph& tree,
-    std::vector<S> node,
+    NodeInitializer _node,
     RakeFunc _rake,
     CompressFunc _compress
 );
@@ -54,9 +55,10 @@ AnyDirectionTreeDP(
 [nachia::Graph とは？](./../graph/graph.md)
 
 - `S` は、集約値の型である。
-- `node` の $i$ 番目の要素は、 $f(i,\lbrace i\rbrace )$ の値である。
+- `node` は次の形式の関数として呼び出すことができる。この関数は、 $f(r,\lbrace r\rbrace )$ の値を返す。
+    - `S node(int r)`
 - `rake` は次の形式の関数として呼び出すことができる。この関数は、操作 `rake` を行う。
-    - `S rake(S a, S b)`
+    - `S rake(S a, S b, int r)`
 - `compress` は次の形式の関数として呼び出すことができる。この関数は、強クラスターに頂点 `newRoot` が追加され、元々の根と `newRoot` を接続している辺の番号が `edgeIdx` であるときの操作 `compress` を行う。
     - `S compress(S a, int edgeIdx, int newRoot)`
 - 頂点数 $n$ : $1 \leq n \leq 2\times 10^8$ (その他、 `nachia::Graph` の制約による)
