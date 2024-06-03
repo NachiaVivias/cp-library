@@ -1,5 +1,5 @@
 #define PROBLEM "https://yukicoder.me/problems/no/1976"
-#include "../../Include/nachia/tree/any-direction-tree-dp.hpp"
+#include "../../Include/nachia/tree/tree-dp.hpp"
 #include "../../Include/nachia/misc/fastio.hpp"
 
 int main(){
@@ -15,16 +15,16 @@ int main(){
         int height = 0;
         int diam = 0;
     };
-    auto treedp = nachia::AnyDirectionTreeDP(
+    auto treedp = nachia::TreeDP<Semiclaster>::Solver(
         tree,
-        std::vector<Semiclaster>(N),
-        [](Semiclaster a, Semiclaster b){
+        [](int){ return Semiclaster(); },
+        [](Semiclaster a, Semiclaster b, int){
             Semiclaster res;
             res.height = std::max(a.height, b.height);
             res.diam = std::max({ a.diam, b.diam, a.height + b.height });
             return res;
         },
-        [](Semiclaster a, int egdeIdx, int newRoot){
+        [](Semiclaster a, int, int){
             Semiclaster res;
             res.height = a.height + 1;
             res.diam = std::max(a.diam, res.height);
