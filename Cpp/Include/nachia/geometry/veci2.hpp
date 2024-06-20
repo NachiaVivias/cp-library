@@ -1,4 +1,6 @@
 #pragma once
+#include <utility>
+#include <algorithm>
 
 namespace nachia{
 
@@ -21,6 +23,8 @@ struct VecI2 {
     Int2 norm() const { return Int2(x) * Int2(x) + Int2(y) * Int2(y); }
     static bool compareYX(VecI2 a, VecI2 b){ return a.y < b.y || (!(b.y < a.y) && a.x < b.x); }
     static bool compareXY(VecI2 a, VecI2 b){ return a.x < b.x || (!(b.x < a.x) && a.y < b.y); }
+    bool operator==(VecI2 r) const { return x == r.x && y == r.y; }
+    bool operator!=(VecI2 r) const { return x != r.x || y != r.y; }
 };
 
 } // namespace nachia
