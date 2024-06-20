@@ -4,17 +4,30 @@
 #include <tuple>
 #include <algorithm>
 #include "../geometry/veci2.hpp"
+#include "../array/csr-array.hpp"
 
 namespace nachia{
 
-// Int2 must be able to handle the value range :
+// Int3 must be able to handle the value range :
 //  |x| <= | (any input - any input) ** 4 * 12 |
 
-template<class Int = long long, class Int2 = long long>
+template<class Int = long long, class Int2 = long long, class Int3 = Int2>
 class DelaunayTriangulation {
 public:
 
-    using GPos2 = class VecI2<Int, Int2>;
+    using GPos2 = VecI2<Int, Int2>;
+    struct Circumcenter {
+        Int3 x; Int3 y; Int2 d;
+        static Circumcenter From3Points(GPos2 p1, GPos2 p2, GPos2 p3){
+            GPos2 dp1 = p2 - p1;
+            GPos2 dp2 = p3 - p1;
+            Int2 d1 = dp1.norm(); Int2 d2 = dp2.norm();
+            Int2 w = dp1 ^ dp2; w += w;
+            Int3 px = (Int3(dp2.y) * Int3(d1) - Int3(dp1.y) * Int3(d2)) + Int3(w) * Int3(p1.x);
+            Int3 py = (Int3(dp1.x) * Int3(d2) - Int3(dp2.x) * Int3(d1)) + Int3(w) * Int3(p1.y);
+            return { px, py, w };
+        }
+    };
 
     struct Edge {
         int to;
@@ -23,14 +36,15 @@ public:
         int rev;
         bool enabled = false;
     };
+    
 private:
 
     static int isDinOABC(GPos2 a, GPos2 b, GPos2 c, GPos2 d){
         a = a - d;
         b = b - d;
         c = c - d;
-        auto val = (b^c) * a.norm() + (c^a) * b.norm() + (a^b) * c.norm();
-        return val > Int2(0) ? 1 : 0;
+        auto val = Int3(b^c) * Int3(a.norm()) + Int3(c^a) * Int3(b.norm()) + Int3(a^b) * Int3(c.norm());
+        return val > Int3(0) ? 1 : 0;
     }
 
     int getOpenAddress(){
@@ -185,7 +199,9 @@ private:
 
             bool chooseA = ebp == ebu;
             if(eap != eau && ebp != ebu){
-                chooseA = isDinOABC(ap, bp, b2, a2);
+				if(isCcw(ap, bp, b2) < 0) chooseA = true;
+				else if(isCcw(a2, ap, bp) < 0) chooseA = false;
+				else chooseA = isDinOABC(ap, bp, b2, a2);
             }
 
             if(chooseA){
@@ -262,9 +278,20 @@ private:
             }
         );
         auto posbuf = pos;
-        for(int i=0; i<(int)pos.size(); i++) pos[i] = posbuf[pi[i]];
-
-        solveRange(0, sz);
+        int posptr = 0;
+        mappings.assign(sz, 0);
+        for(int i=0; i<sz; i++){
+            int v = pi[i];
+            if(i == 0 || !(posbuf[pi[posptr-1]] == posbuf[v])){
+                pi[posptr] = v;
+                pos[posptr++] = posbuf[v];
+                mappings[v] = v;
+            } else {
+                mappings[v] = pi[posptr-1];
+            }
+        }
+        
+        if(posptr >= 2) outerOneEdge = solveRange(0, posptr).second;
         std::swap(pos, posbuf);
         for(auto& e : edges) e.to = pi[e.to];
     }
@@ -272,7 +299,90 @@ private:
     std::vector<int> openAddress;
     std::vector<GPos2> pos;
     std::vector<Edge> edges;
-    
+    std::vector<int> mappings;
+
+    bool voronoiCalculated = false;
+    int outerOneEdge = -1;
+    std::vector<Circumcenter> circumcenters;
+    std::vector<int> voronoiNodeRefLH;
+    CsrArray<std::pair<int,int>> voronoi;
+    void solveVoronoiDiagram(){
+        if(edges.empty()){
+            voronoi = CsrArray<std::pair<int,int>>::FromRaw({}, std::vector<int>(pos.size()+1, 0));
+            voronoiCalculated = true;
+        }
+        if(voronoiCalculated) return;
+        int m = edges.size();
+        std::vector<int> res(m, -1);
+        int outlineCount = 0;
+        {
+            int eu = outerOneEdge;
+            int es = eu;
+            do{
+                eu = edges[eu].rev;
+                res[eu] = -2;
+                eu = edges[eu].ccw;
+                outlineCount++;
+            } while(es != eu);
+        }
+        for(int e=0; e<m; e++) if(res[e] == -1){
+            int f = edges[edges[e].rev].cw;
+            int g = edges[edges[f].rev].cw;
+            int v = edges[e].to;
+            int w = edges[f].to;
+            int u = edges[g].to;
+            int c = circumcenters.size();
+            circumcenters.push_back(Circumcenter::From3Points(pos[u], pos[v], pos[w]));
+            res[e] = res[f] = res[g] = c;
+        }
+        for(int e=0; e<m; e++) if(res[e] == -2){
+            int f = edges[e].rev;
+            int v = edges[e].to;
+            int u = edges[f].to;
+            if(res[f] == -2){
+                int c1 = circumcenters.size();
+                circumcenters.push_back({
+                    Int2(pos[u].x) + Int2(pos[v].x) + Int2(pos[v].y - pos[u].y),
+                    Int2(pos[u].y) + Int2(pos[v].y) - Int2(pos[v].x - pos[u].x), Int2(2) });
+                int c2 = circumcenters.size();
+                circumcenters.push_back({
+                    Int2(pos[u].x) + Int2(pos[v].x) - Int2(pos[v].y - pos[u].y),
+                    Int2(pos[u].y) + Int2(pos[v].y) + Int2(pos[v].x - pos[u].x), Int2(2) });
+                res[e] = c1;
+                res[f] = c2;
+            } else {
+                int c1 = circumcenters.size();
+                auto q = circumcenters[res[f]];
+                auto d = pos[v] - pos[u];
+                q.x -= Int3(q.d) * Int3(d.y);
+                q.y += Int3(q.d) * Int3(d.x);
+                circumcenters.push_back(q);
+                res[e] = c1;
+            }
+        }
+		voronoiNodeRefLH = std::move(res);
+        std::vector<int> oneEdge(pos.size(), -1);
+        for(int e=0; e<m; e++) oneEdge[edges[e].to] = edges[e].rev;
+        {
+            std::vector<std::pair<int,int>> res(m*2);
+            std::vector<int> ptr(pos.size() + 1);
+            for(int s=0; s<int(pos.size()); s++){
+                ptr[s+1] = ptr[s];
+                if(oneEdge[s] >= 0){
+                    int es = oneEdge[s];
+                    int e = es;
+                    do{
+                        int re = edges[e].rev;
+                        res[ptr[s+1]++] = { voronoiNodeRefLH[re], voronoiNodeRefLH[e] };
+                        e = edges[e].ccw;
+                    } while(e != es);
+                }
+            }
+            voronoi = CsrArray<std::pair<int,int>>::FromRaw(std::move(res), std::move(ptr));
+        }
+        voronoiCalculated = true;
+    }
+
 public:
 
     DelaunayTriangulation()
@@ -292,7 +402,30 @@ public:
             if(e < re) continue;
             res.push_back({ edges[e].to, edges[re].to });
         }
+        for(int v=0; v<int(mappings.size()); v++){
+            if(mappings[v] != v) res.push_back({ v, mappings[v] });
+        }
         return res;
+    }
+
+    const std::vector<Circumcenter>& getVirtualCircumcenters(){
+        solveVoronoiDiagram();
+        return circumcenters;
+    }
+
+    std::vector<std::pair<double, double>> getVirtualCircumcentersAsDouble(){
+        solveVoronoiDiagram();
+        std::vector<std::pair<double, double>> res(circumcenters.size());
+        for(int i=0; i<int(circumcenters.size()); i++){
+            res[i].first = double(circumcenters[i].x) / double(circumcenters[i].d);
+            res[i].second = double(circumcenters[i].y) / double(circumcenters[i].d);
+        }
+        return res;
+    }
+
+    const CsrArray<std::pair<int,int>>& getVoronoiDiagram(){
+        solveVoronoiDiagram();
+        return voronoi;
     }
 
 };
