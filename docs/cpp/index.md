@@ -13,6 +13,10 @@
 - [一点更新列で得られる配列の辞書順比較 `<nachia/array/point-update-lex-sort.hpp>`](array/point-update-lex-sort.md)
 - [セグメント木 `<nachia/array/segtree.hpp>`](array/segtree.md)
 
+### Counting
+
+- [彩色多項式 `<nachia/counting/chromatic-polynomial.hpp>`](counting/chromatic-polynomial.md)
+
 ### Geometry
 
 - [ドロネー三角形分割 `<nachia/geometry/delaunay-triangulation.hpp>`](geometry/delaunay-triangulation.md)

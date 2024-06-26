@@ -4,7 +4,7 @@
 
 ## ソースコード
 
-[nachia/graph/counting/chromatic-polynomial.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/graph/counting/chromatic-polynomial.hpp)
+[nachia/counting/chromatic-polynomial.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/counting/chromatic-polynomial.hpp)
 
 ## 主な機能
 
