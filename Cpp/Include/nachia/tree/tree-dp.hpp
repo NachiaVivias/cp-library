@@ -63,8 +63,9 @@ public:
         for(int i=0; i<n; i++){
             int v = bfs[i];
             int C = adj[v].size();
-            S fold = node[0];
-            if(v != 0) fold = compress(high[v], P[v], v);
+            S fold = node[v];
+            bool emp = true;
+            if(v != 0) fold = rake(compress(high[v], P[v], v), node[v], v);
             for(int ci=C-1; ci>=0; ci--){
                 int e = adj[v][ci];
                 if(P[v] == e) continue;
@@ -73,12 +74,15 @@ public:
                 fold = rake(compress(low[w], e, v), fold, v);
             }
             fold = node[v];
+            emp = true;
             for(int ci=0; ci<C; ci++){
                 int e = adj[v][ci];
                 if(P[v] == e) continue;
                 int w = v ^ XorEdge[e];
-                high[w] = rake(high[w], fold, v);
-                fold = rake(fold, compress(low[w], e, v), v);
+                if(!emp) high[w] = rake(fold, high[w], v);
+                auto nxlow = compress(low[w], e, v);
+                fold = emp ? nxlow : rake(nxlow, fold, v);
+                emp = false;
             }
         }
     }
