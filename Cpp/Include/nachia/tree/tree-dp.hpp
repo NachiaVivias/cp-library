@@ -98,6 +98,11 @@ public:
     }
 };
 
+// deduction guide
+template <class R1, class R2, class R3>
+Solver(const Graph&, R1, R2, R3)
+  -> Solver<R1, R2, R3>;
+
 };
 
 } // namespace nachia
