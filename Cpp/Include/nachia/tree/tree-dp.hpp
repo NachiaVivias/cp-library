@@ -10,7 +10,7 @@ namespace nachia{
 
 template<class S>
 class TreeDP{
-public:
+private:
 
 template<
     class NodeInitializer,
@@ -20,7 +20,7 @@ template<
     typename std::enable_if_t<std::is_invocable_r_v<S, RakeFunc, S, S, int>, void*> = nullptr,
     typename std::enable_if_t<std::is_invocable_r_v<S, CompressFunc, S, int, int>, void*> = nullptr
 >
-class Solver{
+class Inner{
 private:
     std::vector<S> low;
     std::vector<S> high;
@@ -33,7 +33,7 @@ public:
 
     // S rake(S a, S b)
     // S compress(S a, int edgeIndex, int newRoot)
-    Solver(const Graph& tree, NodeInitializer _node, RakeFunc _rake, CompressFunc _compress)
+    Inner(const Graph& tree, NodeInitializer _node, RakeFunc _rake, CompressFunc _compress)
         : rake(std::move(_rake))
         , compress(std::move(_compress))
     {
@@ -98,10 +98,25 @@ public:
     }
 };
 
-// deduction guide
-template <class R1, class R2, class R3>
-Solver(const Graph&, R1, R2, R3)
-  -> Solver<R1, R2, R3>;
+public:
+
+// S node(int root)
+// S rake(S a, S b, int root)
+// S compress(S a, int edgeIndex, int newRoot)
+template<
+    class NodeInitializer,
+    class RakeFunc,
+    class CompressFunc
+>
+static auto Solver(
+    const Graph& tree,
+    NodeInitializer node,
+    RakeFunc rake,
+    CompressFunc compress)
+{
+    return Inner<NodeInitializer, RakeFunc, CompressFunc>(
+        tree, std::move(node), std::move(rake), std::move(compress));
+}
 
 };
 
