@@ -25,6 +25,7 @@
 ### Graph
 
 - [Biconnected Components ( 2-連結成分 ) `<nachia/graph/biconnected-components.hpp>`](graph/biconnected-components.md)
+- [二部グラフの辺彩色 `<nachia/graph/bipartite-edge-coloring.hpp>`](graph/bipartite-edge-coloring.md)
 - [Chordal Graph の判定 `<nachia/graph/chordal-graph-recognition.hpp>`](graph/chordal-graph-recognition.md)
 - [頂点彩色数 `<nachia/graph/chromatic-number.hpp>`](graph/chromatic-number.md)
 - [Connected Components ( 連結成分 ) `<nachia/graph/connected-components.hpp>`](graph/connected-components.md)
