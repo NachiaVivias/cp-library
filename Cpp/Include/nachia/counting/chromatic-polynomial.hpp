@@ -7,13 +7,15 @@
 namespace nachia{
 
 template<class Modint>
-std::vector<Modint> SetCoverPolynomial(int n, std::vector<Modint> table){
-    int nn = 1 << n;
-    assert(int(table.size()) >= nn);
-    table[0] -= Modint(1);
+std::vector<Modint> SetCoverPolynomial(int n, const std::vector<Modint>& table){
+    assert(int(table.size()) >= (1 << n));
+    int nn = 1 << (n-1);
+    auto table2 = std::vector<Modint>(table.begin(), table.begin() + nn);
+    table2[0] -= Modint(1);
     std::vector<Modint> weight(nn, 0);
-    weight[nn-1] = Modint(1);
-    auto powerproj = SpsPowerProjection(n, table, weight, n+1, true);
+    for(int i=0; i<nn; i++) weight[nn-1-i] = table[nn+i];
+    auto powerproj = SpsPowerProjection(n-1, table2, weight, n, true);
+    powerproj.insert(powerproj.begin(), Modint(0));
     std::vector<Modint> prod(n+2);
     std::vector<Modint> res(n+1);
     prod[0] = 1;
