@@ -4,13 +4,15 @@
 
 namespace nachia{
 
-struct SCC{
+struct StronglyConnectedComponents{
+private:
     int m_n;
     CsrArray<int> induce;
     int componentNum;
+public:
 
-    SCC() : m_n(0), induce(), componentNum(0) {}
-    SCC(Graph E) {
+    StronglyConnectedComponents() : m_n(0), induce(), componentNum(0) {}
+    StronglyConnectedComponents(Graph E) {
         int n = E.numVertices();
         m_n = n;
         std::vector<int> O(n);
@@ -44,8 +46,13 @@ struct SCC{
         componentNum = induce.size();
     }
 
-    int numComponents() const { return componentNum; }
-    const CsrArray<int>& getCsr() const { return induce; }
+    int numComponents() const noexcept { return componentNum; }
+    const CsrArray<int>& getCsr() const noexcept { return induce; }
+    std::vector<int> getMapping() const {
+        std::vector<int> res(m_n);
+        for(int i=0; i<numComponents(); i++) for(int v : induce[i]) res[v] = i;
+        return res;
+    }
 };
 
 } // namespace nachia
