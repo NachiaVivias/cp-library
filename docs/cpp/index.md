@@ -33,6 +33,7 @@
 - [Online Dynamic Connectivity `<nachia/graph/dynamic-connectivity.hpp>`](graph/dynamic-connectivity.md)
 - [オイラー路の構築 `<nachia/graph/eulerian-trail.hpp>`](graph/eulerian-trail.md)
 - [Graph 構造体・辺のリスト `<nachia/graph/graph.hpp>`](graph/graph.md)
+- [Incremental (Offline) SCC `<nachia/graph/incremental-scc-offline.hpp>`](graph/incremental-scc-offline.md)
 - [Strongly Connected Components ( 強連結成分 ) `<nachia/graph/strongly-connected-components.hpp>`](graph/strongly-connected-components.md)
 - [Two-Edge-Connected Components ( 2-辺連結成分 ) `<nachia/graph/two-edge-connected-components.hpp>`](graph/two-edge-connected-components.md)
 
