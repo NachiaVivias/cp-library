@@ -19,7 +19,7 @@ int main() {
     }
 
     auto G = nachia::Graph(n, edges, false);
-    auto scc = nachia::SCC(G);
+    auto scc = nachia::StronglyConnectedComponents(G);
     auto sccv = scc.getCsr();
     int scccnt = scc.numComponents();
 
