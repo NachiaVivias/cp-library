@@ -33,12 +33,14 @@
 - [Chordal Graph の判定 `<nachia/graph/chordal-graph-recognition.hpp>`](graph/chordal-graph-recognition.md)
 - [頂点彩色数 `<nachia/graph/chromatic-number.hpp>`](graph/chromatic-number.md)
 - [Connected Components ( 連結成分 ) `<nachia/graph/connected-components.hpp>`](graph/connected-components.md)
+- [C4 数え上げ `<nachia/graph/count-c4.hpp>`](graph/count-c4.md)
 - [Dijkstra法 ( ダイクストラ法 ) `<nachia/graph/dijkstra.hpp>`](graph/dijkstra.md)
 - [Online Dynamic Connectivity `<nachia/graph/dynamic-connectivity.hpp>`](graph/dynamic-connectivity.md)
 - [オイラー路の構築 `<nachia/graph/eulerian-trail.hpp>`](graph/eulerian-trail.md)
 - [Graph 構造体・辺のリスト `<nachia/graph/graph.hpp>`](graph/graph.md)
 - [Incremental (Offline) SCC `<nachia/graph/incremental-scc-offline.hpp>`](graph/incremental-scc-offline.md)
 - [Strongly Connected Components ( 強連結成分 ) `<nachia/graph/strongly-connected-components.hpp>`](graph/strongly-connected-components.md)
+- [Three-Edge-Connected Components ( 3-辺連結成分 ) `<nachia/graph/three-edge-connected-components.hpp>`](graph/three-edge-connected-components.md)
 - [Two-Edge-Connected Components ( 2-辺連結成分 ) `<nachia/graph/two-edge-connected-components.hpp>`](graph/two-edge-connected-components.md)
 
 ### Linear Modulo
@@ -58,11 +60,16 @@
 - [$2$ 次元矩形クエリ `<nachia/multi-dimensional/two-d-rectangle-query.hpp>`](multi-dimensional/two-d-rectangle-query.md)
 - [グリッド上の隣接関係 `<nachia/multi-dimensional/grid-adj.hpp>`](multi-dimensional/grid-adj.md)
 
+### Permutation
+
+- [対称群の部分群の簡単化 `<nachia/permutation/simplify-permitation-subgroup.hpp>`](permutation/simplify-permitation-subgroup.md)
+
 ### Range Query
 
 - [point set range min `<nachia/range-query/point-set-range-min.hpp>`](range-query/point-set-range-min.md)
 - [range add count top k `<nachia/range-query/range-add-count-top-k.hpp>`](range-query/range-add-count-top-k.md)
 - [range add range min `<nachia/range-query/range-add-range-min.hpp>`](range-query/range-add-range-min.md)
+- [range LIS `<nachia/range-query/range-lis.hpp>`](range-query/range-lis.md)
 
 ### Set
 
