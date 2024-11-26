@@ -13,6 +13,10 @@
 - [一点更新列で得られる配列の辞書順比較 `<nachia/array/point-update-lex-sort.hpp>`](array/point-update-lex-sort.md)
 - [セグメント木 `<nachia/array/segtree.hpp>`](array/segtree.md)
 
+### Bit
+
+- [ビット演算 `<nachia/bit/bit-operations.hpp>`](bit/bit-operations.md)
+
 ### Counting
 
 - [彩色多項式 `<nachia/counting/chromatic-polynomial.hpp>`](counting/chromatic-polynomial.md)
@@ -48,10 +52,6 @@
 - [$N$ 以下の素数の個数 `<nachia/math/counting-primes.hpp>`](math/counting-primes.md)
 - [明示的な素数篩（エラトステネスの篩） `<nachia/math/prime-sieve-explicit.hpp>`](math/prime-sieve-explicit.md)
 - [有理数の二分探索 `<nachia/math/rational-number-search.hpp>`](math/rational-number-search.md)
-
-### Misc
-
-- [ビット演算 `<nachia/misc/bit-operations.hpp>`](misc/bit-operations.md)
 
 ### Multi-dimensional
 

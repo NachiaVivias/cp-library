@@ -4,7 +4,7 @@
 
 ## ソースコード
 
-[nachia/misc/bit-operations.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/misc/bit-operations.hpp)
+[nachia/bit/bit-operations.hpp](https://github.com/NachiaVivias/cp-library/blob/main/Cpp/Include/nachia/bit/bit-operations.hpp)
 
 ## 主な機能
 
