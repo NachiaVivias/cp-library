@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "../misc/bit-operations.hpp"
+#include "../bit/bit-operations.hpp"
 #include "../set/dsu-fast.hpp"
 
 namespace nachia {
