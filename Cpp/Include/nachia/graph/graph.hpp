@@ -20,7 +20,7 @@ public:
         for(std::size_t i=0; i<edges.size(); i++) m_e[i] = { edges[i].first, edges[i].second };
     }
     template<class Cin>
-    static Graph Input(Cin& cin, int n, bool undirected, int m, bool offset = 0){
+    static Graph Input(Cin& cin, int n, bool undirected, int m, int offset = 0){
         Graph res(n, undirected, m);
         for(int i=0; i<m; i++){
             int u, v; cin >> u >> v;
