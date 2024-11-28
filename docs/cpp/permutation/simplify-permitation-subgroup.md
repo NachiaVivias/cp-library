@@ -15,7 +15,7 @@
     * $i\lt k$ のとき、 `B[i][j][k] == k`
     * `B[i][j][i] < i`
     * $j\neq k$ のとき、 `B[i][j][i] != B[i][k][i]`
-* `B[i]` の要素数を $X _ i$ と置くと、 $\prod _{i=0}^{n-1} X _ i$ は $G$ の要素数 $|G|$ に等しい。
+* `B[i]` の要素数を $X _ i$ と置くと、 $\prod _{i=0}^{n-1} X _ i$ は $G$ の要素数 $\lvert G \rvert$ に等しい。
 
 ## 関数 SimplifyPermutationSubgroup
 
