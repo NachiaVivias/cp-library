@@ -52,6 +52,7 @@
 ### Math
 
 - [$N$ 以下の素数の個数 `<nachia/math/counting-primes.hpp>`](math/counting-primes.md)
+- [Erdős-Ginzburg-Ziv theorem `<nachia/math/erdos-ginzburg-ziv-task.hpp>`](math/erdos-ginzburg-ziv-task.md)
 - [明示的な素数篩（エラトステネスの篩） `<nachia/math/prime-sieve-explicit.hpp>`](math/prime-sieve-explicit.md)
 - [有理数の二分探索 `<nachia/math/rational-number-search.hpp>`](math/rational-number-search.md)
 
