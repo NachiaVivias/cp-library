@@ -39,6 +39,8 @@
 - [オイラー路の構築 `<nachia/graph/eulerian-trail.hpp>`](graph/eulerian-trail.md)
 - [Graph 構造体・辺のリスト `<nachia/graph/graph.hpp>`](graph/graph.md)
 - [Incremental (Offline) SCC `<nachia/graph/incremental-scc-offline.hpp>`](graph/incremental-scc-offline.md)
+- [有向グラフの第 $K$ 最短路 `<nachia/graph/k-shortest-path-directed.hpp>`](graph/k-shortest-path-directed.md)
+- [無向グラフの第 $K$ 最短路 `<nachia/graph/k-shortest-path-undirected.hpp>`](graph/k-shortest-path-undirected.md)
 - [Strongly Connected Components ( 強連結成分 ) `<nachia/graph/strongly-connected-components.hpp>`](graph/strongly-connected-components.md)
 - [Three-Edge-Connected Components ( 3-辺連結成分 ) `<nachia/graph/three-edge-connected-components.hpp>`](graph/three-edge-connected-components.md)
 - [Two-Edge-Connected Components ( 2-辺連結成分 ) `<nachia/graph/two-edge-connected-components.hpp>`](graph/two-edge-connected-components.md)
