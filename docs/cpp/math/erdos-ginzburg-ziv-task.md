@@ -9,7 +9,7 @@
 ## 主な機能
 
 $2N-1$ 個の整数から $N$ 個を選ぶ方法であって、総和が $N$ の倍数となるものを $1$ つ求める。
-これはかならず存在する。
+これは必ず存在する。
 
 ## 関数
 
@@ -20,7 +20,7 @@ std::vector<int> ErdosGinzburgZivTask(int N, std::vector<int> A);
 ```
 
 - $1 \leq N \leq 5 \times 10^8$
-- $0 <= A[i]$
+- $0 \leq A[i]$
 - $O(N \log N)$ 時間
 
 長さ $N$ の配列を返す。
@@ -29,6 +29,7 @@ std::vector<int> ErdosGinzburgZivTask(int N, std::vector<int> A);
 ## 参考
 
 * Choi, Seokhwan, Hanpil Kang, and Dongjae Lim. "Simple deterministic O (n log n) algorithm finding a solution of Erdős-Ginzburg-Ziv theorem." arXiv preprint arXiv:2208.07728 (2022). ([https://arxiv.org/abs/2208.07728](https://arxiv.org/abs/2208.07728))
+* 25448번: N의 배수 (4) \| Baekjoon Online Judge ([https://www.acmicpc.net/problem/25448](https://www.acmicpc.net/problem/25448))
 
 ---
 
