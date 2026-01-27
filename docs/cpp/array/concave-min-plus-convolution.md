@@ -27,11 +27,11 @@ std::vector<std::pair<Elem, int>> MinPlusConvolution_AIsConcave(
 );
 ```
 
-* $1 \leq |A| \leq 10^8$
-* $1 \leq |B| \leq 10^8$
-* $A[i] + A[i] \leq A[i-1] + A[i+1]$ ($1 \leq i \leq |A|-1$)
+* $1 \leq \lvert A \rvert \leq 10^8$
+* $1 \leq \lvert B \rvert \leq 10^8$
+* $A[i] + A[i] \leq A[i-1] + A[i+1]$ ($1 \leq i \leq \lvert A \rvert -1$)
 * $\texttt{Inf}$ は、どの $A[i]+B[j]$ よりも大きい値である
-* $N=|A|+|B|$ として $O(N\log N)$ 時間
+* $N= \lvert A \rvert + \lvert B \rvert$ として $O(N\log N)$ 時間
 
 返り値は $|A|+|B|-1$ 要素の配列である。 $i$ 番目の要素は、 $C[i] = \min _ {a+b=i} (A[a] + B[b])$ の値と、 $C[i] = A[a] + B[i-a]$ を満たす $a$ の組である。
 
