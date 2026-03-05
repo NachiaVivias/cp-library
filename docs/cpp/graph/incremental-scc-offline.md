@@ -27,6 +27,7 @@ CsrArray<int> IncrementalSccOffline(Graph G);
 
 出力を `A` とすると、 `A[i]` は $i$ 番目の辺の追加によって連結になる $2$ 成分を結ぶ辺の番号のリストである。対象の辺で [DSU](./../set/dsu.md) にクエリを与えることで、強連結成分を管理できる。
 
+
 ---
 
 [TOP PAGE](https://nachiavivias.github.io/cp-library/)
