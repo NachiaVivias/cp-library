@@ -2,7 +2,7 @@ name: verify
 on:
   push:
     branches:
-      - "migrate_verifier"
+      - "main"
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages

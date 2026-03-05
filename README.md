@@ -1,6 +1,6 @@
 # cp-library
 
-[![Actions Status](https://github.com/NachiaVivias/cp-library/workflows/verify/badge.svg)](https://github.com/NachiaVivias/cp-library/actions)
+[![Actions Status](https://github.com/NachiaVivias/cp-library/actions/workflows/verify.yml/badge.svg)](https://github.com/NachiaVivias/cp-library/actions)
 
 ## 概要
 
@@ -12,4 +12,4 @@
 
 ## 使い方
 
-[こちら](https://nachiavivias.github.io/cp-library/) をお読みください。
+[こちら](https://nachiavivias.github.io/cp-library/) をご覧ください。
